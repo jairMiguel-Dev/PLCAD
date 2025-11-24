@@ -4,13 +4,22 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* Remove o highlight azul padrão ao tocar em botões no mobile */
+  -webkit-tap-highlight-color: transparent;
 }
 
 html,
 body {
   height: 100%;
   width: 100%;
+  /* Previne o "bounce" elástico da página inteira no iOS */
+  overscroll-behavior-y: none; 
   overflow: hidden;
+}
+
+/* Tipografia base adaptável */
+html {
+  font-size: 100%; /* Padrão 16px */
 }
 
 body {
@@ -18,21 +27,35 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #c5c5c5;
-  /* Soft off‑white to reduce glare */
+  
+  /* ADAPTABILIDADE: Suporte a Safe Areas (Notches do iPhone/Android modernos) */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 
 /* Dark mode fallback */
 .dark body {
   background-color: #0a0a0a;
-  /* Very dark background for low‑light environments */
+  color: #e5e5e5; /* Garante contraste do texto base no modo escuro */
 }
-
 
 /* Smooth transitions for theme changes */
 * {
-  transition-property: background-color, border-color, color, fill, stroke;
+  transition-property: background-color, border-color, color, fill, stroke, transform, opacity;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+/* ADAPTABILIDADE: Respeita usuários que preferem menos movimento (Acessibilidade) */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Custom scrollbar styles */
@@ -69,6 +92,8 @@ button,
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  /* Previne arrastar imagens/links acidentalmente */
+  -webkit-user-drag: none; 
 }
 
 /* Focus styles for accessibility */
@@ -80,61 +105,72 @@ a:focus-visible {
 
 /* Animations */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slideUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 @keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
 
-  0%,
-  100% {
-    transform: translateY(0);
+.animate-fade-in { animation: fadeIn 0.3s ease-out; }
+.animate-slide-up { animation: slideUp 0.3s ease-out; }
+
+/* =========================================
+   ADAPTABILIDADE EXPANDIDA
+   ========================================= */
+
+/* Telas Grandes (Desktops HiDPI e Monitores Wide) */
+@media (min-width: 1440px) {
+  html {
+    font-size: 110%; /* Aumenta levemente a escala para telas muito grandes */
   }
+}
 
-  50% {
-    transform: translateY(-10px);
+/* Tablets e Laptops pequenos */
+@media (max-width: 1024px) {
+  /* Ajuste fino para scrollbars em tablets para facilitar o toque */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
   }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-out;
-}
-
-.animate-slide-up {
-  animation: slideUp 0.3s ease-out;
-}
-
-/* Mobile-specific optimizations */
+/* Mobile Standard (Tablets Portrait e Celulares Grandes) */
 @media (max-width: 768px) {
   body {
     overscroll-behavior: none;
     -webkit-overflow-scrolling: touch;
   }
+
+  /* Previne zoom em inputs no iOS */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
 }
 
-/* Prevent zoom on input focus on iOS */
-@media screen and (max-width: 768px) {
+/* Mobile Pequeno (iPhone SE, Androids antigos) */
+@media (max-width: 375px) {
+  html {
+    font-size: 90%; /* Reduz escala para caber mais conteúdo */
+  }
+  
+  /* Ajuste para garantir que botões não fiquem colados nas bordas */
+  body {
+    padding-left: env(safe-area-inset-left, 12px);
+    padding-right: env(safe-area-inset-right, 12px);
+  }
+}
 
-  input,
-  select,
-  textarea {
-    font-size: 16px !important;
+/* Orientação Paisagem em Mobile (Muitas vezes esquecido) */
+@media (max-height: 500px) and (orientation: landscape) {
+  html, body {
+    overflow: auto; /* Permite scroll se a altura for muito pequena */
   }
 }
