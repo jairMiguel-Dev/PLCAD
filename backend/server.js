@@ -78,8 +78,8 @@ app.get('/api/migrate', async (req, res) => {
   try {
     console.log('🔄 Starting database migration...');
 
-    // Execute prisma migrate deploy
-    const { stdout, stderr } = await execPromise('cd backend && npx prisma migrate deploy');
+    // Execute prisma migrate deploy (no cd needed, already in correct directory)
+    const { stdout, stderr } = await execPromise('npx prisma migrate deploy');
 
     console.log('Migration stdout:', stdout);
     if (stderr) console.error('Migration stderr:', stderr);
