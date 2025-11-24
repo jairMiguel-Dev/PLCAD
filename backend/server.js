@@ -45,6 +45,31 @@ app.get('/api/status', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date() });
 });
 
+// Test database connection
+app.get('/api/db-test', async (req, res) => {
+  const { PrismaClient } = require('@prisma/client');
+  const prisma = new PrismaClient();
+
+  try {
+    await prisma.$connect();
+    const userCount = await prisma.user.count();
+    res.json({
+      status: 'Database connected!',
+      userCount,
+      database: process.env.DATABASE_URL ? 'configured' : 'NOT configured'
+    });
+  } catch (error) {
+    console.error('Database test error:', error);
+    res.status(500).json({
+      error: 'Database connection failed',
+      message: error.message,
+      code: error.code
+    });
+  } finally {
+    await prisma.$disconnect();
+  }
+});
+
 // Rotas de pagamento
 const paymentRoutes = require('./routes/payments');
 app.use('/api/payments', paymentRoutes);

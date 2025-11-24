@@ -25,29 +25,37 @@ const authenticateToken = (req, res, next) => {
 // Registrar novo usuário
 const register = async (req, res) => {
     try {
+        console.log('📝 Iniciando registro de usuário...');
         const { email, username, password } = req.body;
+        console.log(`📧 Email: ${email}, Username: ${username}`);
 
         // Validações
         if (!email || !username || !password) {
+            console.log('❌ Campos obrigatórios faltando');
             return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
         }
 
         if (password.length < 6) {
+            console.log('❌ Senha muito curta');
             return res.status(400).json({ error: 'A senha deve ter pelo menos 6 caracteres' });
         }
 
+        console.log('🔍 Verificando se usuário existe...');
         // Verificar se usuário já existe
         const existingUser = await prisma.user.findUnique({
             where: { email }
         });
 
         if (existingUser) {
+            console.log('❌ Email já cadastrado');
             return res.status(409).json({ error: 'Email já cadastrado' });
         }
 
+        console.log('🔐 Gerando hash da senha...');
         // Hash da senha
         const passwordHash = await bcrypt.hash(password, 10);
 
+        console.log('💾 Criando usuário no banco de dados...');
         // Criar usuário
         const user = await prisma.user.create({
             data: {
@@ -58,7 +66,9 @@ const register = async (req, res) => {
                 progress: null
             }
         });
+        console.log(`✅ Usuário criado: ID ${user.id}`);
 
+        console.log('🔑 Gerando token JWT...');
         // Gerar token
         const token = jwt.sign(
             { id: user.id, email: user.email, isPremium: user.isPremium },
@@ -66,6 +76,7 @@ const register = async (req, res) => {
             { expiresIn: '7d' }
         );
 
+        console.log('✅ Registro concluído com sucesso');
         res.status(201).json({
             message: 'Usuário criado com sucesso',
             token,
@@ -77,8 +88,12 @@ const register = async (req, res) => {
             }
         });
     } catch (error) {
-        console.error('Erro no registro:', error);
-        res.status(500).json({ error: 'Erro ao criar usuário' });
+        console.error('❌ ERRO NO REGISTRO:', error);
+        console.error('Stack trace:', error.stack);
+        res.status(500).json({
+            error: 'Erro ao criar usuário',
+            details: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
     }
 };
 
