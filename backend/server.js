@@ -6,7 +6,6 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-// CORS (libera o frontend hospedado separadamente)
 // CORS Configuration
 const allowedOrigins = [
   'http://localhost:3000',
@@ -67,6 +66,39 @@ app.get('/api/db-test', async (req, res) => {
     });
   } finally {
     await prisma.$disconnect();
+  }
+});
+
+// Run migrations endpoint (for free tier without shell access)
+app.get('/api/migrate', async (req, res) => {
+  const { exec } = require('child_process');
+  const util = require('util');
+  const execPromise = util.promisify(exec);
+
+  try {
+    console.log('🔄 Starting database migration...');
+
+    // Execute prisma migrate deploy
+    const { stdout, stderr } = await execPromise('cd backend && npx prisma migrate deploy');
+
+    console.log('Migration stdout:', stdout);
+    if (stderr) console.error('Migration stderr:', stderr);
+
+    res.json({
+      success: true,
+      message: 'Migrations executed successfully!',
+      output: stdout,
+      stderr: stderr || 'No errors'
+    });
+  } catch (error) {
+    console.error('Migration error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Migration failed',
+      message: error.message,
+      stdout: error.stdout,
+      stderr: error.stderr
+    });
   }
 });
 
