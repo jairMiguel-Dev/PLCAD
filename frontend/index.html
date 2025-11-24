@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ProGres - Aprenda Programação Jogando</title>
+  <meta name="description" content="Domine JavaScript, React e Node.js com lições gamificadas. O jeito mais divertido e viciante de aprender a codar. Comece agora gratuitamente!" />
+  <meta name="author" content="ProGres Team" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://progres.app/" />
+  <meta property="og:title" content="ProGres - Aprenda Programação Jogando" />
+  <meta property="og:description" content="Domine JavaScript, React e Node.js com lições gamificadas. O jeito mais divertido e viciante de aprender a codar." />
+  <meta property="og:image" content="https://progres.app/og-image.png" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://progres.app/" />
+  <meta property="twitter:title" content="ProGres - Aprenda Programação Jogando" />
+  <meta property="twitter:description" content="Domine JavaScript, React e Node.js com lições gamificadas. O jeito mais divertido e viciante de aprender a codar." />
+  <meta property="twitter:image" content="https://progres.app/og-image.png" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Nunito', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          boxShadow: {
+            'btn-primary': '0 4px 0 #46A302',
+            'btn-secondary': '0 4px 0 #e5e7eb',
+            'btn-danger': '0 4px 0 #EA2B2B',
+            'card': '0 4px 0 #E5E7EB',
+            'card-dark': '0 4px 0 #262626',
+          },
+          colors: {
+            brand: {
+              DEFAULT: '#58CC02',
+              dark: '#46A302',
+              light: '#89E219',
+              dim: '#d7ffb8',
+            },
+            secondary: {
+              DEFAULT: '#CE82FF',
+              dark: '#A545EE',
+              light: '#E0B3FF',
+            },
+            danger: {
+              DEFAULT: '#FF4B4B',
+              dark: '#EA2B2B',
+              dim: '#ffdfe0',
+            },
+            info: {
+              DEFAULT: '#1CB0F6',
+              dark: '#1899D6',
+            },
+            warn: {
+              DEFAULT: '#FFC800',
+              dark: '#E5B400',
+            },
+            neutral: {
+              100: '#F7F7F7',
+              200: '#E5E5E5',
+              300: '#D4D4D4',
+              700: '#4B4B4B',
+              800: '#262626',
+              900: '#171717',
+            }
+          },
+          animation: {
+            'bounce-slow': 'bounce 3s infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'scale-up': 'scaleUp 0.3s ease-out forwards',
+            'shake': 'shake 0.4s ease-in-out',
+            'spin-slow': 'spin 3s linear infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            scaleUp: {
+              '0%': { transform: 'scale(0.8)', opacity: '0' },
+              '100%': { transform: 'scale(1)', opacity: '1' },
+            },
+            shake: {
+              '0%, 100%': { transform: 'translateX(0)' },
+              '25%': { transform: 'translateX(-5px)' },
+              '75%': { transform: 'translateX(5px)' },
+            }
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    /* Disable tap highlight on mobile for native app feel */
+    * {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      /* IE and Edge */
+      scrollbar-width: none;
+      /* Firefox */
+    }
+
+    body {
+      overscroll-behavior-y: none;
+    }
+
+    .safe-area-pb {
+      padding-bottom: env(safe-area-inset-bottom, 20px);
+    }
+
+    /* Desktop Background Pattern */
+    .desktop-bg {
+      background-color: #f0f2f5;
+      background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+      background-size: 24px 24px;
+      transition: background-color 0.3s, background-image 0.3s;
+    }
+
+    .dark .desktop-bg {
+      background-color: #111;
+      background-image: radial-gradient(#333 1px, transparent 1px);
+    }
+  </style>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500&display=swap"
+    rel="stylesheet">
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0"
+  }
+}
+</script>
+  <link rel="stylesheet" href="/index.css">
+</head>
+
+<body
+  class="desktop-bg text-neutral-700 dark:text-neutral-100 overflow-hidden selection:bg-brand-light selection:text-white overscroll-none transition-colors duration-300">
+  <div id="root" class="h-[100dvh] w-full flex items-center justify-center"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
+</html>
