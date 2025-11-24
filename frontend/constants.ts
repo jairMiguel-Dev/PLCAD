@@ -256,7 +256,34 @@ export const CURRICULUM: Unit[] = [
                     { term: 'let', definition: 'Palavra-chave para declarar variáveis mutáveis', type: 'Sintaxe', example: 'let nome = "Ana";' }
                 ],
                 questions: [
-                    { id: 'q101_1', type: QuestionType.THEORY, difficulty: 'easy', title: 'Intro', prompt: 'Variáveis', englishWord: 'Variable', phonetic: '/ˈveə.ri.ə.bəl/', theoryContent: 'Uma variável é como uma caixa que guarda valores na memória.', codeSnippet: 'let idade = 25;', options: [], correctFeedback: '', wrongFeedback: '' },
+                    {
+                        id: 'q101_1',
+                        type: QuestionType.THEORY,
+                        difficulty: 'easy',
+                        title: 'Intro',
+                        prompt: 'Variáveis',
+                        englishWord: 'Variable',
+                        phonetic: '/ˈveə.ri.ə.bəl/',
+                        theory: {
+                            concept: 'Variáveis',
+                            title: 'O que são essas tal de variáveis?',
+                            explanation: 'Imagina que você tem uma caixa. Nessa caixa, você pode guardar coisas: um número, um nome, um emoji... qualquer coisa! A variável é essa caixinha na memória do computador. Você dá um nome pra ela (tipo "idade" ou "nome") e coloca um valor lá dentro. Simples assim!',
+                            examples: [
+                                'let idade = 25;\n// Criamos uma caixinha chamada "idade"\n// e colocamos o número 25 dentro',
+                                'let nome = "Ana";\n// Agora temos uma caixa "nome"\n// com o texto "Ana" dentro',
+                                'let estaFeliz = true;\n// E aqui guardamos um valor verdadeiro/falso'
+                            ],
+                            tips: [
+                                'O "let" é tipo dizer "cria uma nova caixinha pra mim!"',
+                                'Escolha nomes que façam sentido. "x" não diz nada, mas "idadeUsuario" deixa claro!',
+                                'Depois você pode trocar o que está dentro da caixa com "idade = 26;"'
+                            ]
+                        },
+                        codeSnippet: 'let idade = 25;',
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
                     { id: 'q101_2', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'easy', title: 'Sintaxe', prompt: 'Como declarar uma variável?', options: [{ id: '1', text: 'let x = 10;', isCorrect: true }, { id: '2', text: 'x = 10;', isCorrect: false }, { id: '3', text: 'var x 10;', isCorrect: false }], correctFeedback: 'Isso! Use let', wrongFeedback: 'Falta let' },
                     { id: 'q101_3', type: QuestionType.CODE_BUILDER, difficulty: 'easy', title: 'Prática', prompt: 'Declare uma variável "nome":', options: [{ id: '1', text: 'let nome;', isCorrect: true }, { id: '2', text: 'const nome;', isCorrect: false }, { id: '3', text: 'nome;', isCorrect: false }], correctFeedback: 'Perfeito!', wrongFeedback: 'Use let' },
                     { id: 'q101_4', type: QuestionType.FILL_IN_BLANK, difficulty: 'medium', title: 'Complete', prompt: 'Complete o código:', codeSnippet: '___ x = 5;', correctAnswer: 'let', options: [], correctFeedback: 'Ótimo!', wrongFeedback: 'Use let' },
@@ -282,7 +309,7 @@ export const CURRICULUM: Unit[] = [
                     { term: 'const', definition: 'Declara constantes imutáveis', type: 'Sintaxe', example: 'const PI = 3.14;' }
                 ],
                 questions: [
-                    { id: 'q102_1', type: QuestionType.THEORY, difficulty: 'easy', title: 'Intro', prompt: 'Constantes', englishWord: 'Constant', phonetic: '/ˈkɒn.stənt/', theoryContent: 'const cria valores que não podem ser alterados.', codeSnippet: 'const PI = 3.14;', options: [], correctFeedback: '', wrongFeedback: '' },
+                    { id: 'q102_1', type: QuestionType.THEORY, difficulty: 'easy', title: 'Intro', prompt: 'Constantes', englishWord: 'Constant', phonetic: '/ˈkɒn.stənt/', codeSnippet: 'const PI = 3.14;', options: [], correctFeedback: '', wrongFeedback: '' },
                     { id: 'q102_2', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'easy', title: 'Diferença', prompt: 'const pode mudar de valor?', options: [{ id: '1', text: 'Não', isCorrect: true }, { id: '2', text: 'Sim', isCorrect: false }], correctFeedback: 'Correto!', wrongFeedback: 'const é constante' },
                     { id: 'q102_3', type: QuestionType.CODE_BUILDER, difficulty: 'easy', title: 'Sintaxe', prompt: 'Declare PI constante:', options: [{ id: '1', text: 'const PI = 3.14;', isCorrect: true }, { id: '2', text: 'let PI = 3.14;', isCorrect: false }], correctFeedback: 'Perfeito!', wrongFeedback: 'Use const' },
                     { id: 'q102_4', type: QuestionType.FILL_IN_BLANK, difficulty: 'medium', title: 'Complete', prompt: 'Gravidade constante:', codeSnippet: '___ g = 9.8;', correctAnswer: 'const', options: [], correctFeedback: 'Ótimo!', wrongFeedback: 'Use const' },
@@ -304,7 +331,7 @@ export const CURRICULUM: Unit[] = [
                     { term: 'String', definition: 'Tipo de dado para texto', type: 'Lógica', example: '"Hello"' }
                 ],
                 questions: [
-                    { id: 'q103_1', type: QuestionType.THEORY, difficulty: 'easy', title: 'Intro', prompt: 'Strings', englishWord: 'String', phonetic: '/strɪŋ/', theoryContent: 'String é texto entre aspas.', codeSnippet: 'let nome = "Ana";', options: [], correctFeedback: '', wrongFeedback: '' },
+                    { id: 'q103_1', type: QuestionType.THEORY, difficulty: 'easy', title: 'Intro', prompt: 'Strings', englishWord: 'String', phonetic: '/strɪŋ/', codeSnippet: 'let nome = "Ana";', options: [], correctFeedback: '', wrongFeedback: '' },
                     { id: 'q103_2', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'easy', title: 'Sintaxe', prompt: 'String usa:', options: [{ id: '1', text: 'Aspas', isCorrect: true }, { id: '2', text: 'Parênteses', isCorrect: false }], correctFeedback: 'Sim!', wrongFeedback: 'Use aspas' },
                     { id: 'q103_3', type: QuestionType.CODE_BUILDER, difficulty: 'easy', title: 'Código', prompt: 'Crie string "JS":', options: [{ id: '1', text: 'let lang = "JS";', isCorrect: true }, { id: '2', text: 'let lang = JS;', isCorrect: false }], correctFeedback: 'Perfeito!', wrongFeedback: 'Faltou aspas' },
                     { id: 'q103_4', type: QuestionType.FILL_IN_BLANK, difficulty: 'medium', title: 'Complete', prompt: 'String vazia:', codeSnippet: 'let texto = ___;', correctAnswer: '""', options: [], correctFeedback: 'Ótimo!', wrongFeedback: 'Use ""' },
@@ -331,7 +358,7 @@ export const CURRICULUM: Unit[] = [
                     { term: 'Operadores', definition: 'Símbolos para operações matemáticas', type: 'Sintaxe', example: '+ - * /' }
                 ],
                 questions: [
-                    { id: 'q104_1', type: QuestionType.THEORY, difficulty: 'easy', title: 'Intro', prompt: 'Números', englishWord: 'Number', phonetic: '/ˈnʌm.bər/', theoryContent: 'Numbers em JS podem ser inteiros ou decimais.', codeSnippet: 'let idade = 25;\nlet preco = 19.99;', options: [], correctFeedback: '', wrongFeedback: '' },
+                    { id: 'q104_1', type: QuestionType.THEORY, difficulty: 'easy', title: 'Intro', prompt: 'Números', englishWord: 'Number', phonetic: '/ˈnʌm.bər/', codeSnippet: 'let idade = 25;\nlet preco = 19.99;', options: [], correctFeedback: '', wrongFeedback: '' },
                     { id: 'q104_2', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'easy', title: 'Tipo', prompt: 'Qual é número?', options: [{ id: '1', text: '42', isCorrect: true }, { id: '2', text: '\"42\"', isCorrect: false }, { id: '3', text: 'true', isCorrect: false }], correctFeedback: 'Correto!', wrongFeedback: 'Sem aspas!' },
                     { id: 'q104_3', type: QuestionType.CODE_BUILDER, difficulty: 'easy', title: 'Código', prompt: 'Crie número 100:', options: [{ id: '1', text: 'let num = 100;', isCorrect: true }, { id: '2', text: 'let num = \"100\";', isCorrect: false }, { id: '3', text: 'let num = 100', isCorrect: false }], correctFeedback: 'Perfeito!', wrongFeedback: 'Sem aspas e com ponto-e-vírgula' },
                     { id: 'q104_4', type: QuestionType.FILL_IN_BLANK, difficulty: 'medium', title: 'Operador', prompt: 'Some dois números:', codeSnippet: 'let soma = 5 ___ 3;', correctAnswer: '+', options: [], correctFeedback: 'Ótimo!', wrongFeedback: 'Use +' },

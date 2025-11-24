@@ -43,6 +43,14 @@ export interface Option {
   isCorrect: boolean;
 }
 
+export interface TheoryContent {
+  concept: string; // e.g., "Variáveis"
+  title: string; // e.g., "O que são variáveis?"
+  explanation: string; // Explicação informal e didática
+  examples?: string[]; // Exemplos de código
+  tips?: string[]; // Dicas práticas
+}
+
 export interface PairItem {
   id: string;
   text: string;
@@ -56,7 +64,7 @@ export interface Question {
   title: string;
   prompt: string;
 
-  theoryContent?: string;
+  theory?: TheoryContent; // Teoria interativa antes da questão
   phonetic?: string;
   englishWord?: string;
 

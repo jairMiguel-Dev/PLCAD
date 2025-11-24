@@ -4,6 +4,7 @@ import { Header } from '../components/Header';
 import { Button } from '../components/Button';
 import { FeedbackModal } from '../components/FeedbackModal';
 import { TheoryCard } from '../components/TheoryCard';
+import { TheoryScreen } from '../components/TheoryScreen';
 import { Level, QuestionType, PairItem, LessonResult } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BASE_XP_PER_QUESTION, COMBO_BONUS_MULTIPLIER, PERFECT_LESSON_BONUS } from '../constants';
@@ -31,6 +32,10 @@ export const Lesson: React.FC<LessonProps> = ({
     onUseSkip
 }) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+
+    // Theory State - NEW
+    const [showTheory, setShowTheory] = useState(false);
+    const [seenTheoryConcepts, setSeenTheoryConcepts] = useState<Set<string>>(new Set());
 
     // Generic State
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -85,6 +90,11 @@ export const Lesson: React.FC<LessonProps> = ({
         setFeedbackState(null);
         setInputValue('');
         setIsPlayingAudio(false);
+
+        // Check if this question has theory that hasn't been shown yet
+        if (currentQuestion.theory && !seenTheoryConcepts.has(currentQuestion.theory.concept)) {
+            setShowTheory(true);
+        }
 
         // Init Matching
         if (isMatching && currentQuestion.pairs) {
@@ -450,7 +460,28 @@ export const Lesson: React.FC<LessonProps> = ({
         return !selectedOption;
     };
 
+    const handleTheoryContinue = () => {
+        if (currentQuestion.theory) {
+            setSeenTheoryConcepts(prev => new Set(prev).add(currentQuestion.theory!.concept));
+        }
+        setShowTheory(false);
+    };
+
     const showCheckButton = !isTheory && !isMatching;
+
+    // If showing theory, render only theory screen
+    if (showTheory && currentQuestion.theory) {
+        return (
+            <TheoryScreen
+                title={currentQuestion.theory.title}
+                concept={currentQuestion.theory.concept}
+                explanation={currentQuestion.theory.explanation}
+                examples={currentQuestion.theory.examples}
+                tips={currentQuestion.theory.tips}
+                onContinue={handleTheoryContinue}
+            />
+        );
+    }
 
     return (
         <div className="flex flex-col h-full bg-white dark:bg-neutral-900 relative transition-colors duration-300">
