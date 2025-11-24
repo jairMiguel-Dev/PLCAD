@@ -22,7 +22,7 @@ async function migrateProgressToBackend() {
         console.log('⏳ Enviando para o servidor...');
 
         // Salvar progresso
-        const progressResponse = await fetch('http://localhost:5000/api/auth/progress', {
+        const progressResponse = await fetch('https://backend-fgao.onrender.com/api/auth/progress', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

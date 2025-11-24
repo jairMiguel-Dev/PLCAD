@@ -193,7 +193,7 @@ const App: React.FC = () => {
 
     const fetchUserProgress = async (token: string) => {
         try {
-            const response = await fetch('http://localhost:5000/api/auth/progress', {
+            const response = await fetch('https://backend-fgao.onrender.com/api/auth/progress', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -213,7 +213,7 @@ const App: React.FC = () => {
 
         // Carregar progresso do servidor para qualquer usuário
         try {
-            const response = await fetch('http://localhost:5000/api/auth/progress', {
+            const response = await fetch('https://backend-fgao.onrender.com/api/auth/progress', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -302,7 +302,7 @@ const App: React.FC = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/api/auth/account', {
+            const response = await fetch('https://backend-fgao.onrender.com/api/auth/account', {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${authToken}`
@@ -335,7 +335,7 @@ const App: React.FC = () => {
         if (authToken) {
             const syncProgress = async () => {
                 try {
-                    await fetch('http://localhost:5000/api/auth/progress', {
+                    await fetch('https://backend-fgao.onrender.com/api/auth/progress', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -488,7 +488,7 @@ const App: React.FC = () => {
         // Se acabou de se tornar premium, salvar progresso imediatamente
         if (becamePremium && authToken) {
             try {
-                await fetch('http://localhost:5000/api/auth/premium', {
+                await fetch('https://backend-fgao.onrender.com/api/auth/premium', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -498,7 +498,7 @@ const App: React.FC = () => {
                 });
 
                 // Salvar progresso atual
-                await fetch('http://localhost:5000/api/auth/progress', {
+                await fetch('https://backend-fgao.onrender.com/api/auth/progress', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -519,7 +519,7 @@ const App: React.FC = () => {
         if (!authToken) return;
         try {
             // Update premium status on backend to false
-            await fetch('http://localhost:5000/api/auth/premium', {
+            await fetch('https://backend-fgao.onrender.com/api/auth/premium', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -530,7 +530,7 @@ const App: React.FC = () => {
             // Update local state
             setUserStats(prev => ({ ...prev, isPremium: false }));
             // Optionally sync progress after cancellation
-            await fetch('http://localhost:5000/api/auth/progress', {
+            await fetch('https://backend-fgao.onrender.com/api/auth/progress', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

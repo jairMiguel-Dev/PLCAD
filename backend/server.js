@@ -6,19 +6,19 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-// Middleware
+// CORS (libera o frontend hospedado separadamente)
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: process.env.FRONTEND_URL || '*',
   credentials: true
 }));
 
-// IMPORTANT: Stripe webhook needs raw body, so we add it BEFORE express.json()
+// Stripe webhook (precisa vir antes)
 app.use('/api/payments/webhook', express.raw({ type: 'application/json' }));
 
-// Regular JSON parsing for other routes
+// JSON padrão para o resto
 app.use(express.json());
 
-// Routes
+// Rotas básicas
 app.get('/', (req, res) => {
   res.send('MicroSaaS Backend is running!');
 });
@@ -27,26 +27,17 @@ app.get('/api/status', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date() });
 });
 
-// Payment routes
+// Rotas de pagamento
 const paymentRoutes = require('./routes/payments');
 app.use('/api/payments', paymentRoutes);
 
-// Auth routes
+// Rotas de autenticação
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
 
-
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
-
-// The "catchall" handler: for any request that doesn't
-// match one above, send back React's index.html file.
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+// 404 final
+app.use((req, res) => {
+  res.status(404).json({ error: "Endpoint not found" });
 });
 
-// Start server
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-  console.log(`Stripe integration enabled`);
-});
+app.listen(port, () => console.log(`Server running on port ${port}`));
