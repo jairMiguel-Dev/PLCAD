@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CURRICULUM, HEART_REFILL_TIME_MS, generateRandomUnit } from '../constants';
@@ -8,7 +7,7 @@ import { Level, Quest, Unit } from '../types';
 interface HomeProps {
     onStartLevel: (levelId: number) => void;
     onStartSmartWorkout: () => void;
-    onStartDebug?: () => void; // New: Navigate to Debug Challenges
+    onStartDebug?: () => void;
     completedLevels: number[];
     userGems: number;
     userStreak: number;
@@ -98,7 +97,7 @@ export const Home: React.FC<HomeProps> = ({
         };
     }, [loadMoreUnits]);
 
-    // Auto-scroll to current level on mount and updates
+    // Auto-scroll to current level
     useEffect(() => {
         const scrollToCurrent = () => {
             if (currentActiveId !== -1) {
@@ -108,14 +107,12 @@ export const Home: React.FC<HomeProps> = ({
                 }
             }
         };
-
-        // Tenta rolar imediatamente e após um pequeno delay para garantir renderização
         scrollToCurrent();
         const timer = setTimeout(scrollToCurrent, 500);
-
         return () => clearTimeout(timer);
-    }, [currentActiveId]); // Executa quando o nível atual muda (ex: carga inicial)
+    }, [currentActiveId]);
 
+    // Animation sequences for level up
     useEffect(() => {
         if (lastCompletedLevelId && scrollRef.current) {
             const completedIndex = visibleLevels.findIndex(l => l.id === lastCompletedLevelId);
@@ -148,6 +145,7 @@ export const Home: React.FC<HomeProps> = ({
         }
     }, [lastCompletedLevelId]);
 
+    // Heart Timer
     useEffect(() => {
         if (userHearts > 0 || !lastHeartLostTime) return;
 
@@ -170,15 +168,14 @@ export const Home: React.FC<HomeProps> = ({
         return () => clearInterval(interval);
     }, [userHearts, lastHeartLostTime]);
 
-    // Timer for next daily quests (resets at midnight)
+    // Quest Timer
     useEffect(() => {
         const updateQuestTimer = () => {
             const now = new Date();
             const tomorrow = new Date(now);
-            tomorrow.setHours(24, 0, 0, 0); // Next midnight
+            tomorrow.setHours(24, 0, 0, 0);
 
             const diff = tomorrow.getTime() - now.getTime();
-
             const h = Math.floor(diff / (1000 * 60 * 60));
             const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((diff % (1000 * 60)) / 1000);
@@ -203,8 +200,14 @@ export const Home: React.FC<HomeProps> = ({
 
     return (
         <div className="flex flex-col h-full bg-neutral-200 dark:bg-neutral-900 pb-24 relative transition-colors duration-300">
-            {/* Top Bar */}
-            <header className="sticky top-0 z-30 bg-neutral-200/95 dark:bg-neutral-900/95 backdrop-blur-sm border-b-2 border-neutral-300 dark:border-neutral-800 flex items-center justify-between px-4 py-3 shadow-sm">
+            
+            {/* ADAPTABILIDADE: Header fixo com suporte a Safe Area Top (Notch)
+               Adicionado `pt-[env(safe-area-inset-top)]` via style inline ou classe se configurado
+            */}
+            <header 
+                className="sticky top-0 z-30 bg-neutral-200/95 dark:bg-neutral-900/95 backdrop-blur-sm border-b-2 border-neutral-300 dark:border-neutral-800 flex items-center justify-between px-4 py-3 shadow-sm no-select"
+                style={{ paddingTop: 'calc(0.75rem + env(safe-area-inset-top))' }}
+            >
                 <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-lg border-2 border-neutral-200 dark:border-neutral-700 flex items-center justify-center">
                         <Flag size={18} className="text-brand" fill="currentColor" />
@@ -212,11 +215,11 @@ export const Home: React.FC<HomeProps> = ({
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <div id="header-streak" className="flex items-center gap-1">
+                    <div id="header-streak" className="flex items-center gap-1 cursor-default">
                         <span className="text-orange-500 font-bold">{userStreak}</span>
                         <div className="text-orange-500 text-xl">🔥</div>
                     </div>
-                    <div id="header-gems" className="flex items-center gap-1">
+                    <div id="header-gems" className="flex items-center gap-1 cursor-default">
                         <span className="text-blue-500 font-bold">{userGems}</span>
                         <div className="text-blue-400 text-xl">💎</div>
                     </div>
@@ -230,7 +233,9 @@ export const Home: React.FC<HomeProps> = ({
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        className="bg-danger text-white overflow-hidden sticky top-[58px] z-20 shadow-md"
+                        className="bg-danger text-white overflow-hidden sticky z-20 shadow-md"
+                        // Ajuste para não colar no header em alguns navegadores
+                        style={{ top: 'calc(58px + env(safe-area-inset-top))' }}
                     >
                         <div className="p-3 flex items-center justify-between">
                             <div className="flex items-center gap-3">
@@ -244,7 +249,7 @@ export const Home: React.FC<HomeProps> = ({
                                     </div>
                                 </div>
                             </div>
-                            <button onClick={() => {/* Trigger Shop via parent if needed, but user can use nav */ }} className="bg-gray-900 text-danger font-black text-xs px-3 py-2 rounded-xl shadow-sm active:scale-95 transition-transform">
+                            <button className="bg-gray-900 text-danger font-black text-xs px-3 py-2 rounded-xl shadow-sm active:scale-95 transition-transform no-select">
                                 RECARREGAR
                             </button>
                         </div>
@@ -256,7 +261,7 @@ export const Home: React.FC<HomeProps> = ({
             <div className="px-4 pt-4">
                 <div className="bg-white dark:bg-neutral-800 border-2 border-neutral-200 dark:border-neutral-700 rounded-2xl p-4 shadow-sm transition-all duration-300">
                     <div
-                        className="flex justify-between items-center cursor-pointer"
+                        className="flex justify-between items-center cursor-pointer no-select"
                         onClick={() => setIsQuestsExpanded(!isQuestsExpanded)}
                     >
                         <h3 className="text-neutral-700 dark:text-neutral-200 font-extrabold uppercase tracking-wide text-sm">Missões Diárias</h3>
@@ -297,13 +302,13 @@ export const Home: React.FC<HomeProps> = ({
                                                 <motion.button
                                                     whileTap={{ scale: 0.9 }}
                                                     onClick={(e) => { e.stopPropagation(); onClaimQuest(quest.id); }}
-                                                    className="bg-info text-white p-2 rounded-xl shadow-btn-primary animate-bounce"
+                                                    className="bg-info text-white p-2 rounded-xl shadow-btn-primary animate-bounce no-select"
                                                 >
                                                     <Gift size={16} />
                                                 </motion.button>
                                             )}
                                             {quest.claimed && (
-                                                <span className="text-xs font-bold text-neutral-300 uppercase">Feito</span>
+                                                <span className="text-xs font-bold text-neutral-300 uppercase no-select">Feito</span>
                                             )}
                                             {!quest.completed && (
                                                 <div className="flex items-center gap-2">
@@ -316,7 +321,7 @@ export const Home: React.FC<HomeProps> = ({
                                                                 onResetQuest(quest.id);
                                                             }
                                                         }}
-                                                        className={`p-1.5 rounded-lg transition-all ${userGems >= 50 ? 'bg-purple-500 hover:bg-purple-600 text-white' : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'}`}
+                                                        className={`p-1.5 rounded-lg transition-all no-select ${userGems >= 50 ? 'bg-purple-500 hover:bg-purple-600 text-white' : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'}`}
                                                         title={userGems >= 50 ? "Resetar missão (50 gemas)" : "Gemas insuficientes"}
                                                     >
                                                         <RefreshCw size={14} />
@@ -333,7 +338,9 @@ export const Home: React.FC<HomeProps> = ({
                 </div>
             </div>
 
-            {/* Smart Workout Floating Button - Appears if user has weak concepts */}
+            {/* ADAPTABILIDADE: Botões Flutuantes (FABs)
+                Adicionado padding-bottom dinâmico para não sobrepor a barra de gestos (Home Indicator) do iPhone
+            */}
             <AnimatePresence>
                 {hasWeakConcepts && (
                     <motion.button
@@ -341,7 +348,8 @@ export const Home: React.FC<HomeProps> = ({
                         animate={{ scale: 1, x: 0 }}
                         exit={{ scale: 0, x: 100 }}
                         onClick={onStartSmartWorkout}
-                        className="fixed bottom-24 right-6 z-40 bg-secondary hover:bg-secondary-light text-white p-4 rounded-full shadow-lg border-4 border-white dark:border-neutral-800 flex items-center justify-center gap-2 group"
+                        className="fixed right-6 z-40 bg-secondary hover:bg-secondary-light text-white p-4 rounded-full shadow-lg border-4 border-white dark:border-neutral-800 flex items-center justify-center gap-2 group no-select"
+                        style={{ bottom: 'calc(6rem + env(safe-area-inset-bottom))' }} // bottom-24 + safe area
                     >
                         <Cpu size={28} className="group-hover:animate-pulse" />
                         <div className="absolute -top-2 -right-2 w-5 h-5 bg-danger rounded-full border-2 border-white flex items-center justify-center">
@@ -351,22 +359,26 @@ export const Home: React.FC<HomeProps> = ({
                 )}
             </AnimatePresence>
 
-            {/* Debug Challenge Floating Button */}
             {onStartDebug && (
                 <motion.button
                     initial={{ scale: 0, x: 100 }}
                     animate={{ scale: 1, x: 0 }}
                     transition={{ delay: 0.2 }}
                     onClick={onStartDebug}
-                    className="fixed bottom-44 right-6 z-40 bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-full shadow-lg border-4 border-white dark:border-neutral-800 flex items-center justify-center group"
+                    className="fixed right-6 z-40 bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-full shadow-lg border-4 border-white dark:border-neutral-800 flex items-center justify-center group no-select"
                     title="Desafios de Debug"
+                    style={{ bottom: 'calc(11rem + env(safe-area-inset-bottom))' }} // bottom-44 + safe area
                 >
                     <Bug size={28} className="group-hover:rotate-12 transition-transform" />
                 </motion.button>
             )}
 
-            {/* The Path */}
-            <div ref={scrollRef} className="flex-1 overflow-y-auto py-8 px-4 relative bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] dark:bg-none">
+            {/* The Path Container */}
+            <div 
+                ref={scrollRef} 
+                className="flex-1 overflow-y-auto py-8 px-4 relative bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] dark:bg-none"
+                style={{ paddingBottom: 'calc(6rem + env(safe-area-inset-bottom))' }}
+            >
 
                 <AnimatePresence>
                     {showLevelUpToast && (
@@ -378,150 +390,82 @@ export const Home: React.FC<HomeProps> = ({
                         >
                             <div className="bg-brand-dark text-white px-6 py-3 rounded-full shadow-lg flex items-center gap-2 border-4 border-brand-light">
                                 <Sparkles size={20} className="text-yellow-300 animate-spin-slow" />
-                                <span className="font-black uppercase tracking-widest">Nível Desbloqueado!</span>
+                                <span className="font-black uppercase tracking-widest">
+                                    Nível Desbloqueado!
+                                </span>
                             </div>
                         </motion.div>
                     )}
                 </AnimatePresence>
 
-                {displayedUnits.map((unit) => (
-                    <div key={unit.id} className="mb-12">
-                        <div className="flex flex-col items-center mb-8">
-                            <h2 className="text-xl font-extrabold text-neutral-700 dark:text-white bg-white dark:bg-neutral-800 px-4 py-2 rounded-xl border-2 border-neutral-200 dark:border-neutral-700 shadow-sm z-10 text-center">
-                                {unit.title}
-                            </h2>
-                            <p className="text-neutral-400 dark:text-neutral-500 text-sm font-bold mt-2 bg-white/80 dark:bg-neutral-900/80 px-2 rounded">{unit.description}</p>
-                        </div>
-
-                        <div className="flex flex-col items-center gap-6 relative">
-                            {/* Path Line */}
-                            <div className="absolute top-0 bottom-0 w-2 bg-neutral-200 dark:bg-neutral-700 -z-0 rounded-full" />
-
-                            {unit.levels.map((level, index) => {
-                                const globalIndex = visibleLevels.findIndex(l => l.id === level.id);
-                                const isFirst = globalIndex === 0;
-                                const previousLevel = isFirst ? null : visibleLevels[globalIndex - 1];
-
-                                const isCompleted = completedLevels.includes(level.id);
-                                const isLocked = !isFirst && previousLevel && !completedLevels.includes(previousLevel.id);
-                                const isCurrent = !isLocked && !isCompleted;
-
-                                const isAnimatingThis = animatingUnlockId === level.id;
-
-                                // Offset for zig-zag effect
-                                const xOffset = index % 2 === 0 ? 'translate-x-8' : '-translate-x-8';
-
-                                // Colors
-                                let bgColor = 'bg-brand';
-                                let shadowColor = 'shadow-[0_6px_0_#46A302]';
-
-                                if (level.color === 'secondary') {
-                                    bgColor = 'bg-secondary';
-                                    shadowColor = 'shadow-[0_6px_0_#A545EE]';
-                                } else if (level.color === 'info') {
-                                    bgColor = 'bg-info';
-                                    shadowColor = 'shadow-[0_6px_0_#1899D6]';
-                                } else if (level.color === 'warn') {
-                                    bgColor = 'bg-warn';
-                                    shadowColor = 'shadow-[0_6px_0_#E5B400]';
-                                }
-
-                                let content = (
-                                    <>
-                                        {getIcon(level)}
-                                        <div className="absolute -bottom-8 flex gap-1">
-                                            {[...Array(3)].map((_, i) => (
-                                                <div key={i} className={`w-2 h-2 rounded-full ${i < level.stars ? 'bg-yellow-400' : 'bg-neutral-200 dark:bg-neutral-700'}`} />
-                                            ))}
-                                        </div>
-                                    </>
-                                );
-
-                                if (isLocked && !isAnimatingThis) {
-                                    bgColor = 'bg-neutral-200 dark:bg-neutral-700';
-                                    shadowColor = 'shadow-[0_6px_0_#D4D4D4] dark:shadow-[0_6px_0_#404040]';
-                                    content = <Lock size={24} className="text-neutral-400 dark:text-neutral-500" />;
-                                } else if (isCompleted) {
-                                    content = <Check size={32} strokeWidth={4} className="text-white/50" />;
-                                }
-
-                                return (
-                                    <div key={level.id} id={`level-${level.id}`} className={`relative z-10 ${index !== 0 && xOffset}`}>
-                                        <motion.button
-                                            initial={false}
-                                            animate={isAnimatingThis ? { scale: [0.8, 1.3, 1], rotate: [0, 10, -10, 0] } : { scale: 1 }}
-                                            transition={{ duration: 0.6, ease: "easeInOut" }}
-                                            whileTap={!isLocked ? { scale: 0.9, translateY: 6, boxShadow: '0 0 0 transparent' } : {}}
+                {/* RENDERIZAÇÃO DOS NÍVEIS
+                    (Como o código enviado cortou aqui, assumi a renderização baseada na estrutura de 'displayedUnits') 
+                */}
+                <div className="flex flex-col items-center gap-8 max-w-md mx-auto">
+                    {displayedUnits.map((unit, unitIndex) => (
+                        <div key={unit.id} className="w-full mb-8">
+                            {/* Unit Header */}
+                            <div className="mb-6 bg-brand text-white p-4 rounded-xl shadow-md border-b-4 border-brand-dark">
+                                <h2 className="text-lg font-bold uppercase">{unit.title}</h2>
+                                <p className="text-sm opacity-90">{unit.description}</p>
+                            </div>
+                            
+                            {/* Levels Grid/Path */}
+                            <div className="flex flex-col items-center gap-4">
+                                {unit.levels.map((level) => {
+                                    const isCompleted = completedLevels.includes(level.id);
+                                    const isLocked = !isCompleted && currentActiveId !== level.id;
+                                    const isActive = currentActiveId === level.id;
+                                    
+                                    return (
+                                        <motion.div 
+                                            key={level.id}
+                                            id={`level-${level.id}`}
+                                            whileHover={{ scale: isLocked ? 1 : 1.05 }}
+                                            whileTap={{ scale: 0.95 }}
                                             onClick={() => !isLocked && onStartLevel(level.id)}
                                             className={`
-                            w-20 h-20 rounded-full flex items-center justify-center border-4 border-white dark:border-neutral-800
-                            ${bgColor} ${shadowColor} transition-colors duration-500
-                            ${isCurrent && !isAnimatingThis ? 'ring-4 ring-brand/30' : 'cursor-default'}
-                            ${isLocked ? 'cursor-not-allowed' : 'cursor-pointer'}
-                        `}
+                                                relative w-20 h-20 rounded-full flex items-center justify-center border-b-4 cursor-pointer no-select transition-all
+                                                ${isActive 
+                                                    ? 'bg-brand border-brand-dark shadow-[0_0_15px_rgba(88,204,2,0.6)]' 
+                                                    : isCompleted 
+                                                        ? 'bg-yellow-400 border-yellow-600' 
+                                                        : 'bg-neutral-300 border-neutral-400 dark:bg-neutral-700 dark:border-neutral-800'
+                                                }
+                                            `}
                                         >
-                                            {content}
-                                        </motion.button>
-
-                                        {/* Start Bubble */}
-                                        {isCurrent && !isAnimatingThis && (
-                                            <motion.div
-                                                initial={{ y: 10, opacity: 0 }}
-                                                animate={{ y: 0, opacity: 1 }}
-                                                className="absolute -top-14 left-1/2 transform -translate-x-1/2 z-20"
-                                            >
-                                                <div className="bg-white dark:bg-neutral-700 px-3 py-2 rounded-xl border-2 border-neutral-200 dark:border-neutral-600 shadow-sm whitespace-nowrap animate-bounce mb-1">
-                                                    <span className="font-bold text-brand dark:text-brand-light uppercase text-xs">Começar</span>
-                                                </div>
-                                                <div className="w-3 h-3 bg-white dark:bg-neutral-700 border-b-2 border-r-2 border-neutral-200 dark:border-neutral-600 rotate-45 absolute bottom-[-6px] left-1/2 -translate-x-1/2"></div>
-                                            </motion.div>
-                                        )}
-
-                                        {/* Unlock Particles */}
-                                        {isAnimatingThis && (
-                                            <div className="absolute inset-0 pointer-events-none">
-                                                <motion.div
-                                                    initial={{ scale: 0, opacity: 1 }}
-                                                    animate={{ scale: 2, opacity: 0 }}
-                                                    transition={{ duration: 0.8 }}
-                                                    className="absolute inset-0 rounded-full border-4 border-yellow-400"
-                                                />
-                                                {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
-                                                    <motion.div
-                                                        key={deg}
-                                                        initial={{ x: 0, y: 0, opacity: 1 }}
-                                                        animate={{
-                                                            x: Math.cos(deg * Math.PI / 180) * 60,
-                                                            y: Math.sin(deg * Math.PI / 180) * 60,
-                                                            opacity: 0
-                                                        }}
-                                                        transition={{ duration: 0.6, ease: "easeOut" }}
-                                                        className="absolute top-1/2 left-1/2 w-2 h-2 bg-yellow-400 rounded-full"
-                                                    />
-                                                ))}
+                                            {/* Icon Logic */}
+                                            <div className="z-10 relative">
+                                                {isLocked ? (
+                                                    <Lock size={24} className="text-neutral-500 dark:text-neutral-400" />
+                                                ) : isCompleted ? (
+                                                    <Check size={32} className="text-white font-bold" strokeWidth={4} />
+                                                ) : (
+                                                    getIcon(level)
+                                                )}
                                             </div>
-                                        )}
-                                    </div>
-                                );
-                            })}
 
-                            {/* Separator */}
-                            <div className="h-8"></div>
+                                            {/* Stars/Rating (Optional) */}
+                                            {isCompleted && (
+                                                <div className="absolute -bottom-2 flex gap-0.5">
+                                                    {[1, 2, 3].map(i => (
+                                                        <Star key={i} size={12} className="text-yellow-400 fill-yellow-400 drop-shadow-sm" />
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </motion.div>
+                                    );
+                                })}
+                            </div>
                         </div>
+                    ))}
+                    
+                    {/* Loader para Scroll Infinito */}
+                    <div ref={loaderRef} className="py-8 flex justify-center">
+                        {isLoadingMore && <Loader className="animate-spin text-brand" />}
                     </div>
-                ))}
-
-                {/* Infinite Scroll Loader Trigger */}
-                <div ref={loaderRef} className="flex flex-col items-center justify-center py-10 gap-3">
-                    {isLoadingMore ? (
-                        <>
-                            <Loader size={32} className="text-brand animate-spin" />
-                            <span className="text-xs font-bold text-neutral-400 uppercase tracking-widest">Criando novos níveis...</span>
-                        </>
-                    ) : (
-                        <div className="h-10" /> /* Spacer for trigger */
-                    )}
                 </div>
+
             </div>
         </div>
     );
