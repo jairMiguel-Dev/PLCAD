@@ -14,7 +14,7 @@ body {
   width: 100%;
   /* Previne o "bounce" elástico da página inteira no iOS */
   overscroll-behavior-y: none; 
-  overflow: hidden;
+  overflow: auto;
 }
 
 /* Tipografia base adaptável */
