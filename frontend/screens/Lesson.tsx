@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Header } from '../components/Header';
 import { Button } from '../components/Button';
@@ -33,7 +32,7 @@ export const Lesson: React.FC<LessonProps> = ({
 }) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
-    // Theory State - NEW
+    // Theory State
     const [showTheory, setShowTheory] = useState(false);
     const [seenTheoryConcepts, setSeenTheoryConcepts] = useState<Set<string>>(new Set());
 
@@ -181,7 +180,7 @@ export const Lesson: React.FC<LessonProps> = ({
     const handleContinue = () => {
         // GAME OVER CHECK
         if (hearts <= 0 && !isPremium) {
-            onQuit(); // This will trigger the App to show the Heart Modal
+            onQuit();
             return;
         }
 
@@ -194,7 +193,6 @@ export const Lesson: React.FC<LessonProps> = ({
             // Shuffle drag items again if drag drop
             if (isDragDrop) {
                 setSelectedSegments([]);
-                // Fix: Rebuild from source to ensure we recover items that were in selectedSegments
                 const allSegments = [
                     ...(currentQuestion.segments || []),
                     ...(currentQuestion.distractors || [])
@@ -234,15 +232,11 @@ export const Lesson: React.FC<LessonProps> = ({
     };
 
     const handleSkipQuestion = () => {
-        if (skipTokens <= 0) return; // Não tem tokens
+        if (skipTokens <= 0) return;
 
-        // Usar um token
         onUseSkip();
-
-        // Contar como acerto para não quebrar o combo
         incrementCombo();
 
-        // Avançar para próxima questão
         setFeedbackState(null);
         setIsCheckSubmitted(false);
         setSelectedOption(null);
@@ -250,8 +244,7 @@ export const Lesson: React.FC<LessonProps> = ({
         if (currentQuestionIndex < level.questions.length - 1) {
             setCurrentQuestionIndex(prev => prev + 1);
         } else {
-            // Se era a última questão, completar a lição
-            const baseXP = (correctCount + 1) * BASE_XP_PER_QUESTION; // +1 pelo pulo
+            const baseXP = (correctCount + 1) * BASE_XP_PER_QUESTION;
             const comboBonus = maxCombo * COMBO_BONUS_MULTIPLIER;
             const perfectBonus = mistakeCount === 0 ? PERFECT_LESSON_BONUS : 0;
             const totalXP = baseXP + comboBonus + perfectBonus;
@@ -261,7 +254,7 @@ export const Lesson: React.FC<LessonProps> = ({
                 comboBonus,
                 perfectBonus,
                 totalXP,
-                correctCount: correctCount + 1, // +1 pelo pulo
+                correctCount: correctCount + 1,
                 mistakeCount,
                 maxCombo,
                 newAchievements: []
@@ -271,7 +264,7 @@ export const Lesson: React.FC<LessonProps> = ({
         }
     };
 
-    // --- MATCHING LOGIC (Special Case) ---
+    // --- MATCHING LOGIC ---
     const handlePairClick = (item: PairItem) => {
         if (matchedPairs.includes(item.id) || wrongPairIds.length > 0) return;
         if (selectedPairId === item.id) { setSelectedPairId(null); return; }
@@ -301,7 +294,6 @@ export const Lesson: React.FC<LessonProps> = ({
             setTimeout(() => {
                 setWrongPairIds([]);
                 setSelectedPairId(null);
-                // If hearts 0, modal handles it via useEffect/Header
             }, 800);
         }
     };
@@ -317,7 +309,6 @@ export const Lesson: React.FC<LessonProps> = ({
         }
     };
 
-    // ... RENDERERS (Matching, DragDrop, etc. same as before but using new state) ...
     const renderMatchingGame = () => (
         <div className="w-full max-w-xl mx-auto px-4 pt-4 pb-32 flex flex-col items-center">
             <h2 className="text-xl md:text-2xl font-extrabold text-neutral-700 dark:text-neutral-200 mb-6 text-center">{currentQuestion.prompt}</h2>
@@ -469,17 +460,19 @@ export const Lesson: React.FC<LessonProps> = ({
 
     const showCheckButton = !isTheory && !isMatching;
 
-    // If showing theory, render only theory screen
+    // If showing theory, render only theory screen - CORREÇÃO DA ROLAGEM
     if (showTheory && currentQuestion.theory) {
         return (
-            <TheoryScreen
-                title={currentQuestion.theory.title}
-                concept={currentQuestion.theory.concept}
-                explanation={currentQuestion.theory.explanation}
-                examples={currentQuestion.theory.examples}
-                tips={currentQuestion.theory.tips}
-                onContinue={handleTheoryContinue}
-            />
+            <div className="h-full overflow-auto">
+                <TheoryScreen
+                    title={currentQuestion.theory.title}
+                    concept={currentQuestion.theory.concept}
+                    explanation={currentQuestion.theory.explanation}
+                    examples={currentQuestion.theory.examples}
+                    tips={currentQuestion.theory.tips}
+                    onContinue={handleTheoryContinue}
+                />
+            </div>
         );
     }
 
@@ -531,4 +524,3 @@ export const Lesson: React.FC<LessonProps> = ({
         </div>
     );
 };
-
