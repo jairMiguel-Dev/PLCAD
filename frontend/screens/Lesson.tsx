@@ -92,7 +92,9 @@ export const Lesson: React.FC<LessonProps> = ({
 
         // Check if this question has theory that hasn't been shown yet
         if (currentQuestion.theory && !seenTheoryConcepts.has(currentQuestion.theory.concept)) {
+            console.log('🎓 Teoria detectada:', currentQuestion.theory.concept);
             setShowTheory(true);
+            return; // Interrompe inicialização do exercício para focar na teoria
         }
 
         // Init Matching
