@@ -91,8 +91,14 @@ export const Lesson: React.FC<LessonProps> = ({
         setIsPlayingAudio(false);
 
         // Check if this question has theory that hasn't been shown yet
-        if (currentQuestion.theory && !seenTheoryConcepts.has(currentQuestion.theory.concept)) {
-            console.log('🎓 Teoria detectada:', currentQuestion.theory.concept);
+        // FORCE SHOW THEORY IF IT IS A THEORY QUESTION TYPE
+        const shouldShowTheory = currentQuestion.theory && (
+            currentQuestion.type === QuestionType.THEORY ||
+            !seenTheoryConcepts.has(currentQuestion.theory.concept)
+        );
+
+        if (shouldShowTheory) {
+            console.log('🎓 Teoria detectada:', currentQuestion.theory?.concept);
             setShowTheory(true);
             return; // Interrompe inicialização do exercício para focar na teoria
         }
@@ -458,6 +464,11 @@ export const Lesson: React.FC<LessonProps> = ({
             setSeenTheoryConcepts(prev => new Set(prev).add(currentQuestion.theory!.concept));
         }
         setShowTheory(false);
+
+        // Se for uma questão puramente teórica, avança automaticamente para a próxima
+        if (currentQuestion.type === QuestionType.THEORY) {
+            handleContinue();
+        }
     };
 
     const showCheckButton = !isTheory && !isMatching;
