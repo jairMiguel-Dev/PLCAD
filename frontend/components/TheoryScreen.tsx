@@ -26,23 +26,51 @@ export const TheoryScreen: React.FC<TheoryScreenProps> = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-indigo-900/20 flex items-center justify-center p-4"
+            style={{ height: '100dvh' }}
         >
             <motion.div
                 initial={{ scale: 0.9, y: 20 }}
                 animate={{ scale: 1, y: 0 }}
                 className="w-full max-w-3xl"
             >
-                {/* Badge "Teoria" */}
+                {/* Badge "Teoria" com Animação */}
                 <motion.div
                     initial={{ y: -20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.1 }}
                     className="flex justify-center mb-6"
                 >
-                    <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-6 py-2 rounded-full shadow-lg">
-                        <Sparkles size={20} className="animate-pulse" />
-                        <span className="font-bold text-sm uppercase tracking-wider">Teoria Rapidinha</span>
-                    </div>
+                    <motion.div
+                        className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 text-white px-6 py-3 rounded-full shadow-2xl relative overflow-hidden"
+                        animate={{
+                            boxShadow: [
+                                "0 10px 30px rgba(168, 85, 247, 0.4)",
+                                "0 10px 40px rgba(236, 72, 153, 0.5)",
+                                "0 10px 30px rgba(99, 102, 241, 0.4)",
+                                "0 10px 30px rgba(168, 85, 247, 0.4)",
+                            ]
+                        }}
+                        transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                        }}
+                    >
+                        {/* Brilho animado de fundo */}
+                        <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0"
+                            animate={{
+                                x: ["-100%", "200%"]
+                            }}
+                            transition={{
+                                duration: 2,
+                                repeat: Infinity,
+                                ease: "linear"
+                            }}
+                        />
+                        <Sparkles size={24} className="animate-pulse relative z-10" />
+                        <span className="font-black text-lg uppercase tracking-wider relative z-10">💡 Teoria</span>
+                    </motion.div>
                 </motion.div>
 
                 {/* Main Card */}
@@ -50,21 +78,82 @@ export const TheoryScreen: React.FC<TheoryScreenProps> = ({
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl overflow-hidden"
+                    className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl overflow-hidden border-4 border-purple-100 dark:border-purple-900/50"
                 >
-                    {/* Header com Gradiente */}
-                    <div className="bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 p-8 text-white">
-                        <div className="flex items-center gap-4 mb-4">
-                            <div className="bg-white/20 backdrop-blur-sm p-3 rounded-2xl">
-                                <BookOpen size={32} />
-                            </div>
+                    {/* Header com Gradiente Animado */}
+                    <motion.div
+                        className="bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 p-8 text-white relative overflow-hidden"
+                        animate={{
+                            backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
+                        }}
+                        transition={{
+                            duration: 5,
+                            repeat: Infinity,
+                            ease: "linear"
+                        }}
+                        style={{
+                            backgroundSize: "200% 200%"
+                        }}
+                    >
+                        {/* Partículas flutuantes */}
+                        <div className="absolute inset-0 opacity-20">
+                            <motion.div
+                                className="absolute w-32 h-32 bg-white rounded-full blur-3xl"
+                                animate={{
+                                    x: [0, 100, 0],
+                                    y: [0, -50, 0]
+                                }}
+                                transition={{
+                                    duration: 8,
+                                    repeat: Infinity,
+                                    ease: "easeInOut"
+                                }}
+                                style={{ top: "10%", left: "10%" }}
+                            />
+                            <motion.div
+                                className="absolute w-24 h-24 bg-pink-300 rounded-full blur-2xl"
+                                animate={{
+                                    x: [0, -80, 0],
+                                    y: [0, 60, 0]
+                                }}
+                                transition={{
+                                    duration: 6,
+                                    repeat: Infinity,
+                                    ease: "easeInOut"
+                                }}
+                                style={{ bottom: "10%", right: "15%" }}
+                            />
+                        </div>
+
+                        <div className="flex items-center gap-4 mb-4 relative z-10">
+                            <motion.div
+                                className="bg-white/20 backdrop-blur-sm p-4 rounded-2xl"
+                                whileHover={{ scale: 1.1, rotate: 5 }}
+                                transition={{ type: "spring", stiffness: 300 }}
+                            >
+                                <BookOpen size={36} />
+                            </motion.div>
                             <div>
-                                <p className="text-purple-100 text-sm font-medium uppercase tracking-wide">Conceito</p>
-                                <h1 className="text-3xl font-black">{concept}</h1>
+                                <p className="text-purple-100 text-sm font-medium uppercase tracking-wide">📚 Conceito</p>
+                                <motion.h1
+                                    className="text-4xl font-black"
+                                    initial={{ x: -20, opacity: 0 }}
+                                    animate={{ x: 0, opacity: 1 }}
+                                    transition={{ delay: 0.3 }}
+                                >
+                                    {concept}
+                                </motion.h1>
                             </div>
                         </div>
-                        <p className="text-lg text-purple-50 font-medium">{title}</p>
-                    </div>
+                        <motion.p
+                            className="text-xl text-purple-50 font-bold relative z-10"
+                            initial={{ x: -20, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ delay: 0.4 }}
+                        >
+                            {title}
+                        </motion.p>
+                    </motion.div>
 
                     {/* Content */}
                     <div className="p-8 space-y-6">

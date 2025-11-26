@@ -309,7 +309,34 @@ export const CURRICULUM: Unit[] = [
                     { term: 'const', definition: 'Declara constantes imutáveis', type: 'Sintaxe', example: 'const PI = 3.14;' }
                 ],
                 questions: [
-                    { id: 'q102_1', type: QuestionType.THEORY, difficulty: 'easy', title: 'Intro', prompt: 'Constantes', englishWord: 'Constant', phonetic: '/ˈkɒn.stənt/', codeSnippet: 'const PI = 3.14;', options: [], correctFeedback: '', wrongFeedback: '' },
+                    {
+                        id: 'q102_1',
+                        type: QuestionType.THEORY,
+                        difficulty: 'easy',
+                        title: 'Intro',
+                        prompt: 'Constantes',
+                        englishWord: 'Constant',
+                        phonetic: '/ˈkɒn.stənt/',
+                        theory: {
+                            concept: 'Constantes (const)',
+                            title: 'Quando usar const ao invés de let?',
+                            explanation: 'Pensa assim: se você guarda algo numa caixa e NÃO vai trocar depois, use const! É tipo um cofre trancado. 🔒 Por exemplo, o nome da sua escola ou o valor de PI (3.14) não muda, certo? Então usa const! Isso evita bugs porque você não vai mudar sem querer.',
+                            examples: [
+                                'const PI = 3.14;\n// PI nunca muda, sempre 3.14',
+                                'const MINHA_CIDADE = "São Paulo";\n// Cidade fixa, não vai mudar',
+                                'const MAX_TENTATIVAS = 5;\n// Limite fixo do jogo'
+                            ],
+                            tips: [
+                                'Use MAIÚSCULAS para constantes importantes: MAX_SCORE, API_URL',
+                                'Se tentar mudar uma const, dá erro! Isso é ÓTIMO, te protege',
+                                'Dica profissa: sempre comece com const, só mude pra let se precisar trocar depois'
+                            ]
+                        },
+                        codeSnippet: 'const PI = 3.14;',
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
                     { id: 'q102_2', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'easy', title: 'Diferença', prompt: 'const pode mudar de valor?', options: [{ id: '1', text: 'Não', isCorrect: true }, { id: '2', text: 'Sim', isCorrect: false }], correctFeedback: 'Correto!', wrongFeedback: 'const é constante' },
                     { id: 'q102_3', type: QuestionType.CODE_BUILDER, difficulty: 'easy', title: 'Sintaxe', prompt: 'Declare PI constante:', options: [{ id: '1', text: 'const PI = 3.14;', isCorrect: true }, { id: '2', text: 'let PI = 3.14;', isCorrect: false }], correctFeedback: 'Perfeito!', wrongFeedback: 'Use const' },
                     { id: 'q102_4', type: QuestionType.FILL_IN_BLANK, difficulty: 'medium', title: 'Complete', prompt: 'Gravidade constante:', codeSnippet: '___ g = 9.8;', correctAnswer: 'const', options: [], correctFeedback: 'Ótimo!', wrongFeedback: 'Use const' },
@@ -331,7 +358,35 @@ export const CURRICULUM: Unit[] = [
                     { term: 'String', definition: 'Tipo de dado para texto', type: 'Lógica', example: '"Hello"' }
                 ],
                 questions: [
-                    { id: 'q103_1', type: QuestionType.THEORY, difficulty: 'easy', title: 'Intro', prompt: 'Strings', englishWord: 'String', phonetic: '/strɪŋ/', codeSnippet: 'let nome = "Ana";', options: [], correctFeedback: '', wrongFeedback: '' },
+                    {
+                        id: 'q103_1',
+                        type: QuestionType.THEORY,
+                        difficulty: 'easy',
+                        title: 'Intro',
+                        prompt: 'Strings',
+                        englishWord: 'String',
+                        phonetic: '/strɪŋ/',
+                        theory: {
+                            concept: 'Strings (Texto)',
+                            title: 'Como guardar texto no JavaScript?',
+                            explanation: 'String é qualquer texto entre aspas! Pode ser uma palavra, uma frase, um emoji... Tipo quando você manda mensagem no WhatsApp, tudo ali é string! 💬 As aspas dizem pro JavaScript: "Ei, isso aqui é texto, não é código!". Pode usar aspas duplas "" ou simples \'\', tanto faz!',
+                            examples: [
+                                'let nome = "Maria";\n// Texto com aspas duplas',
+                                'let cidade = \'Rio de Janeiro\';\n// Texto com aspas simples (mesma coisa)',
+                                'let emoji = "🚀💻";\n// Sim, emojis funcionam!',
+                                'let frase = "Eu tenho 15 anos";\n// Números DENTRO de aspas viram texto'
+                            ],
+                            tips: [
+                                'Sem aspas = variável. Com aspas = texto!',
+                                'Quer usar aspas DENTRO do texto? Alterne: "Ela disse \'olá\'"',
+                                'String vazia é válida: let vazio = "";'
+                            ]
+                        },
+                        codeSnippet: 'let nome = "Ana";',
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
                     { id: 'q103_2', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'easy', title: 'Sintaxe', prompt: 'String usa:', options: [{ id: '1', text: 'Aspas', isCorrect: true }, { id: '2', text: 'Parênteses', isCorrect: false }], correctFeedback: 'Sim!', wrongFeedback: 'Use aspas' },
                     { id: 'q103_3', type: QuestionType.CODE_BUILDER, difficulty: 'easy', title: 'Código', prompt: 'Crie string "JS":', options: [{ id: '1', text: 'let lang = "JS";', isCorrect: true }, { id: '2', text: 'let lang = JS;', isCorrect: false }], correctFeedback: 'Perfeito!', wrongFeedback: 'Faltou aspas' },
                     { id: 'q103_4', type: QuestionType.FILL_IN_BLANK, difficulty: 'medium', title: 'Complete', prompt: 'String vazia:', codeSnippet: 'let texto = ___;', correctAnswer: '""', options: [], correctFeedback: 'Ótimo!', wrongFeedback: 'Use ""' },
@@ -358,7 +413,36 @@ export const CURRICULUM: Unit[] = [
                     { term: 'Operadores', definition: 'Símbolos para operações matemáticas', type: 'Sintaxe', example: '+ - * /' }
                 ],
                 questions: [
-                    { id: 'q104_1', type: QuestionType.THEORY, difficulty: 'easy', title: 'Intro', prompt: 'Números', englishWord: 'Number', phonetic: '/ˈnʌm.bər/', codeSnippet: 'let idade = 25;\nlet preco = 19.99;', options: [], correctFeedback: '', wrongFeedback: '' },
+                    {
+                        id: 'q104_1',
+                        type: QuestionType.THEORY,
+                        difficulty: 'easy',
+                        title: 'Intro',
+                        prompt: 'Números',
+                        englishWord: 'Number',
+                        phonetic: '/ˈnʌm.bər/',
+                        theory: {
+                            concept: 'Numbers (Números)',
+                            title: 'Matemática no JavaScript!',
+                            explanation: 'Números no JS são suuuper simples! Sem aspas, só digita o número. Pode ser inteiro (42), decimal (3.14), negativo (-5)... JavaScript faz contas tipo calculadora! Usa + pra somar, - pra subtrair, * pra multiplicar e / pra dividir. Igual na escola! 🧮',
+                            examples: [
+                                'let idade = 16;\n// Número inteiro',
+                                'let preco = 29.99;\n// Número decimal (usa PONTO, não vírgula!)',
+                                'let temperatura = -5;\n// Número negativo',
+                                'let resultado = 10 + 5 * 2;\n// Matemática: 10 + 10 = 20',
+                                'let media = (8 + 7 + 9) / 3;\n// Usa parênteses pra calcular antes!'
+                            ],
+                            tips: [
+                                'ATENÇÃO: 42 é número, "42" é texto! Sem aspas = número',
+                                'Decimais usam PONTO: 3.14 ✅  |  3,14 ❌',
+                                'Multiplicação é * e divisão é / (sem símbolo ÷)'
+                            ]
+                        },
+                        codeSnippet: 'let idade = 25;\nlet preco = 19.99;',
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
                     { id: 'q104_2', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'easy', title: 'Tipo', prompt: 'Qual é número?', options: [{ id: '1', text: '42', isCorrect: true }, { id: '2', text: '\"42\"', isCorrect: false }, { id: '3', text: 'true', isCorrect: false }], correctFeedback: 'Correto!', wrongFeedback: 'Sem aspas!' },
                     { id: 'q104_3', type: QuestionType.CODE_BUILDER, difficulty: 'easy', title: 'Código', prompt: 'Crie número 100:', options: [{ id: '1', text: 'let num = 100;', isCorrect: true }, { id: '2', text: 'let num = \"100\";', isCorrect: false }, { id: '3', text: 'let num = 100', isCorrect: false }], correctFeedback: 'Perfeito!', wrongFeedback: 'Sem aspas e com ponto-e-vírgula' },
                     { id: 'q104_4', type: QuestionType.FILL_IN_BLANK, difficulty: 'medium', title: 'Operador', prompt: 'Some dois números:', codeSnippet: 'let soma = 5 ___ 3;', correctAnswer: '+', options: [], correctFeedback: 'Ótimo!', wrongFeedback: 'Use +' },
