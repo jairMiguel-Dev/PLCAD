@@ -462,7 +462,41 @@ export const CURRICULUM: Unit[] = [
                 totalQuestions: 10,
                 stars: 0,
                 learnableConcepts: [{ term: 'Operators', definition: 'Símbolos de operação', type: 'Sintaxe' }],
-                questions: [...Array(10)].map((_, i) => createQuestion(`q105_${i + 1}`, QuestionType.CODE_BUILDER, 'medium', `Questão ${i + 1}`, 'Operações', [{ id: '1', text: '10 + 5', isCorrect: true }]))
+                questions: [
+                    {
+                        id: 'q105_1',
+                        type: QuestionType.THEORY,
+                        difficulty: 'easy',
+                        title: 'Operadores',
+                        prompt: 'Matemática Básica',
+                        theory: {
+                            concept: 'Operadores Aritméticos',
+                            title: 'Fazendo contas no código',
+                            explanation: 'O JavaScript funciona como uma calculadora super potente. Os símbolos que usamos para fazer contas são chamados de "Operadores".',
+                            examples: [
+                                '10 + 5  // Soma (15)',
+                                '10 - 5  // Subtração (5)',
+                                '10 * 5  // Multiplicação (50) -> Usa asterisco!',
+                                '10 / 5  // Divisão (2) -> Usa barra!'
+                            ],
+                            tips: [
+                                'Para multiplicar use * (asterisco), não x',
+                                'Para dividir use / (barra)',
+                                'O computador segue a ordem matemática: multiplicação vem antes da soma!'
+                            ]
+                        },
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
+                    { id: 'q105_2', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'easy', title: 'Soma', prompt: 'Qual o resultado de: 10 + 8?', options: [{ id: '1', text: '18', isCorrect: true }, { id: '2', text: '108', isCorrect: false }, { id: '3', text: '2', isCorrect: false }], correctFeedback: 'Isso aí!', wrongFeedback: 'É uma soma simples.' },
+                    { id: 'q105_3', type: QuestionType.CODE_BUILDER, difficulty: 'easy', title: 'Subtração', prompt: 'Calcule 20 menos 5:', options: [{ id: '1', text: '20 - 5', isCorrect: true }, { id: '2', text: '20 + 5', isCorrect: false }, { id: '3', text: '20 : 5', isCorrect: false }], correctFeedback: 'Correto!', wrongFeedback: 'Use o sinal de menos (-)' },
+                    { id: 'q105_4', type: QuestionType.FILL_IN_BLANK, difficulty: 'medium', title: 'Multiplicação', prompt: 'Complete para multiplicar:', codeSnippet: 'let total = 5 ___ 4;', correctAnswer: '*', options: [], correctFeedback: 'Boa! Asterisco multiplica.', wrongFeedback: 'Use * para multiplicar' },
+                    { id: 'q105_5', type: QuestionType.DRAG_AND_DROP, difficulty: 'medium', title: 'Divisão', prompt: 'Divida 50 por 2:', options: [], segments: ['let', 'res', '=', '50', '/', '2;'], distractors: [':', '%'], correctFeedback: 'Perfeito!', wrongFeedback: 'Ordem errada' },
+                    { id: 'q105_6', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'medium', title: 'Símbolo', prompt: 'Qual símbolo faz multiplicação?', options: [{ id: '1', text: '*', isCorrect: true }, { id: '2', text: 'x', isCorrect: false }, { id: '3', text: '.', isCorrect: false }], correctFeedback: 'Exato! O asterisco.', wrongFeedback: 'No código usamos *' },
+                    { id: 'q105_7', type: QuestionType.CODE_BUILDER, difficulty: 'hard', title: 'Expressão', prompt: 'Soma e Multiplicação:', options: [{ id: '1', text: 'let x = 2 + 3 * 4;', isCorrect: true }, { id: '2', text: 'let x = (2 + 3) x 4;', isCorrect: false }], correctFeedback: 'Correto! JS respeita a ordem.', wrongFeedback: 'Use * e sintaxe correta' },
+                    { id: 'q105_8', type: QuestionType.FILL_IN_BLANK, difficulty: 'easy', title: 'Soma', prompt: 'Complete:', codeSnippet: '10 ___ 10 = 20', correctAnswer: '+', options: [], correctFeedback: 'Fácil!', wrongFeedback: 'Use +' }
+                ]
             },
             {
                 id: 106,
@@ -473,7 +507,40 @@ export const CURRICULUM: Unit[] = [
                 totalQuestions: 8,
                 stars: 0,
                 learnableConcepts: [{ term: 'Boolean', definition: 'Verdadeiro ou Falso', type: 'Lógica' }],
-                questions: [...Array(8)].map((_, i) => createQuestion(`q106_${i + 1}`, QuestionType.MULTIPLE_CHOICE, 'easy', `Questão ${i + 1}`, 'Boolean', [{ id: '1', text: 'true', isCorrect: true }]))
+                questions: [
+                    {
+                        id: 'q106_1',
+                        type: QuestionType.THEORY,
+                        difficulty: 'easy',
+                        title: 'Boolean',
+                        prompt: 'Verdadeiro ou Falso',
+                        theory: {
+                            concept: 'Boolean',
+                            title: 'Sim ou Não?',
+                            explanation: 'O tipo Boolean é o mais simples de todos! Ele só tem dois valores possíveis: true (verdadeiro) ou false (falso). É usado para tomar decisões no código, tipo "o usuário está logado?" ou "o jogo acabou?".',
+                            examples: [
+                                'let estaChovendo = true;  // Sim, está chovendo',
+                                'let jogoAcabou = false;   // Não, ainda não acabou',
+                                'let temSaldo = true;      // Sim, tem dinheiro'
+                            ],
+                            tips: [
+                                'Sempre escreva em minúsculas: true e false',
+                                'Sem aspas! "true" é texto, true é boolean',
+                                'Use nomes de variáveis que pareçam perguntas: ehMaior, temPermissao'
+                            ]
+                        },
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
+                    { id: 'q106_2', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'easy', title: 'Identifique', prompt: 'Qual destes é um Boolean?', options: [{ id: '1', text: 'true', isCorrect: true }, { id: '2', text: '"true"', isCorrect: false }, { id: '3', text: '1', isCorrect: false }], correctFeedback: 'Isso! Sem aspas.', wrongFeedback: 'Lembre-se: sem aspas.' },
+                    { id: 'q106_3', type: QuestionType.CODE_BUILDER, difficulty: 'easy', title: 'Declaração', prompt: 'Declare "ativo" como verdadeiro:', options: [{ id: '1', text: 'let ativo = true;', isCorrect: true }, { id: '2', text: 'let ativo = "true";', isCorrect: false }, { id: '3', text: 'let ativo = True;', isCorrect: false }], correctFeedback: 'Perfeito!', wrongFeedback: 'Use true minúsculo.' },
+                    { id: 'q106_4', type: QuestionType.FILL_IN_BLANK, difficulty: 'medium', title: 'Falso', prompt: 'Defina como falso:', codeSnippet: 'let gameover = ___;', correctAnswer: 'false', options: [], correctFeedback: 'Correto!', wrongFeedback: 'Use false' },
+                    { id: 'q106_5', type: QuestionType.DRAG_AND_DROP, difficulty: 'medium', title: 'Constante', prompt: 'Crie: const admin = true;', options: [], segments: ['const', 'admin', '=', 'true;'], distractors: ['let', 'false', '"true"'], correctFeedback: 'Boa!', wrongFeedback: 'Ordem errada' },
+                    { id: 'q106_6', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'hard', title: 'Case Sensitive', prompt: 'Qual está correto?', options: [{ id: '1', text: 'false', isCorrect: true }, { id: '2', text: 'False', isCorrect: false }, { id: '3', text: 'FALSE', isCorrect: false }], correctFeedback: 'Isso! Sempre minúsculo.', wrongFeedback: 'JS diferencia maiúsculas.' },
+                    { id: 'q106_7', type: QuestionType.CODE_BUILDER, difficulty: 'medium', title: 'Prática', prompt: 'Declare "offline" como falso:', options: [{ id: '1', text: 'let offline = false;', isCorrect: true }, { id: '2', text: 'let offline = "false";', isCorrect: false }], correctFeedback: 'Excelente!', wrongFeedback: 'Sem aspas.' },
+                    { id: 'q106_8', type: QuestionType.TRANSLATION, difficulty: 'easy', title: 'Inglês', prompt: 'Traduza "true":', options: [{ id: '1', text: 'Verdadeiro', isCorrect: true }, { id: '2', text: 'Falso', isCorrect: false }], correctFeedback: 'Sim!', wrongFeedback: 'True = Verdadeiro' }
+                ]
             },
             {
                 id: 107,
@@ -484,7 +551,42 @@ export const CURRICULUM: Unit[] = [
                 totalQuestions: 9,
                 stars: 0,
                 learnableConcepts: [{ term: 'console.log', definition: 'Exibe no console', type: 'Sintaxe' }],
-                questions: [...Array(9)].map((_, i) => createQuestion(`q107_${i + 1}`, QuestionType.CODE_BUILDER, 'easy', `Questão ${i + 1}`, 'Console', [{ id: '1', text: 'console.log(x);', isCorrect: true }]))
+                questions: [
+                    {
+                        id: 'q107_1',
+                        type: QuestionType.THEORY,
+                        difficulty: 'easy',
+                        title: 'Console',
+                        prompt: 'Falando com o computador',
+                        theory: {
+                            concept: 'console.log()',
+                            title: 'Como ver o que está acontecendo?',
+                            explanation: 'O console.log() é o melhor amigo do programador! Ele serve para "imprimir" mensagens na tela preta do sistema (o console). É muito usado para testar se o código está funcionando ou ver o valor de uma variável.',
+                            examples: [
+                                'console.log("Olá Mundo!"); // Escreve: Olá Mundo!',
+                                'console.log(10 + 5);       // Escreve: 15',
+                                'let nome = "Ana";',
+                                'console.log(nome);         // Escreve: Ana'
+                            ],
+                            tips: [
+                                'Não esqueça dos parênteses ()',
+                                'O "log" significa "registro" ou "diário"',
+                                'Você pode imprimir qualquer coisa: texto, números, variáveis...'
+                            ]
+                        },
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
+                    { id: 'q107_2', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'easy', title: 'Função', prompt: 'Para que serve console.log?', options: [{ id: '1', text: 'Mostrar dados', isCorrect: true }, { id: '2', text: 'Deletar dados', isCorrect: false }, { id: '3', text: 'Criar site', isCorrect: false }], correctFeedback: 'Isso! Mostra no console.', wrongFeedback: 'Ele exibe informações.' },
+                    { id: 'q107_3', type: QuestionType.CODE_BUILDER, difficulty: 'easy', title: 'Sintaxe', prompt: 'Imprima "Oi":', options: [{ id: '1', text: 'console.log("Oi");', isCorrect: true }, { id: '2', text: 'print("Oi");', isCorrect: false }, { id: '3', text: 'log.console("Oi");', isCorrect: false }], correctFeedback: 'Perfeito!', wrongFeedback: 'Use console.log' },
+                    { id: 'q107_4', type: QuestionType.FILL_IN_BLANK, difficulty: 'medium', title: 'Comando', prompt: 'Complete o comando:', codeSnippet: 'console.___("Teste");', correctAnswer: 'log', options: [], correctFeedback: 'Correto!', wrongFeedback: 'É console.log' },
+                    { id: 'q107_5', type: QuestionType.DRAG_AND_DROP, difficulty: 'medium', title: 'Variável', prompt: 'Imprima a variável x:', options: [], segments: ['console', '.', 'log', '(', 'x', ');'], distractors: ['print', '='], correctFeedback: 'Boa!', wrongFeedback: 'Ordem errada' },
+                    { id: 'q107_6', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'medium', title: 'Números', prompt: 'Posso imprimir números?', options: [{ id: '1', text: 'Sim', isCorrect: true }, { id: '2', text: 'Não', isCorrect: false }], correctFeedback: 'Sim! console.log(42)', wrongFeedback: 'Pode sim!' },
+                    { id: 'q107_7', type: QuestionType.CODE_BUILDER, difficulty: 'hard', title: 'Prática', prompt: 'Imprima o resultado de 2+2:', options: [{ id: '1', text: 'console.log(2 + 2);', isCorrect: true }, { id: '2', text: 'console.log "2+2";', isCorrect: false }], correctFeedback: 'Excelente!', wrongFeedback: 'Use parênteses.' },
+                    { id: 'q107_8', type: QuestionType.FILL_IN_BLANK, difficulty: 'easy', title: 'Objeto', prompt: 'O objeto global é:', codeSnippet: '___.log("Erro");', correctAnswer: 'console', options: [], correctFeedback: 'Isso!', wrongFeedback: 'console' },
+                    { id: 'q107_9', type: QuestionType.DRAG_AND_DROP, difficulty: 'hard', title: 'Múltiplos', prompt: 'Imprima x e y:', options: [], segments: ['console.log', '(', 'x', ',', 'y', ');'], distractors: ['+', 'and'], correctFeedback: 'Perfeito! Use vírgula.', wrongFeedback: 'Separe com vírgula' }
+                ]
             },
             {
                 id: 108,
@@ -495,7 +597,42 @@ export const CURRICULUM: Unit[] = [
                 totalQuestions: 10,
                 stars: 0,
                 learnableConcepts: [{ term: 'Concatenation', definition: 'Juntar textos', type: 'Lógica' }],
-                questions: [...Array(10)].map((_, i) => createQuestion(`q108_${i + 1}`, QuestionType.DRAG_AND_DROP, 'medium', `Questão ${i + 1}`, 'Concatenar', [], 'Ótimo!', 'Tente novamente'))
+                questions: [
+                    {
+                        id: 'q108_1',
+                        type: QuestionType.THEORY,
+                        difficulty: 'easy',
+                        title: 'Concatenação',
+                        prompt: 'Juntando pedaços',
+                        theory: {
+                            concept: 'Concatenação',
+                            title: 'Colando textos',
+                            explanation: 'Concatenar é uma palavra chique para "juntar". Em JavaScript, usamos o sinal de mais (+) para colar dois textos um no outro, ou colar texto com números.',
+                            examples: [
+                                'let nome = "Ana" + " " + "Silva"; // "Ana Silva"',
+                                'let saudacao = "Olá " + "Mundo";   // "Olá Mundo"',
+                                'let pontos = "Pontos: " + 100;     // "Pontos: 100"'
+                            ],
+                            tips: [
+                                'Cuidado com os espaços! O computador não coloca espaço automático.',
+                                '"1" + "1" vira "11", não 2! Texto + Texto = Texto maior.',
+                                'Você pode juntar quantas coisas quiser: "A" + "B" + "C"'
+                            ]
+                        },
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
+                    { id: 'q108_2', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'easy', title: 'Operador', prompt: 'Qual sinal junta strings?', options: [{ id: '1', text: '+', isCorrect: true }, { id: '2', text: '&', isCorrect: false }, { id: '3', text: '.', isCorrect: false }], correctFeedback: 'Isso! O mais (+).', wrongFeedback: 'É o sinal de mais (+)' },
+                    { id: 'q108_3', type: QuestionType.CODE_BUILDER, difficulty: 'easy', title: 'Juntar', prompt: 'Junte "A" e "B":', options: [{ id: '1', text: '"A" + "B"', isCorrect: true }, { id: '2', text: '"A" . "B"', isCorrect: false }], correctFeedback: 'Perfeito!', wrongFeedback: 'Use +' },
+                    { id: 'q108_4', type: QuestionType.FILL_IN_BLANK, difficulty: 'medium', title: 'Espaço', prompt: 'Complete com espaço:', codeSnippet: 'let x = "Oi" + ___ + "Mundo";', correctAnswer: '" "', options: [], correctFeedback: 'Boa! Precisa do espaço.', wrongFeedback: 'Use " " (aspas com espaço)' },
+                    { id: 'q108_5', type: QuestionType.DRAG_AND_DROP, difficulty: 'medium', title: 'Variável', prompt: 'Junte "Olá " com nome:', options: [], segments: ['let', 'msg', '=', '"Olá "', '+', 'nome;'], distractors: ['-', 'concat'], correctFeedback: 'Isso!', wrongFeedback: 'Ordem errada' },
+                    { id: 'q108_6', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'hard', title: 'Pegadinha', prompt: 'Quanto é "10" + 5?', options: [{ id: '1', text: '"105"', isCorrect: true }, { id: '2', text: '15', isCorrect: false }], correctFeedback: 'Exato! Texto ganha.', wrongFeedback: 'String + Número = String' },
+                    { id: 'q108_7', type: QuestionType.CODE_BUILDER, difficulty: 'medium', title: 'Frase', prompt: 'Crie "Level 5":', options: [{ id: '1', text: '"Level " + 5', isCorrect: true }, { id: '2', text: '"Level" + 5', isCorrect: false }], correctFeedback: 'Atenção ao espaço!', wrongFeedback: 'Faltou o espaço dentro das aspas' },
+                    { id: 'q108_8', type: QuestionType.FILL_IN_BLANK, difficulty: 'easy', title: 'Soma', prompt: 'Complete:', codeSnippet: 'let res = "A" ___ "B";', correctAnswer: '+', options: [], correctFeedback: 'Fácil!', wrongFeedback: 'Use +' },
+                    { id: 'q108_9', type: QuestionType.DRAG_AND_DROP, difficulty: 'hard', title: 'Complexo', prompt: 'Monte: "Eu tenho " + idade + " anos"', options: [], segments: ['"Eu tenho "', '+', 'idade', '+', '" anos"'], distractors: ['&', ','], correctFeedback: 'Muito bom!', wrongFeedback: 'Ordem errada' },
+                    { id: 'q108_10', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'medium', title: 'Tipo', prompt: 'O resultado de "A" + 1 é?', options: [{ id: '1', text: 'String', isCorrect: true }, { id: '2', text: 'Number', isCorrect: false }], correctFeedback: 'Sempre String!', wrongFeedback: 'Vira texto' }
+                ]
             },
             {
                 id: 109,
@@ -737,12 +874,33 @@ export const getLevelById = (id: number): Level | undefined => {
     for (const unit of CURRICULUM) {
         const level = unit.levels.find(l => l.id === id);
         if (level) {
-            // Shuffle and pick 5 random questions to ensure variety
-            const shuffledQuestions = [...level.questions].sort(() => Math.random() - 0.5).slice(0, 5);
+            // GARANTIA DE TEORIA: Separa questões de teoria das práticas
+            const theoryQuestions = level.questions.filter(q => q.type === QuestionType.THEORY || q.theory);
+            const practiceQuestions = level.questions.filter(q => q.type !== QuestionType.THEORY && !q.theory);
+
+            let selectedQuestions: typeof level.questions = [];
+
+            // Se houver teoria, garante que a primeira questão seja de teoria
+            if (theoryQuestions.length > 0) {
+                // Pega a primeira teoria definida (geralmente a intro)
+                selectedQuestions.push(theoryQuestions[0]);
+
+                // Mistura o resto (outras teorias + práticas)
+                const remaining = [...theoryQuestions.slice(1), ...practiceQuestions];
+                const shuffledRemaining = remaining.sort(() => Math.random() - 0.5);
+
+                // Preenche até 5 questões (1 teoria + 4 aleatórias)
+                const countToTake = Math.min(4, shuffledRemaining.length);
+                selectedQuestions = [...selectedQuestions, ...shuffledRemaining.slice(0, countToTake)];
+            } else {
+                // Se não tiver teoria, segue o fluxo normal aleatório
+                selectedQuestions = [...level.questions].sort(() => Math.random() - 0.5).slice(0, 5);
+            }
+
             return {
                 ...level,
-                questions: shuffledQuestions,
-                totalQuestions: shuffledQuestions.length
+                questions: selectedQuestions,
+                totalQuestions: selectedQuestions.length
             };
         }
     }
