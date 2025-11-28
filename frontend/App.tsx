@@ -211,6 +211,8 @@ const App: React.FC = () => {
         setAuthToken(token);
         setUserId(user.id);
 
+        let hasSelectedModule = !!userStats.selectedModule;
+
         // Carregar progresso do servidor para qualquer usuário
         try {
             const response = await fetch('https://backend-fgao.onrender.com/api/auth/progress', {
@@ -228,6 +230,11 @@ const App: React.FC = () => {
                     isPremium: user.isPremium,
                     username: user.username
                 }));
+
+                // Check if module is selected in the fetched data
+                if (data.progress.selectedModule) {
+                    hasSelectedModule = true;
+                }
             } else {
                 // Se não tem progresso no servidor, manter o local
                 setUserStats(prev => ({
@@ -245,14 +252,12 @@ const App: React.FC = () => {
             }));
         }
 
-        // Verificar módulo selecionado após carregar stats
-        setTimeout(() => {
-            if (!userStats.selectedModule) {
-                setScreen(ScreenState.MODULE_SELECTION);
-            } else {
-                setScreen(ScreenState.HOME);
-            }
-        }, 100);
+        // Verificar módulo selecionado usando o dado mais recente
+        if (!hasSelectedModule) {
+            setScreen(ScreenState.MODULE_SELECTION);
+        } else {
+            setScreen(ScreenState.HOME);
+        }
     };
 
     const handleRegister = (token: string, user: any) => {
