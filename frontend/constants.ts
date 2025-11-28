@@ -1,4 +1,3 @@
-
 import { QuestionType, Unit, Achievement, ShopItem, Quest, Level } from './types';
 import { Heart, Zap, Crown, Coins, Gem } from 'lucide-react';
 
@@ -106,90 +105,94 @@ export const ACHIEVEMENTS: Achievement[] = [
 export const CURRICULUM: Unit[] = [
     {
         id: 1,
-        title: "Unidade 1: Primeiros Passos",
-        description: "Variáveis, Strings e Números.",
+        title: "Unidade 1: Fundamentos & Vocabulário",
+        description: "Iniciando sua jornada bilíngue.",
         levels: [
             {
                 id: 101,
-                title: "Variáveis: Let & Const",
-                description: "Onde guardamos dados.",
+                title: "Variáveis & Assignment",
+                description: "Guardando dados.",
                 color: 'brand',
                 icon: 'code',
                 totalQuestions: 4,
                 stars: 0,
                 learnableConcepts: [
                     { term: 'Variable', definition: 'Um espaço na memória para guardar dados.', type: 'Inglês', example: 'The score variable is 10.' },
-                    { term: 'const', definition: 'Declara uma variável constante que não pode mudar.', type: 'Sintaxe', example: 'const pi = 3.14;' },
-                    { term: 'let', definition: 'Declara uma variável que pode ser reatribuída.', type: 'Sintaxe', example: 'let age = 20;' }
+                    { term: 'Assign', definition: 'Atribuir um valor a uma variável (=).', type: 'Inglês', example: 'Assign 10 to x.' },
+                    { term: 'Value', definition: 'O dado guardado na variável.', type: 'Inglês', example: 'The value is 5.' }
                 ],
                 questions: [
                     {
                         id: 't1',
                         type: QuestionType.THEORY,
                         difficulty: 'easy',
-                        title: 'Variáveis',
-                        prompt: 'Variable Declaration',
+                        title: 'O que é uma Variable?',
+                        prompt: 'Variable',
                         englishWord: 'Variable',
                         phonetic: '/ˈveə.ri.ə.bəl/',
-                        theoryContent: 'Imagine uma **Variable** como uma caixa etiquetada. \n\nSe a caixa for aberta (**let**), você pode trocar o que tem dentro. Se a caixa for lacrada (**const**), o valor é constante e nunca muda.',
-                        codeSnippet: 'let score = 10;\nscore = 20; // ✅\n\nconst pi = 3.14;\npi = 0; // ❌ Erro!',
+                        theoryContent: 'Uma **Variable** (Variável) é como uma caixa etiquetada onde guardamos um **Value** (Valor). \n\nPara colocar algo na caixa, usamos o sinal de igual `=`. Em inglês, chamamos isso de **Assignment** (Atribuição).',
+                        codeSnippet: 'let score = 10; // Assign 10 to score',
                         options: [],
                         correctFeedback: '',
                         wrongFeedback: '',
                     },
                     {
                         id: 'q1',
-                        type: QuestionType.CODE_BUILDER,
+                        type: QuestionType.TRANSLATION,
                         difficulty: 'easy',
-                        title: 'Prática',
-                        prompt: 'Declare uma variável "name" que PODE mudar:',
+                        title: 'Vocabulário',
+                        prompt: 'O que significa "Assign"?',
                         options: [
-                            { id: '1', text: 'let name;', isCorrect: true },
-                            { id: '2', text: 'const name;', isCorrect: false },
-                            { id: '3', text: 'var name;', isCorrect: false },
+                            { id: '1', text: 'Atribuir', isCorrect: true },
+                            { id: '2', text: 'Assinar', isCorrect: false },
+                            { id: '3', text: 'Apagar', isCorrect: false },
                         ],
-                        correctFeedback: 'Isso! "let" permite mudanças.',
-                        wrongFeedback: 'Use "let" para valores mutáveis.',
+                        correctFeedback: 'Correct! Assign = Atribuir valor.',
+                        wrongFeedback: 'Assign é usado para definir valores (=).',
                     },
                     {
                         id: 'q2',
-                        type: QuestionType.FILL_IN_BLANK,
-                        difficulty: 'medium',
-                        title: 'Sintaxe',
-                        prompt: 'Crie uma constante para a gravidade:',
-                        codeSnippet: '___ gravity = 9.8;',
-                        correctAnswer: 'const',
-                        options: [],
-                        correctFeedback: 'Exato! A gravidade não muda, então é const.',
-                        wrongFeedback: 'Use a palavra reservada para constantes.'
+                        type: QuestionType.CODE_BUILDER,
+                        difficulty: 'easy',
+                        title: 'Prática',
+                        prompt: 'Assign the value 10 to "x":',
+                        options: [
+                            { id: '1', text: 'let x = 10;', isCorrect: true },
+                            { id: '2', text: 'let x == 10;', isCorrect: false },
+                            { id: '3', text: 'x : 10;', isCorrect: false },
+                        ],
+                        correctFeedback: 'Perfect! "=" is the assignment operator.',
+                        wrongFeedback: 'Use "=" to assign.',
                     },
                     {
                         id: 'q3',
-                        type: QuestionType.TRANSLATION,
-                        difficulty: 'easy',
-                        title: 'Inglês Técnico',
-                        prompt: 'O que significa "Assign a value"?',
+                        type: QuestionType.LISTENING,
+                        difficulty: 'medium',
+                        title: 'Listening',
+                        prompt: 'O que foi dito?',
+                        englishWord: 'Assign a value to the variable.',
                         options: [
-                            { id: '1', text: 'Atribuir um valor', isCorrect: true },
-                            { id: '2', text: 'Assinar um contrato', isCorrect: false },
-                            { id: '3', text: 'Apagar um valor', isCorrect: false }
+                            { id: '1', text: 'Atribua um valor à variável.', isCorrect: true },
+                            { id: '2', text: 'Assine o valor da variável.', isCorrect: false },
+                            { id: '3', text: 'Verifique o valor da variável.', isCorrect: false }
                         ],
-                        correctFeedback: 'Correct! Assignment = Atribuição (=).',
-                        wrongFeedback: 'Assign vem de designar/atribuir.'
+                        correctFeedback: 'Yes! Assign = Atribuir.',
+                        wrongFeedback: 'Listen closely: "Assign".'
                     }
                 ]
             },
             {
                 id: 102,
-                title: "Tipos de Dados: Strings",
-                description: "Trabalhando com textos.",
+                title: "Strings & Characters",
+                description: "Textos em código.",
                 color: 'info',
                 icon: 'book',
                 totalQuestions: 3,
                 stars: 0,
                 learnableConcepts: [
-                    { term: 'String', definition: 'Uma sequência de caracteres (texto).', type: 'Lógica', example: '"Hello World"' },
-                    { term: 'Quotes', definition: 'Aspas. Usadas para delimitar Strings.', type: 'Inglês', example: 'Single (\') or Double (") quotes.' }
+                    { term: 'String', definition: 'Texto em programação.', type: 'Inglês', example: '"Hello"' },
+                    { term: 'Character', definition: 'Uma única letra ou símbolo.', type: 'Inglês', example: '"A"' },
+                    { term: 'Quote', definition: 'Aspas (" ou \').', type: 'Inglês', example: 'Single quotes.' }
                 ],
                 questions: [
                     {
@@ -197,592 +200,183 @@ export const CURRICULUM: Unit[] = [
                         type: QuestionType.THEORY,
                         difficulty: 'easy',
                         title: 'Texto é String',
-                        prompt: 'Strings',
+                        prompt: 'String',
                         englishWord: 'String',
                         phonetic: '/strɪŋ/',
-                        theoryContent: 'Em programação, texto é chamado de **String** (fio/corda de caracteres). Sempre usamos aspas ("" ou \'\'). \n\nSem aspas, o JavaScript acha que é uma variável!',
-                        codeSnippet: 'let dog = "Rex"; // String\nlet cat = Rex; // Erro (variável Rex não existe)',
+                        theoryContent: 'Em inglês técnico, texto é **String**. Uma String é feita de **Characters** (Caracteres). \n\nSempre usamos **Quotes** (Aspas) para definir uma String.',
+                        codeSnippet: 'let name = "Leo"; // String with double quotes',
                         options: [],
                         correctFeedback: '',
                         wrongFeedback: ''
                     },
                     {
+                        id: 'q_match_str',
+                        type: QuestionType.PAIR_MATCH,
+                        difficulty: 'medium',
+                        title: 'Vocabulário',
+                        prompt: 'Conecte os termos:',
+                        options: [],
+                        pairs: [
+                            { id: 'p1', text: 'String', pairId: 'r1' },
+                            { id: 'r1', text: 'Texto', pairId: 'p1' },
+                            { id: 'p2', text: 'Quote', pairId: 'r2' },
+                            { id: 'r2', text: 'Aspas', pairId: 'p2' },
+                            { id: 'p3', text: 'Character', pairId: 'r3' },
+                            { id: 'r3', text: 'Letra/Símbolo', pairId: 'p3' }
+                        ],
+                        correctFeedback: 'Great job!',
+                        wrongFeedback: 'Review the terms.'
+                    },
+                    {
                         id: 'q_drag_str',
                         type: QuestionType.DRAG_AND_DROP,
                         difficulty: 'medium',
-                        title: 'Monte o Código',
-                        prompt: 'Crie uma variável com o texto Hello:',
+                        title: 'Code It',
+                        prompt: 'Create a String "Hello":',
                         options: [],
-                        segments: ['const', 'msg', '=', '"Hello";'],
-                        distractors: ['Hello', 'let'],
-                        correctFeedback: 'Perfeito!',
-                        wrongFeedback: 'Lembre das aspas na String.'
-                    },
-                    {
-                        id: 'q_listen_str',
-                        type: QuestionType.LISTENING,
-                        difficulty: 'medium',
-                        title: 'Listening',
-                        prompt: 'Qual tipo de dado foi mencionado?',
-                        englishWord: 'We use a String to store text data.',
-                        options: [
-                            { id: '1', text: 'String', isCorrect: true },
-                            { id: '2', text: 'Number', isCorrect: false },
-                            { id: '3', text: 'Boolean', isCorrect: false }
-                        ],
-                        correctFeedback: 'Yes! String stores text.',
-                        wrongFeedback: 'Ouça atentamente: "Text data".'
+                        segments: ['let', 's', '=', '"Hello";'],
+                        distractors: ['Hello', 'quote'],
+                        correctFeedback: 'Correct! Quotes are essential.',
+                        wrongFeedback: 'Don\'t forget the quotes.'
                     }
                 ]
             },
             {
                 id: 103,
-                title: "Console & Output",
-                description: "Debugando código.",
+                title: "Output & Console",
+                description: "Vendo resultados.",
                 color: 'secondary',
                 icon: 'zap',
                 totalQuestions: 3,
                 stars: 0,
                 learnableConcepts: [
-                    { term: 'console.log', definition: 'Comando para exibir dados no terminal.', type: 'Sintaxe', example: 'console.log(x);' },
-                    { term: 'Output', definition: 'A saída de dados de um programa.', type: 'Inglês', example: 'Check the output window.' }
+                    { term: 'Output', definition: 'O resultado exibido pelo programa.', type: 'Inglês' },
+                    { term: 'Print', definition: 'Escrever/Mostrar algo na tela.', type: 'Inglês' },
+                    { term: 'Error', definition: 'Um problema ou falha no código.', type: 'Inglês' }
                 ],
                 questions: [
                     {
                         id: 't_log',
                         type: QuestionType.THEORY,
                         difficulty: 'easy',
-                        title: 'O Diário de Bordo',
-                        prompt: 'Console Log',
+                        title: 'Saída de Dados',
+                        prompt: 'Output',
                         englishWord: 'Output',
                         phonetic: '/ˈaʊt.pʊt/',
-                        theoryContent: '`console.log()` é seu melhor amigo. Ele "imprime" informações no painel de desenvolvedor. Usamos isso para verificar se nosso código está funcionando como esperado.',
-                        codeSnippet: 'console.log("O sistema está online!");',
+                        theoryContent: 'Para ver o que seu código está fazendo, geramos um **Output** (Saída). \n\nO comando `console.log()` serve para **Print** (Imprimir/Mostrar) mensagens no terminal de desenvolvimento.',
+                        codeSnippet: 'console.log("System Ready"); // Prints "System Ready"',
                         options: [],
                         correctFeedback: '',
                         wrongFeedback: ''
                     },
                     {
-                        id: 'q_match_log',
-                        type: QuestionType.PAIR_MATCH,
-                        difficulty: 'medium',
-                        title: 'Associe',
-                        prompt: 'Conecte os termos:',
-                        options: [],
-                        pairs: [
-                            { id: 'p1', text: 'console.log', pairId: 'r1' },
-                            { id: 'r1', text: 'Mostrar dados', pairId: 'p1' },
-                            { id: 'p2', text: 'Erro', pairId: 'r2' },
-                            { id: 'r2', text: 'Bug', pairId: 'p2' },
-                            { id: 'p3', text: 'Input', pairId: 'r3' },
-                            { id: 'r3', text: 'Entrada', pairId: 'p3' },
+                        id: 'q_trans_print',
+                        type: QuestionType.TRANSLATION,
+                        difficulty: 'easy',
+                        title: 'Tradução',
+                        prompt: 'O que significa "Print" em programação?',
+                        options: [
+                            { id: '1', text: 'Mostrar na tela', isCorrect: true },
+                            { id: '2', text: 'Imprimir em papel', isCorrect: false },
+                            { id: '3', text: 'Digitar', isCorrect: false }
                         ],
-                        correctFeedback: 'Muito bem!',
-                        wrongFeedback: 'Tente novamente.'
+                        correctFeedback: 'Yes! Print = Mostrar output.',
+                        wrongFeedback: 'No contexto dev, é mostrar na tela.'
                     },
                     {
                         id: 'q_code_log',
                         type: QuestionType.CODE_BUILDER,
                         difficulty: 'easy',
                         title: 'Prática',
-                        prompt: 'Mostre o valor de "x" no console:',
+                        prompt: 'Print "Error" to the console:',
                         options: [
-                            { id: '1', text: 'console.log(x);', isCorrect: true },
-                            { id: '2', text: 'print(x);', isCorrect: false },
-                            { id: '3', text: 'console(x);', isCorrect: false }
+                            { id: '1', text: 'console.log("Error");', isCorrect: true },
+                            { id: '2', text: 'print("Error");', isCorrect: false },
+                            { id: '3', text: 'log.console("Error");', isCorrect: false }
                         ],
-                        correctFeedback: 'Exato! .log() é o método.',
-                        wrongFeedback: 'Faltou o .log ou usou comando de outra linguagem.'
+                        correctFeedback: 'Correct syntax!',
+                        wrongFeedback: 'Use console.log().'
                     }
                 ]
-            },
-            {
-                id: 104,
-                title: "Números e Operações",
-                description: "Matemática básica.",
-                color: 'warn',
-                icon: 'zap',
-                totalQuestions: 3,
-                stars: 0,
-                learnableConcepts: [
-                    { term: 'Number', definition: 'Tipo de dado numérico.', type: 'Lógica', example: 'let age = 25;' },
-                    { term: 'Operators', definition: 'Símbolos para operações (+, -, *, /).', type: 'Sintaxe', example: 'let sum = 10 + 5;' }
-                ],
-                questions: [
-                    {
-                        id: 't_num',
-                        type: QuestionType.THEORY,
-                        difficulty: 'easy',
-                        title: 'Matemática',
-                        prompt: 'Numbers',
-                        englishWord: 'Integer',
-                        phonetic: '/ˈɪn.tɪ.dʒər/',
-                        theoryContent: 'JavaScript faz contas facilmente. Use `+` para somar, `-` para subtrair, `*` para multiplicar e `/` para dividir. Não use aspas para números!',
-                        codeSnippet: 'let score = 10 + 5; // 15\nlet double = score * 2; // 30',
-                        options: [],
-                        correctFeedback: '',
-                        wrongFeedback: ''
-                    },
-                    {
-                        id: 'q_calc',
-                        type: QuestionType.FILL_IN_BLANK,
-                        difficulty: 'easy',
-                        title: 'Cálculo',
-                        prompt: 'Some 10 com 20:',
-                        codeSnippet: 'let total = 10 ___ 20;',
-                        correctAnswer: '+',
-                        options: [],
-                        correctFeedback: 'Isso! + soma valores.',
-                        wrongFeedback: 'Qual símbolo usamos para adição?'
-                    },
-                    {
-                        id: 'q_drag_math',
-                        type: QuestionType.DRAG_AND_DROP,
-                        difficulty: 'medium',
-                        title: 'Monte a Conta',
-                        prompt: 'Crie uma variável "price" igual a 50:',
-                        options: [],
-                        segments: ['let', 'price', '=', '50;'],
-                        distractors: ['"50"', 'const'],
-                        correctFeedback: 'Correto! Sem aspas para números.',
-                        wrongFeedback: 'Números não levam aspas.'
-                    }
-                ]
-            },
-            {
-                id: 105,
-                title: "Variáveis: Reatribuição",
-                description: "Mudando o passado.",
-                color: 'brand',
-                icon: 'code',
-                totalQuestions: 3,
-                stars: 0,
-                learnableConcepts: [
-                    { term: 'Reassignment', definition: 'Dar um novo valor a uma variável existente.', type: 'Lógica', example: 'x = 5; x = 10;' }
-                ],
-                questions: [
-                    {
-                        id: 't_reassign',
-                        type: QuestionType.THEORY,
-                        difficulty: 'easy',
-                        title: 'Mudando Valores',
-                        prompt: 'Reassignment',
-                        englishWord: 'Update',
-                        phonetic: '/ʌpˈdeɪt/',
-                        theoryContent: 'Com `let`, você pode atualizar o valor de uma variável. Basta usar o nome dela e o sinal de igual. Não use `let` novamente!',
-                        codeSnippet: 'let points = 0;\npoints = 10; // ✅ Atualizou!\nlet points = 20; // ❌ Erro: já existe!',
-                        options: [],
-                        correctFeedback: '',
-                        wrongFeedback: ''
-                    },
-                    {
-                        id: 'q_update',
-                        type: QuestionType.CODE_BUILDER,
-                        difficulty: 'medium',
-                        title: 'Atualize',
-                        prompt: 'Mude o valor de "lives" para 0:',
-                        options: [
-                            { id: '1', text: 'lives = 0;', isCorrect: true },
-                            { id: '2', text: 'let lives = 0;', isCorrect: false },
-                            { id: '3', text: 'lives == 0;', isCorrect: false }
-                        ],
-                        correctFeedback: 'Perfeito! Sem "let" para atualizar.',
-                        wrongFeedback: 'Não redeclare a variável, apenas atribua.'
-                    },
-                    {
-                        id: 'q_match_var',
-                        type: QuestionType.PAIR_MATCH,
-                        difficulty: 'easy',
-                        title: 'Conceitos',
-                        prompt: 'Associe:',
-                        options: [],
-                        pairs: [
-                            { id: 'p1', text: 'let', pairId: 'r1' },
-                            { id: 'r1', text: 'Pode mudar', pairId: 'p1' },
-                            { id: 'p2', text: 'const', pairId: 'r2' },
-                            { id: 'r2', text: 'Fixo', pairId: 'p2' }
-                        ],
-                        correctFeedback: 'Isso aí!',
-                        wrongFeedback: 'Revise let vs const.'
-                    }
-                ]
-            },
-            {
-                id: 106,
-                title: "Tipos Booleanos",
-                description: "Verdadeiro ou Falso?",
-                color: 'info',
-                icon: 'zap',
-                totalQuestions: 3,
-                stars: 0,
-                learnableConcepts: [
-                    { term: 'Boolean', definition: 'Um valor que é true (verdadeiro) ou false (falso).', type: 'Lógica', example: 'let isActive = true;' }
-                ],
-                questions: [
-                    {
-                        id: 't_bool',
-                        type: QuestionType.THEORY,
-                        difficulty: 'easy',
-                        title: 'Sim ou Não',
-                        prompt: 'Boolean',
-                        englishWord: 'True/False',
-                        phonetic: '/truː/',
-                        theoryContent: 'Booleans são a base da lógica. Eles só podem ser `true` ou `false`. Sem aspas! Usamos para "ligar/desligar" coisas.',
-                        codeSnippet: 'let isGameOver = false;\nlet hasKey = true;',
-                        options: [],
-                        correctFeedback: '',
-                        wrongFeedback: ''
-                    },
-                    {
-                        id: 'q_bool_val',
-                        type: QuestionType.TRANSLATION,
-                        difficulty: 'easy',
-                        title: 'Tradução',
-                        prompt: 'O que significa "false"?',
-                        options: [
-                            { id: '1', text: 'Falso', isCorrect: true },
-                            { id: '2', text: 'Falha', isCorrect: false },
-                            { id: '3', text: 'Vazio', isCorrect: false }
-                        ],
-                        correctFeedback: 'Correct!',
-                        wrongFeedback: 'False = Falso.'
-                    },
-                    {
-                        id: 'q_drag_bool',
-                        type: QuestionType.DRAG_AND_DROP,
-                        difficulty: 'medium',
-                        title: 'Código',
-                        prompt: 'Declare que o usuário é admin:',
-                        options: [],
-                        segments: ['let', 'isAdmin', '=', 'true;'],
-                        distractors: ['"true"', 'yes'],
-                        correctFeedback: 'Boa!',
-                        wrongFeedback: 'Booleans são palavras reservadas, sem aspas.'
-                    }
-                ]
-            },
-            {
-                id: 107,
-                title: "Comentários",
-                description: "Notas invisíveis.",
-                color: 'secondary',
-                icon: 'book',
-                totalQuestions: 3,
-                stars: 0,
-                learnableConcepts: [
-                    { term: 'Comment', definition: 'Texto ignorado pelo computador, útil para humanos.', type: 'Sintaxe', example: '// Isso é um comentário' }
-                ],
-                questions: [
-                    {
-                        id: 't_comment',
-                        type: QuestionType.THEORY,
-                        difficulty: 'easy',
-                        title: 'Anotações',
-                        prompt: 'Comments',
-                        englishWord: 'Ignore',
-                        phonetic: '/ɪɡˈnɔːr/',
-                        theoryContent: 'Use `//` para criar um comentário de uma linha. O computador ignora tudo depois das barras. É ótimo para explicar seu código!',
-                        codeSnippet: 'let x = 10; // Define x como 10\n// Este código não faz nada',
-                        options: [],
-                        correctFeedback: '',
-                        wrongFeedback: ''
-                    },
-                    {
-                        id: 'q_comment_syntax',
-                        type: QuestionType.FILL_IN_BLANK,
-                        difficulty: 'easy',
-                        title: 'Sintaxe',
-                        prompt: 'Crie um comentário:',
-                        codeSnippet: '___ Minha anotação',
-                        correctAnswer: '//',
-                        options: [],
-                        correctFeedback: 'Isso! Duas barras.',
-                        wrongFeedback: 'Use duas barras.'
-                    },
-                    {
-                        id: 'q_listening_comment',
-                        type: QuestionType.LISTENING,
-                        difficulty: 'easy',
-                        title: 'Listening',
-                        prompt: 'O que o código faz com comentários?',
-                        englishWord: 'The computer ignores comments.',
-                        options: [
-                            { id: '1', text: 'Ignora', isCorrect: true },
-                            { id: '2', text: 'Executa', isCorrect: false },
-                            { id: '3', text: 'Apaga', isCorrect: false }
-                        ],
-                        correctFeedback: 'Yes! It ignores them.',
-                        wrongFeedback: 'Ouça: "ignores".'
-                    }
-                ]
-            },
-            {
-                id: 108,
-                title: "Juntando Textos",
-                description: "Concatenação.",
-                color: 'warn',
-                icon: 'code',
-                totalQuestions: 3,
-                stars: 0,
-                learnableConcepts: [
-                    { term: 'Concatenation', definition: 'Unir duas strings.', type: 'Lógica', example: '"A" + "B" = "AB"' }
-                ],
-                questions: [
-                    {
-                        id: 't_concat',
-                        type: QuestionType.THEORY,
-                        difficulty: 'easy',
-                        title: 'Somando Palavras',
-                        prompt: 'Concatenation',
-                        englishWord: 'Join',
-                        phonetic: '/dʒɔɪn/',
-                        theoryContent: 'Você pode "somar" strings para juntá-las. Isso se chama **Concatenação**. Cuidado com os espaços!',
-                        codeSnippet: 'let nome = "Ana";\nlet saudacao = "Oi " + nome; // "Oi Ana"',
-                        options: [],
-                        correctFeedback: '',
-                        wrongFeedback: ''
-                    },
-                    {
-                        id: 'q_concat_res',
-                        type: QuestionType.CODE_BUILDER,
-                        difficulty: 'medium',
-                        title: 'Resultado',
-                        prompt: 'Qual o resultado de "Java" + "Script"?',
-                        options: [
-                            { id: '1', text: '"JavaScript"', isCorrect: true },
-                            { id: '2', text: '"Java Script"', isCorrect: false },
-                            { id: '3', text: 'Erro', isCorrect: false }
-                        ],
-                        correctFeedback: 'Exato! Cola sem espaço.',
-                        wrongFeedback: 'O computador não adiciona espaço sozinho.'
-                    },
-                    {
-                        id: 'q_drag_concat',
-                        type: QuestionType.DRAG_AND_DROP,
-                        difficulty: 'hard',
-                        title: 'Monte a Frase',
-                        prompt: 'Crie "Super Mario":',
-                        options: [],
-                        segments: ['"Super"', '+', '" "', '+', '"Mario"'],
-                        distractors: ['-'],
-                        correctFeedback: 'Perfeito!',
-                        wrongFeedback: 'Precisa do espaço no meio.'
-                    }
-                ]
-            },
-            {
-                id: 109,
-                title: "Template Literals",
-                description: "Strings modernas.",
-                color: 'info',
-                icon: 'zap',
-                totalQuestions: 3,
-                stars: 0,
-                learnableConcepts: [
-                    { term: 'Template Literal', definition: 'String com crases que aceita variáveis dentro.', type: 'Sintaxe', example: '`Oi ${nome}`' }
-                ],
-                questions: [
-                    {
-                        id: 't_template',
-                        type: QuestionType.THEORY,
-                        difficulty: 'medium',
-                        title: 'Super Strings',
-                        prompt: 'Backticks',
-                        englishWord: 'Embed',
-                        phonetic: '/ɪmˈbed/',
-                        theoryContent: 'Em vez de usar `+`, use crases (`` ` ``) e `${}` para colocar variáveis dentro do texto. É muito mais limpo!',
-                        codeSnippet: 'let user = "Leo";\nlet msg = `Bem-vindo ${user}!`;',
-                        options: [],
-                        correctFeedback: '',
-                        wrongFeedback: ''
-                    },
-                    {
-                        id: 'q_template_syntax',
-                        type: QuestionType.FILL_IN_BLANK,
-                        difficulty: 'medium',
-                        title: 'Sintaxe',
-                        prompt: 'Complete para interpolar:',
-                        codeSnippet: '`Olá ___{name}`',
-                        correctAnswer: '$',
-                        options: [],
-                        correctFeedback: 'Isso! Cifrão antes das chaves.',
-                        wrongFeedback: 'Sintaxe é ${variavel}.'
-                    },
-                    {
-                        id: 'q_match_quote',
-                        type: QuestionType.PAIR_MATCH,
-                        difficulty: 'easy',
-                        title: 'Aspas',
-                        prompt: 'Qual usa qual?',
-                        options: [],
-                        pairs: [
-                            { id: 'p1', text: 'String Normal', pairId: 'r1' },
-                            { id: 'r1', text: '"Aspas"', pairId: 'p1' },
-                            { id: 'p2', text: 'Template Literal', pairId: 'r2' },
-                            { id: 'r2', text: '`Crases`', pairId: 'p2' }
-                        ],
-                        correctFeedback: 'Boa!',
-                        wrongFeedback: 'Confundiu aspas com crases.'
-                    }
-                ]
-            },
-            {
-                id: 110,
-                title: "Revisão Unidade 1",
-                description: "Teste seus conhecimentos.",
-                color: 'brand',
-                icon: 'trophy',
-                totalQuestions: 5,
-                stars: 0,
-                learnableConcepts: [],
-                questions: [
-                    {
-                        id: 'rev_1',
-                        type: QuestionType.CODE_BUILDER,
-                        difficulty: 'hard',
-                        title: 'Desafio Final',
-                        prompt: 'Declare uma constante "pi" com valor 3.14:',
-                        options: [
-                            { id: '1', text: 'const pi = 3.14;', isCorrect: true },
-                            { id: '2', text: 'let pi = 3.14;', isCorrect: false },
-                            { id: '3', text: 'var pi = 3.14;', isCorrect: false }
-                        ],
-                        correctFeedback: 'Excelente!',
-                        wrongFeedback: 'Pi é constante.'
-                    },
-                    {
-                        id: 'rev_2',
-                        type: QuestionType.TRANSLATION,
-                        difficulty: 'medium',
-                        title: 'Conceito',
-                        prompt: 'O que é uma "String"?',
-                        options: [
-                            { id: '1', text: 'Texto', isCorrect: true },
-                            { id: '2', text: 'Número', isCorrect: false },
-                            { id: '3', text: 'Lista', isCorrect: false }
-                        ],
-                        correctFeedback: 'Isso!',
-                        wrongFeedback: 'String é texto.'
-                    },
-                    {
-                        id: 'rev_3',
-                        type: QuestionType.FILL_IN_BLANK,
-                        difficulty: 'medium',
-                        title: 'Output',
-                        prompt: 'Comando para mostrar na tela:',
-                        codeSnippet: 'console.___(msg);',
-                        correctAnswer: 'log',
-                        options: [],
-                        correctFeedback: 'console.log!',
-                        wrongFeedback: 'log.'
-                    },
-                    {
-                        id: 'rev_4',
-                        type: QuestionType.DRAG_AND_DROP,
-                        difficulty: 'hard',
-                        title: 'Lógica',
-                        prompt: 'Crie uma mensagem "Oi Dev":',
-                        options: [],
-                        segments: ['let', 'm', '=', '`Oi ${role}`;'],
-                        distractors: ['+'],
-                        correctFeedback: 'Muito bem!',
-                        wrongFeedback: 'Use template literals.'
-                    },
-                    {
-                        id: 'rev_5',
-                        type: QuestionType.LISTENING,
-                        difficulty: 'easy',
-                        title: 'Inglês',
-                        prompt: 'Qual palavra significa "Variável"?',
-                        englishWord: 'Variable',
-                        options: [
-                            { id: '1', text: 'Variable', isCorrect: true },
-                            { id: '2', text: 'Value', isCorrect: false },
-                            { id: '3', text: 'Variety', isCorrect: false }
-                        ],
-                        correctFeedback: 'Yes!',
-                        wrongFeedback: 'Variable.'
-                    }
-                ]
-            },
+            }
         ]
     },
     {
         id: 2,
-        title: "Unidade 2: Lógica Booleana",
-        description: "Verdadeiro, Falso e Decisões.",
+        title: "Unidade 2: Lógica & Conditions",
+        description: "Tomando decisões.",
         levels: [
             {
                 id: 201,
-                title: "True ou False?",
-                description: "O tipo Boolean.",
+                title: "Booleans & Conditions",
+                description: "Verdadeiro ou Falso.",
                 color: 'warn',
                 icon: 'trophy',
                 totalQuestions: 3,
                 learnableConcepts: [
-                    { term: 'Boolean', definition: 'Um valor que pode ser apenas verdadeiro ou falso.', type: 'Lógica' },
-                    { term: 'Condition', definition: 'Uma condição que determina o fluxo do código.', type: 'Inglês' }
+                    { term: 'Boolean', definition: 'Tipo verdadeiro (true) ou falso (false).', type: 'Inglês' },
+                    { term: 'Condition', definition: 'Uma verificação lógica.', type: 'Inglês' },
+                    { term: 'Statement', definition: 'Uma instrução completa de código.', type: 'Inglês' }
                 ],
                 questions: [
                     {
                         id: 't_bool',
                         type: QuestionType.THEORY,
                         difficulty: 'easy',
-                        title: 'Binário',
-                        prompt: 'Booleans',
-                        englishWord: 'Condition',
-                        phonetic: '/kənˈdɪʃ.ən/',
-                        theoryContent: 'Um **Boolean** é o tipo de dado mais simples: só pode ser `true` (verdadeiro) ou `false` (falso). É a base de toda tomada de decisão no código.',
-                        codeSnippet: 'let isOnline = true;\nlet hasError = false;',
+                        title: 'Lógica Binária',
+                        prompt: 'Boolean',
+                        englishWord: 'True/False',
+                        theoryContent: 'Um **Boolean** só tem dois estados: `true` (Verdadeiro) ou `false` (Falso). \n\nUsamos booleans em **Conditions** (Condições) para decidir se um código deve rodar ou não.',
+                        codeSnippet: 'let isValid = true;\nif (isValid) { ... }',
                         options: [],
                         correctFeedback: '',
                         wrongFeedback: ''
                     },
                     {
-                        id: 'q_match_bool',
+                        id: 'q_match_cond',
                         type: QuestionType.PAIR_MATCH,
                         difficulty: 'medium',
-                        title: 'Tradução',
-                        prompt: 'Traduza os termos lógicos:',
+                        title: 'Termos',
+                        prompt: 'Associe:',
                         options: [],
                         pairs: [
                             { id: '1', text: 'True', pairId: '1a' },
                             { id: '1a', text: 'Verdadeiro', pairId: '1' },
                             { id: '2', text: 'False', pairId: '2a' },
                             { id: '2a', text: 'Falso', pairId: '2' },
-                            { id: '3', text: 'Boolean', pairId: '3a' },
-                            { id: '3a', text: 'Lógico', pairId: '3' }
+                            { id: '3', text: 'Condition', pairId: '3a' },
+                            { id: '3a', text: 'Condição', pairId: '3' }
                         ],
-                        correctFeedback: 'Ótimo!',
-                        wrongFeedback: 'Ups, tente de novo.'
+                        correctFeedback: 'Good!',
+                        wrongFeedback: 'Try again.'
                     },
                     {
-                        id: 'q_fill_bool',
+                        id: 'q_fill_if',
                         type: QuestionType.FILL_IN_BLANK,
                         difficulty: 'medium',
-                        title: 'Código',
-                        prompt: 'Declare que o usuário é admin (verdadeiro):',
-                        codeSnippet: 'let isAdmin = ___;',
-                        correctAnswer: 'true',
+                        title: 'Syntax',
+                        prompt: 'Check if x is true:',
+                        codeSnippet: 'if (x ___ true) { ... }',
+                        correctAnswer: '===',
                         options: [],
-                        correctFeedback: 'Isso! Sem aspas, pois é uma palavra reservada.',
-                        wrongFeedback: 'Use "true" (minúsculo).'
+                        correctFeedback: 'Triple equals check equality.',
+                        wrongFeedback: 'Use === for comparison.'
                     }
                 ],
                 stars: 0
             },
             {
                 id: 202,
-                title: "If / Else",
-                description: "Tomando caminhos diferentes.",
+                title: "If / Else Statements",
+                description: "Caminhos alternativos.",
                 color: 'brand',
                 icon: 'code',
                 totalQuestions: 4,
                 stars: 0,
                 learnableConcepts: [
-                    { term: 'if', definition: 'Executa um bloco se a condição for verdadeira.', type: 'Sintaxe' },
-                    { term: 'else', definition: 'Executa um bloco caso a condição do if falhe.', type: 'Sintaxe' },
-                    { term: 'Statement', definition: 'Uma instrução ou comando no código.', type: 'Inglês' }
+                    { term: 'If Statement', definition: 'Bloco "Se".', type: 'Inglês' },
+                    { term: 'Else', definition: 'Bloco "Senão" (Caso contrário).', type: 'Inglês' },
+                    { term: 'Block', definition: 'Grupo de código entre chaves { }.', type: 'Inglês' }
                 ],
                 questions: [
                     {
@@ -790,51 +384,39 @@ export const CURRICULUM: Unit[] = [
                         type: QuestionType.THEORY,
                         difficulty: 'easy',
                         title: 'Se... Senão...',
-                        prompt: 'Statements',
-                        englishWord: 'Statement',
-                        theoryContent: 'Usamos `if` para executar código APENAS se uma condição for `true`. O `else` captura qualquer outro caso.',
-                        codeSnippet: 'if (age >= 18) {\n  enterParty();\n} else {\n  goHome();\n}',
+                        prompt: 'Else',
+                        englishWord: 'Else',
+                        theoryContent: 'O **If Statement** verifica uma condição. Se falhar, o código pula para o bloco **Else** (Senão/Caso contrário). \n\nO código dentro das chaves `{}` é chamado de **Block**.',
+                        codeSnippet: 'if (isOnline) {\n  // Block 1\n} else {\n  // Block 2\n}',
                         options: [],
                         correctFeedback: '',
                         wrongFeedback: ''
                     },
                     {
-                        id: 'q_drag_if',
-                        type: QuestionType.DRAG_AND_DROP,
-                        difficulty: 'hard',
-                        title: 'Lógica',
-                        prompt: 'Monte: Se pontuação > 10, ganha.',
-                        segments: ['if', '(score > 10)', '{', 'win();', '}'],
-                        distractors: ['else', 'then'],
-                        options: [],
-                        correctFeedback: 'Código válido!',
-                        wrongFeedback: 'Siga a estrutura: if (condição) { ação }'
-                    },
-                    {
-                        id: 'q_trans_if',
+                        id: 'q_trans_else',
                         type: QuestionType.TRANSLATION,
-                        difficulty: 'medium',
-                        title: 'Inglês',
-                        prompt: 'O que significa "Else"?',
+                        difficulty: 'easy',
+                        title: 'Tradução',
+                        prompt: 'O que "Else" significa neste contexto?',
                         options: [
-                            { id: '1', text: 'Senão / Caso contrário', isCorrect: true },
-                            { id: '2', text: 'Então', isCorrect: false },
-                            { id: '3', text: 'Fim', isCorrect: false }
+                            { id: '1', text: 'Caso contrário', isCorrect: true },
+                            { id: '2', text: 'E também', isCorrect: false },
+                            { id: '3', text: 'Depois', isCorrect: false }
                         ],
-                        correctFeedback: 'Correto. Else cobre o que sobra.',
-                        wrongFeedback: 'Else é a alternativa.'
+                        correctFeedback: 'Correct! Else = Caso contrário.',
+                        wrongFeedback: 'Else cobre a alternativa.'
                     },
                     {
-                        id: 'q_fill_else',
-                        type: QuestionType.FILL_IN_BLANK,
+                        id: 'q_drag_block',
+                        type: QuestionType.DRAG_AND_DROP,
                         difficulty: 'medium',
-                        title: 'Syntax',
-                        prompt: 'Complete a estrutura condicional:',
-                        codeSnippet: 'if (x) { ... } ___ { ... }',
-                        correctAnswer: 'else',
+                        title: 'Estrutura',
+                        prompt: 'Create an else block:',
+                        segments: ['else', '{', 'runCode();', '}'],
+                        distractors: ['if', '('],
                         options: [],
-                        correctFeedback: 'Boa!',
-                        wrongFeedback: 'O oposto do if é o else.'
+                        correctFeedback: 'Valid syntax.',
+                        wrongFeedback: 'Else doesn\'t need parentheses.'
                     }
                 ]
             }
@@ -842,20 +424,21 @@ export const CURRICULUM: Unit[] = [
     },
     {
         id: 3,
-        title: "Unidade 3: Arrays & Listas",
-        description: "Organizando coleções de dados.",
+        title: "Unidade 3: Arrays & Loops",
+        description: "Listas e Repetições.",
         levels: [
             {
                 id: 301,
-                title: "O que é um Array?",
-                description: "Listas ordenadas.",
+                title: "Arrays & Items",
+                description: "Coleções.",
                 color: 'secondary',
                 icon: 'book',
                 totalQuestions: 3,
                 stars: 0,
                 learnableConcepts: [
-                    { term: 'Array', definition: 'Uma estrutura para armazenar múltiplos itens.', type: 'Lógica', example: '[1, 2, 3]' },
-                    { term: 'Brackets', definition: 'Colchetes [ ]. Usados para criar arrays.', type: 'Inglês' }
+                    { term: 'Array', definition: 'Lista de dados.', type: 'Inglês' },
+                    { term: 'Item/Element', definition: 'Um dado dentro do array.', type: 'Inglês' },
+                    { term: 'Empty', definition: 'Vazio (sem itens).', type: 'Inglês' }
                 ],
                 questions: [
                     {
@@ -863,100 +446,101 @@ export const CURRICULUM: Unit[] = [
                         type: QuestionType.THEORY,
                         difficulty: 'easy',
                         title: 'Listas',
-                        prompt: 'Arrays',
+                        prompt: 'Array',
                         englishWord: 'Array',
                         phonetic: '/əˈreɪ/',
-                        theoryContent: 'Um **Array** é uma super-variável que guarda vários itens em ordem. Usamos colchetes `[]` para criá-lo.',
-                        codeSnippet: 'let fruits = ["Maçã", "Banana", "Uva"];',
+                        theoryContent: 'Um **Array** é uma lista de **Items** (ou Elements). \n\nUm array sem nada dentro é chamado de **Empty Array** (Array Vazio).',
+                        codeSnippet: 'let list = []; // Empty Array\nlet nums = [1, 2, 3]; // 3 Items',
                         options: [],
                         correctFeedback: '',
                         wrongFeedback: ''
                     },
                     {
-                        id: 'q_mc_arr',
-                        type: QuestionType.MULTIPLE_CHOICE,
-                        difficulty: 'easy',
-                        title: 'Identificação',
-                        prompt: 'Qual destas opções é um Array válido?',
-                        options: [
-                            { id: '1', text: '["A", "B", "C"]', isCorrect: true },
-                            { id: '2', text: '(1, 2, 3)', isCorrect: false },
-                            { id: '3', text: '{1, 2, 3}', isCorrect: false }
+                        id: 'q_match_arr',
+                        type: QuestionType.PAIR_MATCH,
+                        difficulty: 'medium',
+                        title: 'Vocabulário',
+                        prompt: 'Conecte:',
+                        options: [],
+                        pairs: [
+                            { id: '1', text: 'Empty', pairId: '1a' },
+                            { id: '1a', text: 'Vazio', pairId: '1' },
+                            { id: '2', text: 'Item', pairId: '2a' },
+                            { id: '2a', text: 'Elemento', pairId: '2' },
+                            { id: '3', text: 'Array', pairId: '3a' },
+                            { id: '3a', text: 'Lista', pairId: '3' }
                         ],
-                        correctFeedback: 'Correto! Colchetes [] definem arrays.',
-                        wrongFeedback: 'Arrays usam colchetes [].'
+                        correctFeedback: 'Nice!',
+                        wrongFeedback: 'Try again.'
                     },
                     {
-                        id: 'q_code_arr',
+                        id: 'q_code_empty',
                         type: QuestionType.CODE_BUILDER,
-                        difficulty: 'medium',
-                        title: 'Criação',
-                        prompt: 'Crie um array vazio chamado "list":',
+                        difficulty: 'easy',
+                        title: 'Prática',
+                        prompt: 'Create an empty array "data":',
                         options: [
-                            { id: '1', text: 'const list = [];', isCorrect: true },
-                            { id: '2', text: 'const list = {};', isCorrect: false },
-                            { id: '3', text: 'const list = new Array;', isCorrect: false }
+                            { id: '1', text: 'let data = [];', isCorrect: true },
+                            { id: '2', text: 'let data = {};', isCorrect: false },
+                            { id: '3', text: 'let data = empty;', isCorrect: false }
                         ],
-                        correctFeedback: 'Moderna e limpa. [] é o ideal.',
-                        wrongFeedback: 'Use a notação literal [].'
+                        correctFeedback: 'Correct! [] is an empty array.',
+                        wrongFeedback: 'Use brackets [].'
                     }
                 ]
             },
             {
                 id: 302,
-                title: "Acessando Itens",
-                description: "O Índice Zero.",
+                title: "Index & Length",
+                description: "Posições.",
                 color: 'info',
                 icon: 'zap',
                 totalQuestions: 3,
                 stars: 0,
                 learnableConcepts: [
-                    { term: 'Index', definition: 'A posição numérica de um item em um array.', type: 'Inglês' },
-                    { term: 'Zero-based', definition: 'Contagem que começa em 0, não em 1.', type: 'Lógica' }
+                    { term: 'Index', definition: 'Posição (começa em 0).', type: 'Inglês' },
+                    { term: 'Length', definition: 'Comprimento/Tamanho total.', type: 'Inglês' },
+                    { term: 'Last', definition: 'Último.', type: 'Inglês' }
                 ],
                 questions: [
                     {
                         id: 't_idx',
                         type: QuestionType.THEORY,
                         difficulty: 'easy',
-                        title: 'Zero-based Indexing',
+                        title: 'Posições',
                         prompt: 'Index',
                         englishWord: 'Index',
-                        theoryContent: 'Em JS, a contagem começa no **ZERO**. O primeiro item da lista está na posição 0, não 1. Isso confunde todo mundo no começo!',
-                        codeSnippet: 'let colors = ["Red", "Blue"];\n// colors[0] é "Red"\n// colors[1] é "Blue"',
+                        theoryContent: 'Cada item tem um **Index** (Índice). O primeiro é 0. \n\nA propriedade **Length** diz quantos itens existem no total.',
+                        codeSnippet: 'let arr = ["A", "B"];\n// Index 0 is "A"\n// Length is 2',
                         options: [],
                         correctFeedback: '',
                         wrongFeedback: ''
                     },
                     {
-                        id: 'q_fill_idx',
-                        type: QuestionType.FILL_IN_BLANK,
-                        difficulty: 'hard',
-                        title: 'Lógica',
-                        prompt: 'Pegue o PRIMEIRO item do array "users":',
-                        codeSnippet: 'let first = users[___];',
-                        correctAnswer: '0',
-                        options: [],
-                        correctFeedback: 'Exato! O índice 0 é o primeiro.',
-                        wrongFeedback: 'Lembre-se: programadores contam a partir do 0.'
+                        id: 'q_trans_len',
+                        type: QuestionType.TRANSLATION,
+                        difficulty: 'medium',
+                        title: 'Tradução',
+                        prompt: 'O que "Length" significa?',
+                        options: [
+                            { id: '1', text: 'Tamanho/Comprimento', isCorrect: true },
+                            { id: '2', text: 'Largura', isCorrect: false },
+                            { id: '3', text: 'Lento', isCorrect: false }
+                        ],
+                        correctFeedback: 'Correct!',
+                        wrongFeedback: 'Length = Tamanho.'
                     },
                     {
-                        id: 'q_match_idx',
-                        type: QuestionType.PAIR_MATCH,
-                        difficulty: 'medium',
-                        title: 'Conceitos',
-                        prompt: 'Ligue o conceito:',
+                        id: 'q_fill_len',
+                        type: QuestionType.FILL_IN_BLANK,
+                        difficulty: 'hard',
+                        title: 'Código',
+                        prompt: 'Get the size of the array:',
+                        codeSnippet: 'let size = list.___;',
+                        correctAnswer: 'length',
                         options: [],
-                        pairs: [
-                            { id: '1', text: 'Index 0', pairId: '1a' },
-                            { id: '1a', text: 'Primeiro Item', pairId: '1' },
-                            { id: '2', text: 'Length', pairId: '2a' },
-                            { id: '2a', text: 'Tamanho Total', pairId: '2' },
-                            { id: '3', text: 'Undefined', pairId: '3a' },
-                            { id: '3a', text: 'Item não existe', pairId: '3' }
-                        ],
-                        correctFeedback: 'Excelente memória!',
-                        wrongFeedback: 'Tente novamente.'
+                        correctFeedback: 'Yes! .length property.',
+                        wrongFeedback: 'Use .length'
                     }
                 ]
             }
@@ -964,60 +548,109 @@ export const CURRICULUM: Unit[] = [
     },
     {
         id: 4,
-        title: "Unidade 4: Funções",
-        description: "Reutilizando lógica.",
+        title: "Unidade 4: Functions",
+        description: "Ações e Comandos.",
         levels: [
             {
                 id: 401,
-                title: "Declarando Funções",
-                description: "Criando comandos novos.",
+                title: "Functions & Calls",
+                description: "Criando ações.",
                 color: 'warn',
                 icon: 'code',
                 totalQuestions: 3,
                 stars: 0,
                 learnableConcepts: [
-                    { term: 'Function', definition: 'Um bloco de código reutilizável.', type: 'Inglês' },
-                    { term: 'Call', definition: 'Ação de executar a função.', type: 'Inglês' }
+                    { term: 'Function', definition: 'Bloco de código reutilizável.', type: 'Inglês' },
+                    { term: 'Call', definition: 'Executar/Chamar a função.', type: 'Inglês' },
+                    { term: 'Run', definition: 'Rodar o código.', type: 'Inglês' }
                 ],
                 questions: [
                     {
                         id: 't_func',
                         type: QuestionType.THEORY,
                         difficulty: 'easy',
-                        title: 'Receitas de Código',
-                        prompt: 'Functions',
-                        theoryContent: 'Funções são blocos de código que você dá um nome. Quando você "chama" o nome, o código roda. É como ensinar um truque novo pro computador.',
-                        codeSnippet: 'function pular() {\n  player.y += 10;\n}',
+                        title: 'Funções',
+                        prompt: 'Call',
+                        englishWord: 'Call',
+                        theoryContent: 'Uma **Function** guarda código para usar depois. \n\nPara usar esse código, nós fazemos uma **Call** (Chamada) da função. Dizemos "Call the function" ou "Run the function".',
+                        codeSnippet: 'function sayHi() { ... }\nsayHi(); // Calling the function',
                         options: [],
                         correctFeedback: '',
                         wrongFeedback: ''
                     },
                     {
-                        id: 'q_drag_func',
-                        type: QuestionType.DRAG_AND_DROP,
-                        difficulty: 'medium',
-                        title: 'Estrutura',
-                        prompt: 'Crie uma função vazia chamada "start":',
-                        segments: ['function', 'start()', '{', '}'],
-                        distractors: ['call', 'var'],
-                        options: [],
-                        correctFeedback: 'Correto!',
-                        wrongFeedback: 'Sintaxe: function nome() { }'
-                    },
-                    {
                         id: 'q_listen_call',
                         type: QuestionType.LISTENING,
-                        difficulty: 'hard',
-                        title: 'Inglês',
-                        prompt: 'Qual ação o código faz?',
-                        englishWord: 'Call the function to execute the code.',
+                        difficulty: 'medium',
+                        title: 'Listening',
+                        prompt: 'O que devo fazer?',
+                        englishWord: 'Call the function immediately.',
                         options: [
                             { id: '1', text: 'Chamar a função', isCorrect: true },
-                            { id: '2', text: 'Apagar a função', isCorrect: false },
-                            { id: '3', text: 'Criar a função', isCorrect: false }
+                            { id: '2', text: 'Criar a função', isCorrect: false },
+                            { id: '3', text: 'Parar a função', isCorrect: false }
                         ],
-                        correctFeedback: 'Yes! Call = Chamar/Executar.',
-                        wrongFeedback: 'Call significa chamar.'
+                        correctFeedback: 'Correct! Call = Chamar/Executar.',
+                        wrongFeedback: 'Call means execute.'
+                    },
+                    {
+                        id: 'q_drag_call',
+                        type: QuestionType.DRAG_AND_DROP,
+                        difficulty: 'easy',
+                        title: 'Prática',
+                        prompt: 'Call the function "start":',
+                        segments: ['start', '(', ')', ';'],
+                        distractors: ['call', 'func'],
+                        options: [],
+                        correctFeedback: 'Good!',
+                        wrongFeedback: 'Just use name().'
+                    }
+                ]
+            },
+            {
+                id: 402,
+                title: "Parameters & Returns",
+                description: "Entrada e Saída.",
+                color: 'brand',
+                icon: 'zap',
+                totalQuestions: 3,
+                stars: 0,
+                learnableConcepts: [
+                    { term: 'Parameter', definition: 'Variável de entrada da função.', type: 'Inglês' },
+                    { term: 'Argument', definition: 'Valor real passado para a função.', type: 'Inglês' },
+                    { term: 'Return', definition: 'Devolver um resultado.', type: 'Inglês' }
+                ],
+                questions: [
+                    {
+                        id: 't_param',
+                        type: QuestionType.THEORY,
+                        difficulty: 'medium',
+                        title: 'Entradas e Saídas',
+                        prompt: 'Return',
+                        englishWord: 'Return',
+                        theoryContent: 'Funções podem receber dados (**Parameters**) e devolver um resultado final usando **Return**. \n\nO `return` para a função e entrega o valor de volta.',
+                        codeSnippet: 'function add(a, b) { // Parameters\n  return a + b; // Return value\n}',
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
+                    {
+                        id: 'q_match_func',
+                        type: QuestionType.PAIR_MATCH,
+                        difficulty: 'hard',
+                        title: 'Conceitos',
+                        prompt: 'Ligue:',
+                        options: [],
+                        pairs: [
+                            { id: '1', text: 'Parameter', pairId: '1a' },
+                            { id: '1a', text: 'Input (Definição)', pairId: '1' },
+                            { id: '2', text: 'Argument', pairId: '2a' },
+                            { id: '2a', text: 'Input (Valor Real)', pairId: '2' },
+                            { id: '3', text: 'Return', pairId: '3a' },
+                            { id: '3a', text: 'Output/Devolução', pairId: '3' }
+                        ],
+                        correctFeedback: 'Excellent!',
+                        wrongFeedback: 'Review params vs args.'
                     }
                 ]
             }
@@ -1025,61 +658,272 @@ export const CURRICULUM: Unit[] = [
     },
     {
         id: 5,
-        title: "Unidade 5: Objetos",
-        description: "Modelando o mundo real.",
+        title: "Unidade 5: Ambiente Dev",
+        description: "Ferramentas do dia a dia.",
         levels: [
             {
                 id: 501,
-                title: "Chave e Valor",
-                description: "O formato JSON.",
-                color: 'brand',
-                icon: 'trophy',
-                totalQuestions: 3,
+                title: "Git Basics",
+                description: "Controle de versão.",
+                color: 'secondary',
+                icon: 'code',
+                totalQuestions: 4,
                 stars: 0,
                 learnableConcepts: [
-                    { term: 'Object', definition: 'Coleção de propriedades (chave: valor).', type: 'Lógica' },
-                    { term: 'Property', definition: 'Uma característica de um objeto.', type: 'Inglês' },
-                    { term: 'Dot Notation', definition: 'Acessar valores usando ponto (obj.prop).', type: 'Sintaxe' }
+                    { term: 'Repository', definition: 'Onde o projeto fica guardado.', type: 'Inglês' },
+                    { term: 'Commit', definition: 'Salvar mudanças (ponto na história).', type: 'Inglês' },
+                    { term: 'Push', definition: 'Enviar mudanças para a nuvem.', type: 'Inglês' }
                 ],
                 questions: [
                     {
-                        id: 't_obj',
+                        id: 't_git',
                         type: QuestionType.THEORY,
                         difficulty: 'easy',
-                        title: 'Dicionários',
-                        prompt: 'Objects',
-                        englishWord: 'Properties',
-                        theoryContent: 'Objetos agrupam dados relacionados usando **chaves** e **valores**. Usamos chaves `{}`. É perfeito para descrever um usuário, um produto ou um post.',
-                        codeSnippet: 'const user = {\n  name: "Ana",\n  age: 25\n};',
+                        title: 'Git Vocabulary',
+                        prompt: 'Commit',
+                        englishWord: 'Commit',
+                        phonetic: '/kəˈmɪt/',
+                        theoryContent: 'No Git, um **Commit** é como um "Save Game". Você salva o estado atual do seu código. \n\nDepois, você faz um **Push** para enviar esses commits para o servidor (GitHub).',
+                        codeSnippet: 'git commit -m "Fix bugs"\ngit push origin main',
                         options: [],
                         correctFeedback: '',
                         wrongFeedback: ''
                     },
                     {
-                        id: 'q_code_obj',
-                        type: QuestionType.CODE_BUILDER,
-                        difficulty: 'medium',
-                        title: 'Acesso',
-                        prompt: 'Como pegamos o nome do usuário?',
+                        id: 'q_trans_push',
+                        type: QuestionType.TRANSLATION,
+                        difficulty: 'easy',
+                        title: 'Tradução',
+                        prompt: 'O que "Push" faz?',
                         options: [
-                            { id: '1', text: 'user.name', isCorrect: true },
-                            { id: '2', text: 'user[name]', isCorrect: false },
-                            { id: '3', text: 'user->name', isCorrect: false }
+                            { id: '1', text: 'Envia código', isCorrect: true },
+                            { id: '2', text: 'Baixa código', isCorrect: false },
+                            { id: '3', text: 'Apaga código', isCorrect: false }
                         ],
-                        correctFeedback: 'Dot notation (ponto) é o padrão!',
-                        wrongFeedback: 'Use o ponto (.) para acessar propriedades.'
+                        correctFeedback: 'Yes! Push = Empurrar/Enviar.',
+                        wrongFeedback: 'Push empurra para o servidor.'
                     },
                     {
-                        id: 'q_fill_obj',
-                        type: QuestionType.FILL_IN_BLANK,
-                        difficulty: 'hard',
-                        title: 'Sintaxe',
-                        prompt: 'Defina a chave "id" como 1:',
-                        codeSnippet: 'const item = { id___ 1 };',
-                        correctAnswer: ':',
+                        id: 'q_match_git',
+                        type: QuestionType.PAIR_MATCH,
+                        difficulty: 'medium',
+                        title: 'Git Terms',
+                        prompt: 'Associe:',
                         options: [],
-                        correctFeedback: 'Isso! Dois pontos separam chave e valor.',
-                        wrongFeedback: 'Em objetos, usamos dois pontos (:).'
+                        pairs: [
+                            { id: '1', text: 'Commit', pairId: '1a' },
+                            { id: '1a', text: 'Salvar Mudança', pairId: '1' },
+                            { id: '2', text: 'Push', pairId: '2a' },
+                            { id: '2a', text: 'Enviar', pairId: '2' },
+                            { id: '3', text: 'Pull', pairId: '3a' },
+                            { id: '3a', text: 'Baixar/Puxar', pairId: '3' }
+                        ],
+                        correctFeedback: 'Git master!',
+                        wrongFeedback: 'Review Push vs Pull.'
+                    }
+                ]
+            },
+            {
+                id: 502,
+                title: "Terminal & CLI",
+                description: "Linha de comando.",
+                color: 'info',
+                icon: 'zap',
+                totalQuestions: 3,
+                stars: 0,
+                learnableConcepts: [
+                    { term: 'Directory', definition: 'Pasta.', type: 'Inglês' },
+                    { term: 'Path', definition: 'Caminho do arquivo.', type: 'Inglês' },
+                    { term: 'Flag', definition: 'Opção de comando (ex: -v).', type: 'Inglês' }
+                ],
+                questions: [
+                    {
+                        id: 't_cli',
+                        type: QuestionType.THEORY,
+                        difficulty: 'easy',
+                        title: 'O Terminal',
+                        prompt: 'Directory',
+                        englishWord: 'Directory',
+                        phonetic: '/dɪˈrek.tər.i/',
+                        theoryContent: 'No terminal, não dizemos "pasta", dizemos **Directory**. \n\nO endereço de um arquivo é o seu **Path** (Caminho).',
+                        codeSnippet: 'cd /home/user/projects\n# Changing Directory',
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
+                    {
+                        id: 'q_trans_dir',
+                        type: QuestionType.TRANSLATION,
+                        difficulty: 'easy',
+                        title: 'Vocabulário',
+                        prompt: 'O que é um "Directory"?',
+                        options: [
+                            { id: '1', text: 'Uma pasta', isCorrect: true },
+                            { id: '2', text: 'Um arquivo', isCorrect: false },
+                            { id: '3', text: 'Um comando', isCorrect: false }
+                        ],
+                        correctFeedback: 'Correct!',
+                        wrongFeedback: 'Directory = Pasta.'
+                    },
+                    {
+                        id: 'q_listen_path',
+                        type: QuestionType.LISTENING,
+                        difficulty: 'medium',
+                        title: 'Listening',
+                        prompt: 'O que foi pedido?',
+                        englishWord: 'Check the file path.',
+                        options: [
+                            { id: '1', text: 'Verificar o caminho', isCorrect: true },
+                            { id: '2', text: 'Criar o arquivo', isCorrect: false },
+                            { id: '3', text: 'Apagar a pasta', isCorrect: false }
+                        ],
+                        correctFeedback: 'Yes! Path = Caminho.',
+                        wrongFeedback: 'Path means location/way.'
+                    }
+                ]
+            },
+            {
+                id: 503,
+                title: "Workflow",
+                description: "Fluxo de trabalho.",
+                color: 'warn',
+                icon: 'trophy',
+                totalQuestions: 3,
+                stars: 0,
+                learnableConcepts: [
+                    { term: 'Bug', definition: 'Erro ou falha no código.', type: 'Inglês' },
+                    { term: 'Feature', definition: 'Nova funcionalidade.', type: 'Inglês' },
+                    { term: 'Deploy', definition: 'Publicar o site/app.', type: 'Inglês' }
+                ],
+                questions: [
+                    {
+                        id: 't_flow',
+                        type: QuestionType.THEORY,
+                        difficulty: 'easy',
+                        title: 'Dia a Dia',
+                        prompt: 'Deploy',
+                        englishWord: 'Deploy',
+                        phonetic: '/dɪˈplɔɪ/',
+                        theoryContent: 'Quando terminamos uma **Feature** (Funcionalidade) e corrigimos os **Bugs**, fazemos o **Deploy**. \n\nDeploy significa colocar o sistema no ar para os usuários.',
+                        codeSnippet: 'npm run deploy',
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
+                    {
+                        id: 'q_match_flow',
+                        type: QuestionType.PAIR_MATCH,
+                        difficulty: 'medium',
+                        title: 'Workflow',
+                        prompt: 'Conecte:',
+                        options: [],
+                        pairs: [
+                            { id: '1', text: 'Bug', pairId: '1a' },
+                            { id: '1a', text: 'Erro/Falha', pairId: '1' },
+                            { id: '2', text: 'Feature', pairId: '2a' },
+                            { id: '2a', text: 'Funcionalidade', pairId: '2' },
+                            { id: '3', text: 'Deploy', pairId: '3a' },
+                            { id: '3a', text: 'Publicar', pairId: '3' }
+                        ],
+                        correctFeedback: 'Ready for work!',
+                        wrongFeedback: 'Review the terms.'
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        id: 6,
+        title: "Unidade 6: Web & APIs",
+        description: "Como a internet funciona.",
+        levels: [
+            {
+                id: 601,
+                title: "HTTP Basics",
+                description: "Conversa entre computadores.",
+                color: 'brand',
+                icon: 'zap',
+                totalQuestions: 3,
+                stars: 0,
+                learnableConcepts: [
+                    { term: 'Request', definition: 'Pedido feito ao servidor.', type: 'Inglês' },
+                    { term: 'Response', definition: 'Resposta do servidor.', type: 'Inglês' },
+                    { term: 'Server', definition: 'Computador que serve dados.', type: 'Inglês' }
+                ],
+                questions: [
+                    {
+                        id: 't_http',
+                        type: QuestionType.THEORY,
+                        difficulty: 'easy',
+                        title: 'A Web',
+                        prompt: 'Request',
+                        englishWord: 'Request',
+                        theoryContent: 'A web funciona com perguntas e respostas. \n\nO seu navegador faz um **Request** (Pedido) e o **Server** (Servidor) manda uma **Response** (Resposta).',
+                        codeSnippet: 'Client -> Request -> Server\nClient <- Response <- Server',
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
+                    {
+                        id: 'q_trans_req',
+                        type: QuestionType.TRANSLATION,
+                        difficulty: 'medium',
+                        title: 'Tradução',
+                        prompt: 'O que é um "Request"?',
+                        options: [
+                            { id: '1', text: 'Um pedido/solicitação', isCorrect: true },
+                            { id: '2', text: 'Uma recusa', isCorrect: false },
+                            { id: '3', text: 'Um teste', isCorrect: false }
+                        ],
+                        correctFeedback: 'Correct!',
+                        wrongFeedback: 'Request é solicitar algo.'
+                    }
+                ]
+            },
+            {
+                id: 602,
+                title: "JSON Data",
+                description: "Formato de dados.",
+                color: 'info',
+                icon: 'code',
+                totalQuestions: 3,
+                stars: 0,
+                learnableConcepts: [
+                    { term: 'Key', definition: 'Chave (nome do dado).', type: 'Inglês' },
+                    { term: 'Value', definition: 'Valor do dado.', type: 'Inglês' },
+                    { term: 'Parse', definition: 'Converter texto para código.', type: 'Inglês' }
+                ],
+                questions: [
+                    {
+                        id: 't_json',
+                        type: QuestionType.THEORY,
+                        difficulty: 'medium',
+                        title: 'Dados',
+                        prompt: 'Parse',
+                        englishWord: 'Parse',
+                        theoryContent: 'Dados vêm como texto. Para o código entender, precisamos fazer o **Parse** (Analisar/Converter). \n\nJSON é o formato mais comum, com pares de **Key** (Chave) e **Value** (Valor).',
+                        codeSnippet: 'JSON.parse(\'{"id": 1}\');',
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
+                    {
+                        id: 'q_match_json',
+                        type: QuestionType.PAIR_MATCH,
+                        difficulty: 'medium',
+                        title: 'JSON Terms',
+                        prompt: 'Associe:',
+                        options: [],
+                        pairs: [
+                            { id: '1', text: 'Key', pairId: '1a' },
+                            { id: '1a', text: 'Chave', pairId: '1' },
+                            { id: '2', text: 'Value', pairId: '2a' },
+                            { id: '2a', text: 'Valor', pairId: '2' },
+                            { id: '3', text: 'Parse', pairId: '3a' },
+                            { id: '3a', text: 'Converter', pairId: '3' }
+                        ],
+                        correctFeedback: 'Good job!',
+                        wrongFeedback: 'Try again.'
                     }
                 ]
             }
