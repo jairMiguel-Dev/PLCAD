@@ -1137,9 +1137,13 @@ export const generateRandomUnit = (startUnitId: number, startLevelId: number): U
 // Helper to get a level even if it's dynamically generated
 export const getLevelById = (id: number): Level | undefined => {
     // 1. Try static curriculum
+    let level: Level | undefined;
     for (const unit of CURRICULUM) {
-        const level = unit.levels.find(l => l.id === id);
-        if (level) return level;
+        const found = unit.levels.find(l => l.id === id);
+        if (found) {
+            level = found;
+            break;
+        }
     }
 
     // 2. If id is high, it might be generated. 
@@ -1147,10 +1151,56 @@ export const getLevelById = (id: number): Level | undefined => {
     // deterministically or assume App/Home passed the data context. 
     // However, for this demo, we'll implement a simple deterministic generator based on ID 
     // so direct linking works.
-    if (id > 900) {
+    if (!level && id > 900) {
         const seedUnitId = Math.floor(id / 100); // approx
         const generatedUnit = generateRandomUnit(seedUnitId, Math.floor(id / 10) * 10); // approximate logic
-        return generatedUnit.levels.find(l => l.id === id) || generatedUnit.levels[0];
+        level = generatedUnit.levels.find(l => l.id === id) || generatedUnit.levels[0];
+    }
+
+    if (level) {
+        // SHUFFLE OPTIONS: Randomize the order of options for relevant question types
+        const questions = level.questions.map(q => {
+            if (q.options && q.options.length > 1 && (
+                q.type === QuestionType.MULTIPLE_CHOICE ||
+                q.type === QuestionType.LISTENING ||
+                q.type === QuestionType.CODE_BUILDER
+            )) {
+                return {
+                    ...q,
+                    options: [...q.options].sort(() => Math.random() - 0.5)
+                };
+            }
+            return q;
+        });
+
+        // GARANTIA DE TEORIA: Separa questões de teoria das práticas
+        const theoryQuestions = questions.filter(q => q.type === QuestionType.THEORY || q.theory);
+        const practiceQuestions = questions.filter(q => q.type !== QuestionType.THEORY && !q.theory);
+
+        let selectedQuestions: typeof level.questions = [];
+
+        // Se houver teoria, garante que a primeira questão seja de teoria
+        if (theoryQuestions.length > 0) {
+            // Pega a primeira teoria definida (geralmente a intro)
+            selectedQuestions.push(theoryQuestions[0]);
+
+            // Mistura o resto (outras teorias + práticas)
+            const remaining = [...theoryQuestions.slice(1), ...practiceQuestions];
+            const shuffledRemaining = remaining.sort(() => Math.random() - 0.5);
+
+            // Preenche até 5 questões (1 teoria + 4 aleatórias)
+            const countToTake = Math.min(4, shuffledRemaining.length);
+            selectedQuestions = [...selectedQuestions, ...shuffledRemaining.slice(0, countToTake)];
+        } else {
+            // Se não tiver teoria, segue o fluxo normal aleatório
+            selectedQuestions = [...questions].sort(() => Math.random() - 0.5).slice(0, 5);
+        }
+
+        return {
+            ...level,
+            questions: selectedQuestions,
+            totalQuestions: selectedQuestions.length
+        };
     }
 
     return undefined;
