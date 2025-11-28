@@ -1,6 +1,6 @@
 
 import { QuestionType, Unit, Achievement, ShopItem, Quest, Level } from './types';
-import { Heart, Zap, Crown, Gem, Trophy, Flame } from 'lucide-react';
+import { Heart, Zap, Crown, Coins, Gem } from 'lucide-react';
 
 export const MAX_HEARTS = 5;
 export const HEART_REFILL_TIME_MS = 35 * 60 * 1000; // 35 minutes
@@ -13,26 +13,11 @@ export const calculateLevel = (xp: number) => Math.floor(Math.sqrt(xp / 100)) + 
 export const calculateXpForNextLevel = (level: number) => 100 * Math.pow(level, 2);
 
 export const DAILY_QUEST_TEMPLATES: Omit<Quest, 'current' | 'completed' | 'claimed'>[] = [
-    // ========== MISSÕES FÁCEIS (Iniciantes) ==========
-    { id: 'q_less_1', description: '🌟 Complete 1 lição hoje', target: 1, reward: 15, type: 'lesson' },
-    { id: 'q_xp_1', description: '⚡ Ganhe 30 XP hoje', target: 30, reward: 10, type: 'xp' },
-    { id: 'q_streak_1', description: '🔥 Mantenha sua ofensiva', target: 1, reward: 10, type: 'streak' },
-    { id: 'q_less_2', description: '📚 Complete 2 lições hoje', target: 2, reward: 20, type: 'lesson' },
-
-    // ========== MISSÕES MÉDIAS (Intermediárias) ==========
-    { id: 'q_less_3', description: '💪 Complete 3 lições hoje', target: 3, reward: 35, type: 'lesson' },
-    { id: 'q_xp_2', description: '🎯 Ganhe 100 XP hoje', target: 100, reward: 40, type: 'xp' },
-    { id: 'q_perf_1', description: '💎 Faça 1 lição perfeita', target: 1, reward: 50, type: 'perfect' },
-    { id: 'q_xp_3', description: '⭐ Ganhe 150 XP hoje', target: 150, reward: 55, type: 'xp' },
-    { id: 'q_less_4', description: '🚀 Complete 4 lições hoje', target: 4, reward: 50, type: 'lesson' },
-
-    // ========== MISSÕES DIFÍCEIS (Avançadas) ==========
-    { id: 'q_less_5', description: '🏆 Complete 5 lições hoje', target: 5, reward: 80, type: 'lesson' },
-    { id: 'q_xp_4', description: '🌟 Ganhe 250 XP hoje', target: 250, reward: 100, type: 'xp' },
-    { id: 'q_perf_2', description: '💯 Faça 2 lições perfeitas', target: 2, reward: 120, type: 'perfect' },
-    { id: 'q_less_6', description: '👑 Complete 7 lições hoje', target: 7, reward: 150, type: 'lesson' },
-    { id: 'q_streak_2', description: '🔥 Atinja 7 dias de ofensiva', target: 7, reward: 100, type: 'streak' },
-    { id: 'q_perf_3', description: '⚡ Faça 3 lições perfeitas', target: 3, reward: 180, type: 'perfect' },
+    { id: 'q_less_1', description: 'Complete 2 lições hoje', target: 2, reward: 10, type: 'lesson' },
+    { id: 'q_xp_1', description: 'Ganhe 50 XP hoje', target: 50, reward: 15, type: 'xp' },
+    { id: 'q_perf_1', description: 'Faça 1 lição perfeita', target: 1, reward: 25, type: 'perfect' },
+    { id: 'q_less_2', description: 'Complete 3 lições hoje', target: 3, reward: 20, type: 'lesson' },
+    { id: 'q_xp_2', description: 'Ganhe 100 XP hoje', target: 100, reward: 30, type: 'xp' },
 ];
 
 export const SHOP_ITEMS: ShopItem[] = [
@@ -45,34 +30,18 @@ export const SHOP_ITEMS: ShopItem[] = [
         type: 'consumable'
     },
     {
-        id: 'skip_question',
-        name: 'Pular Questão',
-        description: 'Pule uma questão difícil durante uma lição. Use com sabedoria!',
-        cost: 50,
-        icon: Zap,
-        type: 'consumable'
-    },
-    {
-        id: 'quest_reset',
-        name: 'Reset de Missões',
-        description: 'Gere 3 novas missões diárias imediatamente e ganhe mais gemas hoje!',
-        cost: 150,
-        icon: Trophy,
-        type: 'consumable'
-    },
-    {
         id: 'streak_freeze',
         name: 'Congelar Ofensiva',
         description: 'Mantenha sua sequência mesmo se ficar 1 dia sem jogar.',
         cost: 200,
-        icon: Flame,
+        icon: Zap,
         type: 'consumable'
     },
     {
         id: 'premium_sub',
         name: 'ProGres Super',
         description: 'Vidas infinitas, zero anúncios, emblema dourado e acesso a conteúdos exclusivos.',
-        cost: 19.99,
+        cost: 19.99, // R$ 19,99/mês
         icon: Crown,
         type: 'subscription'
     },
@@ -87,30 +56,12 @@ export const SHOP_ITEMS: ShopItem[] = [
     },
     {
         id: 'gems_medium',
-        name: 'Bolsa de Gemas',
-        description: '+800 Gemas',
+        name: 'Saco de Gemas',
+        description: '+1200 Gemas',
         cost: 9.99,
-        icon: Gem,
+        icon: Coins,
         type: 'currency_pack',
-        gemAmount: 800
-    },
-    {
-        id: 'gems_large',
-        name: 'Cofre de Gemas',
-        description: '+2000 Gemas',
-        cost: 24.99,
-        icon: Gem,
-        type: 'currency_pack',
-        gemAmount: 2000
-    },
-    {
-        id: 'gems_huge',
-        name: 'Tesouro de Gemas',
-        description: '+6000 Gemas',
-        cost: 49.99,
-        icon: Gem,
-        type: 'currency_pack',
-        gemAmount: 6000
+        gemAmount: 1200
     }
 ];
 
@@ -118,708 +69,1022 @@ export const ACHIEVEMENTS: Achievement[] = [
     {
         id: 'first_step',
         title: 'Hello World',
-        description: 'Complete sua primeira lição.',
+        description: 'Complete sua primeira lição de JavaScript.',
         icon: '🚀',
         condition: (stats) => stats.lessonsCompleted >= 1
     },
     {
-        id: 'streak_3',
-        title: 'Aquecimento',
-        description: 'Atinja uma ofensiva de 3 dias.',
-        icon: '🔥',
-        condition: (stats) => stats.streakDays >= 3
-    },
-    {
-        id: 'streak_7',
-        title: 'Em Chamas',
-        description: 'Atinja uma ofensiva de 7 dias.',
-        icon: '🌋',
-        condition: (stats) => stats.streakDays >= 7
-    },
-    {
-        id: 'streak_30',
-        title: 'Imparável',
-        description: 'Atinja uma ofensiva de 30 dias.',
-        icon: '👑',
-        condition: (stats) => stats.streakDays >= 30
-    },
-    {
-        id: 'xp_100',
-        title: 'Aprendiz',
-        description: 'Ganhe 100 XP total.',
-        icon: '🌱',
-        condition: (stats) => stats.totalXP >= 100
-    },
-    {
-        id: 'xp_1000',
-        title: 'Desenvolvedor',
-        description: 'Ganhe 1.000 XP total.',
-        icon: '💻',
-        condition: (stats) => stats.totalXP >= 1000
-    },
-    {
-        id: 'xp_5000',
-        title: 'Arquiteto',
-        description: 'Ganhe 5.000 XP total.',
-        icon: '🏛️',
-        condition: (stats) => stats.totalXP >= 5000
-    },
-    {
-        id: 'lessons_10',
-        title: 'Estudioso',
-        description: 'Complete 10 lições.',
-        icon: '📚',
-        condition: (stats) => stats.lessonsCompleted >= 10
-    },
-    {
-        id: 'lessons_50',
-        title: 'Bibliotecário',
-        description: 'Complete 50 lições.',
-        icon: '🎓',
-        condition: (stats) => stats.lessonsCompleted >= 50
-    },
-    {
-        id: 'perfect_1',
-        title: 'Perfeccionista',
-        description: 'Complete uma lição sem erros.',
-        icon: '✨',
-        condition: (stats) => stats.perfectLessons >= 1
-    },
-    {
-        id: 'perfect_10',
-        title: 'Mestre Zen',
-        description: 'Complete 10 lições sem erros.',
-        icon: '🧘',
-        condition: (stats) => stats.perfectLessons >= 10
-    },
-    {
-        id: 'combo_5',
+        id: 'on_fire',
         title: 'Compilador Humano',
         description: 'Atinja um combo de 5x em uma lição.',
-        icon: '⚡',
+        icon: '🔥',
         condition: (_, result) => (result ? result.maxCombo >= 5 : false)
     },
     {
-        id: 'combo_10',
-        title: 'Overclocked',
-        description: 'Atinja um combo de 10x em uma lição.',
-        icon: '🚀',
-        condition: (_, result) => (result ? result.maxCombo >= 10 : false)
+        id: 'perfectionist',
+        title: 'Clean Code',
+        description: 'Complete uma lição sem nenhum erro de sintaxe.',
+        icon: '💎',
+        condition: (_, result) => (result ? result.mistakeCount === 0 : false)
     },
     {
-        id: 'gem_hoarder',
-        title: 'Magnata',
-        description: 'Acumule 1.000 gemas.',
-        icon: '💎',
+        id: 'xp_hunter',
+        title: 'Full Stack Jr.',
+        description: 'Acumule 500 XP total.',
+        icon: '⚡',
+        condition: (stats) => stats.totalXP >= 500
+    },
+    {
+        id: 'rich',
+        title: 'Investidor Tech',
+        description: 'Acumule 1000 gemas.',
+        icon: '💰',
         condition: (stats) => stats.gems >= 1000
     }
 ];
 
-// Função auxiliar para criar questões básicas
-const createQuestion = (
-    id: string,
-    type: QuestionType,
-    difficulty: 'easy' | 'medium' | 'hard',
-    title: string,
-    prompt: string,
-    options: any[] = [],
-    correctFeedback: string = 'Correto!',
-    wrongFeedback: string = 'Tente novamente!'
-) => ({
-    id,
-    type,
-    difficulty,
-    title,
-    prompt,
-    options,
-    correctFeedback,
-    wrongFeedback
-});
-
 export const CURRICULUM: Unit[] = [
-    // ==================== UNIDADE 1: FUNDAMENTOS ====================
     {
         id: 1,
-        title: "Unidade 1: Fundamentos",
-        description: "Variáveis, tipos de dados e operadores básicos",
+        title: "Unidade 1: Primeiros Passos",
+        description: "Variáveis, Strings e Números.",
         levels: [
             {
                 id: 101,
-                title: "Variáveis com let",
-                description: "Declaração de variáveis",
+                title: "Variáveis: Let & Const",
+                description: "Onde guardamos dados.",
                 color: 'brand',
                 icon: 'code',
-                totalQuestions: 8,
+                totalQuestions: 4,
                 stars: 0,
                 learnableConcepts: [
-                    { term: 'Variable', definition: 'Espaço na memória para guardar dados', type: 'Lógica', example: 'let x = 10;' },
-                    { term: 'let', definition: 'Palavra-chave para declarar variáveis mutáveis', type: 'Sintaxe', example: 'let nome = "Ana";' }
+                    { term: 'Variable', definition: 'Um espaço na memória para guardar dados.', type: 'Inglês', example: 'The score variable is 10.' },
+                    { term: 'const', definition: 'Declara uma variável constante que não pode mudar.', type: 'Sintaxe', example: 'const pi = 3.14;' },
+                    { term: 'let', definition: 'Declara uma variável que pode ser reatribuída.', type: 'Sintaxe', example: 'let age = 20;' }
                 ],
                 questions: [
                     {
-                        id: 'q101_1',
+                        id: 't1',
                         type: QuestionType.THEORY,
                         difficulty: 'easy',
-                        title: 'Intro',
-                        prompt: 'Variáveis',
+                        title: 'Variáveis',
+                        prompt: 'Variable Declaration',
                         englishWord: 'Variable',
                         phonetic: '/ˈveə.ri.ə.bəl/',
-                        theory: {
-                            concept: 'Variáveis',
-                            title: 'O que são essas tal de variáveis?',
-                            explanation: 'Imagina que você tem uma caixa. Nessa caixa, você pode guardar coisas: um número, um nome, um emoji... qualquer coisa! A variável é essa caixinha na memória do computador. Você dá um nome pra ela (tipo "idade" ou "nome") e coloca um valor lá dentro. Simples assim!',
-                            examples: [
-                                'let idade = 25;\n// Criamos uma caixinha chamada "idade"\n// e colocamos o número 25 dentro',
-                                'let nome = "Ana";\n// Agora temos uma caixa "nome"\n// com o texto "Ana" dentro',
-                                'let estaFeliz = true;\n// E aqui guardamos um valor verdadeiro/falso'
-                            ],
-                            tips: [
-                                'O "let" é tipo dizer "cria uma nova caixinha pra mim!"',
-                                'Escolha nomes que façam sentido. "x" não diz nada, mas "idadeUsuario" deixa claro!',
-                                'Depois você pode trocar o que está dentro da caixa com "idade = 26;"'
-                            ]
-                        },
-                        codeSnippet: 'let idade = 25;',
+                        theoryContent: 'Imagine uma **Variable** como uma caixa etiquetada. \n\nSe a caixa for aberta (**let**), você pode trocar o que tem dentro. Se a caixa for lacrada (**const**), o valor é constante e nunca muda.',
+                        codeSnippet: 'let score = 10;\nscore = 20; // ✅\n\nconst pi = 3.14;\npi = 0; // ❌ Erro!',
                         options: [],
                         correctFeedback: '',
-                        wrongFeedback: ''
+                        wrongFeedback: '',
                     },
-                    { id: 'q101_2', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'easy', title: 'Sintaxe', prompt: 'Como declarar uma variável?', options: [{ id: '1', text: 'let x = 10;', isCorrect: true }, { id: '2', text: 'x = 10;', isCorrect: false }, { id: '3', text: 'var x 10;', isCorrect: false }], correctFeedback: 'Isso! Use let', wrongFeedback: 'Falta let' },
-                    { id: 'q101_3', type: QuestionType.CODE_BUILDER, difficulty: 'easy', title: 'Prática', prompt: 'Declare uma variável "nome":', options: [{ id: '1', text: 'let nome;', isCorrect: true }, { id: '2', text: 'const nome;', isCorrect: false }, { id: '3', text: 'nome;', isCorrect: false }], correctFeedback: 'Perfeito!', wrongFeedback: 'Use let' },
-                    { id: 'q101_4', type: QuestionType.FILL_IN_BLANK, difficulty: 'medium', title: 'Complete', prompt: 'Complete o código:', codeSnippet: '___ x = 5;', correctAnswer: 'let', options: [], correctFeedback: 'Ótimo!', wrongFeedback: 'Use let' },
-                    { id: 'q101_5', type: QuestionType.TRANSLATION, difficulty: 'easy', title: 'Inglês', prompt: 'O que significa "declare"?', options: [{ id: '1', text: 'Declarar', isCorrect: true }, { id: '2', text: 'Deletar', isCorrect: false }, { id: '3', text: 'Duplicar', isCorrect: false }], correctFeedback: 'Correto!', wrongFeedback: 'Revise' },
-                    { id: 'q101_6', type: QuestionType.DRAG_AND_DROP, difficulty: 'medium', title: 'Monte', prompt: 'Crie: let score = 0;', options: [], segments: ['let', 'score', '=', '0;'], distractors: ['const', 'var'], correctFeedback: 'Exato!', wrongFeedback: 'Ordem errada' },
-                    { id: 'q101_7', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'medium', title: 'Conceito', prompt: 'let permite mudança de valor?', options: [{ id: '1', text: 'Sim', isCorrect: true }, { id: '2', text: 'Não', isCorrect: false }], correctFeedback: 'Sim!', wrongFeedback: 'let é mutável' },
-                    { id: 'q101_8', type: QuestionType.CODE_BUILDER, difficulty: 'easy', title: 'Exercício', prompt: 'Declare "idade" com valor 20:', options: [{ id: '1', text: 'let idade = 20;', isCorrect: true }, { id: '2', text: 'let idade 20;', isCorrect: false }, { id: '3', text: 'idade = 20;', isCorrect: false }], correctFeedback: 'Perfeito!', wrongFeedback: 'Faltou let' },
-                    { id: 'q101_9', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'hard', title: 'Moderno', prompt: 'Qual é a forma moderna de declarar variáveis?', options: [{ id: '1', text: 'let', isCorrect: true }, { id: '2', text: 'var', isCorrect: false }], correctFeedback: 'Isso! var é antigo', wrongFeedback: 'Evite var' },
-                    { id: 'q101_10', type: QuestionType.CODE_BUILDER, difficulty: 'medium', title: 'Booleano', prompt: 'Declare "ativo" como true:', options: [{ id: '1', text: 'let ativo = true;', isCorrect: true }, { id: '2', text: 'let ativo = "true";', isCorrect: false }], correctFeedback: 'Correto!', wrongFeedback: 'Sem aspas para boolean' },
-                    { id: 'q101_11', type: QuestionType.FILL_IN_BLANK, difficulty: 'easy', title: 'Atribuição', prompt: 'Use o sinal correto:', codeSnippet: 'let x ___ 10;', correctAnswer: '=', options: [], correctFeedback: 'Igual atribui!', wrongFeedback: 'Use =' },
-                    { id: 'q101_12', type: QuestionType.TRANSLATION, difficulty: 'medium', title: 'Inglês', prompt: 'O que é "assignment"?', options: [{ id: '1', text: 'Atribuição', isCorrect: true }, { id: '2', text: 'Assinatura', isCorrect: false }], correctFeedback: 'Isso!', wrongFeedback: 'Assignment = Atribuição' }
+                    {
+                        id: 'q1',
+                        type: QuestionType.CODE_BUILDER,
+                        difficulty: 'easy',
+                        title: 'Prática',
+                        prompt: 'Declare uma variável "name" que PODE mudar:',
+                        options: [
+                            { id: '1', text: 'let name;', isCorrect: true },
+                            { id: '2', text: 'const name;', isCorrect: false },
+                            { id: '3', text: 'var name;', isCorrect: false },
+                        ],
+                        correctFeedback: 'Isso! "let" permite mudanças.',
+                        wrongFeedback: 'Use "let" para valores mutáveis.',
+                    },
+                    {
+                        id: 'q2',
+                        type: QuestionType.FILL_IN_BLANK,
+                        difficulty: 'medium',
+                        title: 'Sintaxe',
+                        prompt: 'Crie uma constante para a gravidade:',
+                        codeSnippet: '___ gravity = 9.8;',
+                        correctAnswer: 'const',
+                        options: [],
+                        correctFeedback: 'Exato! A gravidade não muda, então é const.',
+                        wrongFeedback: 'Use a palavra reservada para constantes.'
+                    },
+                    {
+                        id: 'q3',
+                        type: QuestionType.TRANSLATION,
+                        difficulty: 'easy',
+                        title: 'Inglês Técnico',
+                        prompt: 'O que significa "Assign a value"?',
+                        options: [
+                            { id: '1', text: 'Atribuir um valor', isCorrect: true },
+                            { id: '2', text: 'Assinar um contrato', isCorrect: false },
+                            { id: '3', text: 'Apagar um valor', isCorrect: false }
+                        ],
+                        correctFeedback: 'Correct! Assignment = Atribuição (=).',
+                        wrongFeedback: 'Assign vem de designar/atribuir.'
+                    }
                 ]
             },
             {
                 id: 102,
-                title: "Constantes com const",
-                description: "Valores que não mudam",
+                title: "Tipos de Dados: Strings",
+                description: "Trabalhando com textos.",
                 color: 'info',
                 icon: 'book',
-                totalQuestions: 8,
+                totalQuestions: 3,
                 stars: 0,
                 learnableConcepts: [
-                    { term: 'const', definition: 'Declara constantes imutáveis', type: 'Sintaxe', example: 'const PI = 3.14;' }
+                    { term: 'String', definition: 'Uma sequência de caracteres (texto).', type: 'Lógica', example: '"Hello World"' },
+                    { term: 'Quotes', definition: 'Aspas. Usadas para delimitar Strings.', type: 'Inglês', example: 'Single (\') or Double (") quotes.' }
                 ],
                 questions: [
                     {
-                        id: 'q102_1',
+                        id: 't_str',
                         type: QuestionType.THEORY,
                         difficulty: 'easy',
-                        title: 'Intro',
-                        prompt: 'Constantes',
-                        englishWord: 'Constant',
-                        phonetic: '/ˈkɒn.stənt/',
-                        theory: {
-                            concept: 'Constantes (const)',
-                            title: 'Quando usar const ao invés de let?',
-                            explanation: 'Pensa assim: se você guarda algo numa caixa e NÃO vai trocar depois, use const! É tipo um cofre trancado. 🔒 Por exemplo, o nome da sua escola ou o valor de PI (3.14) não muda, certo? Então usa const! Isso evita bugs porque você não vai mudar sem querer.',
-                            examples: [
-                                'const PI = 3.14;\n// PI nunca muda, sempre 3.14',
-                                'const MINHA_CIDADE = "São Paulo";\n// Cidade fixa, não vai mudar',
-                                'const MAX_TENTATIVAS = 5;\n// Limite fixo do jogo'
-                            ],
-                            tips: [
-                                'Use MAIÚSCULAS para constantes importantes: MAX_SCORE, API_URL',
-                                'Se tentar mudar uma const, dá erro! Isso é ÓTIMO, te protege',
-                                'Dica profissa: sempre comece com const, só mude pra let se precisar trocar depois'
-                            ]
-                        },
-                        codeSnippet: 'const PI = 3.14;',
+                        title: 'Texto é String',
+                        prompt: 'Strings',
+                        englishWord: 'String',
+                        phonetic: '/strɪŋ/',
+                        theoryContent: 'Em programação, texto é chamado de **String** (fio/corda de caracteres). Sempre usamos aspas ("" ou \'\'). \n\nSem aspas, o JavaScript acha que é uma variável!',
+                        codeSnippet: 'let dog = "Rex"; // String\nlet cat = Rex; // Erro (variável Rex não existe)',
                         options: [],
                         correctFeedback: '',
                         wrongFeedback: ''
                     },
-                    { id: 'q102_2', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'easy', title: 'Diferença', prompt: 'const pode mudar de valor?', options: [{ id: '1', text: 'Não', isCorrect: true }, { id: '2', text: 'Sim', isCorrect: false }], correctFeedback: 'Correto!', wrongFeedback: 'const é constante' },
-                    { id: 'q102_3', type: QuestionType.CODE_BUILDER, difficulty: 'easy', title: 'Sintaxe', prompt: 'Declare PI constante:', options: [{ id: '1', text: 'const PI = 3.14;', isCorrect: true }, { id: '2', text: 'let PI = 3.14;', isCorrect: false }], correctFeedback: 'Perfeito!', wrongFeedback: 'Use const' },
-                    { id: 'q102_4', type: QuestionType.FILL_IN_BLANK, difficulty: 'medium', title: 'Complete', prompt: 'Gravidade constante:', codeSnippet: '___ g = 9.8;', correctAnswer: 'const', options: [], correctFeedback: 'Ótimo!', wrongFeedback: 'Use const' },
-                    { id: 'q102_5', type: QuestionType.PAIR_MATCH, difficulty: 'medium', title: 'Associe', prompt: 'Combine:', options: [], pairs: [{ id: 'p1', text: 'let', pairId: 'r1' }, { id: 'r1', text: 'Mutável', pairId: 'p1' }, { id: 'p2', text: 'const', pairId: 'r2' }, { id: 'r2', text: 'Imutável', pairId: 'p2' }], correctFeedback: 'Boa!', wrongFeedback: 'Revise' },
-                    { id: 'q102_6', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'hard', title: 'Erro', prompt: 'O que acontece?  const x = 5; x = 10;', options: [{ id: '1', text: 'Erro', isCorrect: true }, { id: '2', text: 'x = 10', isCorrect: false }], correctFeedback: 'Sim, dá erro!', wrongFeedback: 'const não pode mudar' },
-                    { id: 'q102_7', type: QuestionType.TRANSLATION, difficulty: 'easy', title: 'Inglês', prompt: 'Traduza "constant":', options: [{ id: '1', text: 'Constante', isCorrect: true }, { id: '2', text: 'Construção', isCorrect: false }], correctFeedback: 'Correto!', wrongFeedback: 'Constant = Constante' },
-                    { id: 'q102_8', type: QuestionType.CODE_BUILDER, difficulty: 'medium', title: 'Prática', prompt: 'Declare MAX_PLAYERS = 4:', options: [{ id: '1', text: 'const MAX_PLAYERS = 4;', isCorrect: true }, { id: '2', text: 'let MAX_PLAYERS = 4;', isCorrect: false }], correctFeedback: 'Perfeito!', wrongFeedback: 'Valor fixo = const' }
+                    {
+                        id: 'q_drag_str',
+                        type: QuestionType.DRAG_AND_DROP,
+                        difficulty: 'medium',
+                        title: 'Monte o Código',
+                        prompt: 'Crie uma variável com o texto Hello:',
+                        options: [],
+                        segments: ['const', 'msg', '=', '"Hello";'],
+                        distractors: ['Hello', 'let'],
+                        correctFeedback: 'Perfeito!',
+                        wrongFeedback: 'Lembre das aspas na String.'
+                    },
+                    {
+                        id: 'q_listen_str',
+                        type: QuestionType.LISTENING,
+                        difficulty: 'medium',
+                        title: 'Listening',
+                        prompt: 'Qual tipo de dado foi mencionado?',
+                        englishWord: 'We use a String to store text data.',
+                        options: [
+                            { id: '1', text: 'String', isCorrect: true },
+                            { id: '2', text: 'Number', isCorrect: false },
+                            { id: '3', text: 'Boolean', isCorrect: false }
+                        ],
+                        correctFeedback: 'Yes! String stores text.',
+                        wrongFeedback: 'Ouça atentamente: "Text data".'
+                    }
                 ]
             },
             {
                 id: 103,
-                title: "Tipo String",
-                description: "Trabalhando com texto",
+                title: "Console & Output",
+                description: "Debugando código.",
                 color: 'secondary',
                 icon: 'zap',
-                totalQuestions: 10,
+                totalQuestions: 3,
                 stars: 0,
                 learnableConcepts: [
-                    { term: 'String', definition: 'Tipo de dado para texto', type: 'Lógica', example: '"Hello"' }
+                    { term: 'console.log', definition: 'Comando para exibir dados no terminal.', type: 'Sintaxe', example: 'console.log(x);' },
+                    { term: 'Output', definition: 'A saída de dados de um programa.', type: 'Inglês', example: 'Check the output window.' }
                 ],
                 questions: [
                     {
-                        id: 'q103_1',
+                        id: 't_log',
                         type: QuestionType.THEORY,
                         difficulty: 'easy',
-                        title: 'Intro',
-                        prompt: 'Strings',
-                        englishWord: 'String',
-                        phonetic: '/strɪŋ/',
-                        theory: {
-                            concept: 'Strings (Texto)',
-                            title: 'Como guardar texto no JavaScript?',
-                            explanation: 'String é qualquer texto entre aspas! Pode ser uma palavra, uma frase, um emoji... Tipo quando você manda mensagem no WhatsApp, tudo ali é string! 💬 As aspas dizem pro JavaScript: "Ei, isso aqui é texto, não é código!". Pode usar aspas duplas "" ou simples \'\', tanto faz!',
-                            examples: [
-                                'let nome = "Maria";\n// Texto com aspas duplas',
-                                'let cidade = \'Rio de Janeiro\';\n// Texto com aspas simples (mesma coisa)',
-                                'let emoji = "🚀💻";\n// Sim, emojis funcionam!',
-                                'let frase = "Eu tenho 15 anos";\n// Números DENTRO de aspas viram texto'
-                            ],
-                            tips: [
-                                'Sem aspas = variável. Com aspas = texto!',
-                                'Quer usar aspas DENTRO do texto? Alterne: "Ela disse \'olá\'"',
-                                'String vazia é válida: let vazio = "";'
-                            ]
-                        },
-                        codeSnippet: 'let nome = "Ana";',
+                        title: 'O Diário de Bordo',
+                        prompt: 'Console Log',
+                        englishWord: 'Output',
+                        phonetic: '/ˈaʊt.pʊt/',
+                        theoryContent: '`console.log()` é seu melhor amigo. Ele "imprime" informações no painel de desenvolvedor. Usamos isso para verificar se nosso código está funcionando como esperado.',
+                        codeSnippet: 'console.log("O sistema está online!");',
                         options: [],
                         correctFeedback: '',
                         wrongFeedback: ''
                     },
-                    { id: 'q103_2', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'easy', title: 'Sintaxe', prompt: 'String usa:', options: [{ id: '1', text: 'Aspas', isCorrect: true }, { id: '2', text: 'Parênteses', isCorrect: false }], correctFeedback: 'Sim!', wrongFeedback: 'Use aspas' },
-                    { id: 'q103_3', type: QuestionType.CODE_BUILDER, difficulty: 'easy', title: 'Código', prompt: 'Crie string "JS":', options: [{ id: '1', text: 'let lang = "JS";', isCorrect: true }, { id: '2', text: 'let lang = JS;', isCorrect: false }], correctFeedback: 'Perfeito!', wrongFeedback: 'Faltou aspas' },
-                    { id: 'q103_4', type: QuestionType.FILL_IN_BLANK, difficulty: 'medium', title: 'Complete', prompt: 'String vazia:', codeSnippet: 'let texto = ___;', correctAnswer: '""', options: [], correctFeedback: 'Ótimo!', wrongFeedback: 'Use ""' },
-                    { id: 'q103_5', type: QuestionType.TRANSLATION, difficulty: 'easy', title: 'Inglês', prompt: 'O que é "text"?', options: [{ id: '1', text: 'Texto', isCorrect: true }, { id: '2', text: 'Teste', isCorrect: false }], correctFeedback: 'Correto!', wrongFeedback: 'Text = Texto' },
-                    { id: 'q103_6', type: QuestionType.DRAG_AND_DROP, difficulty: 'medium', title: 'Monte', prompt: 'Crie: const msg = "Ok";', options: [], segments: ['const', 'msg', '=', '"Ok";'], distractors: ['let', 'Ok'], correctFeedback: 'Boa!', wrongFeedback: 'Ordem errada' },
-                    { id: 'q103_7', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'medium', title: 'Conceito', prompt: 'String pode conter números?', options: [{ id: '1', text: 'Sim', isCorrect: true }, { id: '2', text: 'Não', isCorrect: false }], correctFeedback: 'Sim! "123"', wrongFeedback: '"123" é texto' },
-                    { id: 'q103_8', type: QuestionType.CODE_BUILDER, difficulty: 'easy', title: 'Exercício', prompt: 'String com espaço:', options: [{ id: '1', text: 'let nome = "Ana Silva";', isCorrect: true }, { id: '2', text: 'let nome = Ana Silva;', isCorrect: false }], correctFeedback: 'Perfeito!', wrongFeedback: 'Faltou aspas' },
-                    { id: 'q103_9', type: QuestionType.LISTENING, difficulty: 'medium', title: 'Listen', prompt: 'Tipo mencionado?', englishWord: 'String data type', options: [{ id: '1', text: 'String', isCorrect: true }, { id: '2', text: 'Number', isCorrect: false }], correctFeedback: 'Yes!', wrongFeedback: 'Listen again' },
-                    { id: 'q103_10', type: QuestionType.PAIR_MATCH, difficulty: 'easy', title: 'Associe', prompt: 'Tipos:', options: [], pairs: [{ id: 'p1', text: '"Hello"', pairId: 'r1' }, { id: 'r1', text: 'String', pairId: 'p1' }, { id: 'p2', text: '42', pairId: 'r2' }, { id: 'r2', text: 'Number', pairId: 'p2' }], correctFeedback: 'Boa!', wrongFeedback: 'Tente de novo' }
+                    {
+                        id: 'q_match_log',
+                        type: QuestionType.PAIR_MATCH,
+                        difficulty: 'medium',
+                        title: 'Associe',
+                        prompt: 'Conecte os termos:',
+                        options: [],
+                        pairs: [
+                            { id: 'p1', text: 'console.log', pairId: 'r1' },
+                            { id: 'r1', text: 'Mostrar dados', pairId: 'p1' },
+                            { id: 'p2', text: 'Erro', pairId: 'r2' },
+                            { id: 'r2', text: 'Bug', pairId: 'p2' },
+                            { id: 'p3', text: 'Input', pairId: 'r3' },
+                            { id: 'r3', text: 'Entrada', pairId: 'p3' },
+                        ],
+                        correctFeedback: 'Muito bem!',
+                        wrongFeedback: 'Tente novamente.'
+                    },
+                    {
+                        id: 'q_code_log',
+                        type: QuestionType.CODE_BUILDER,
+                        difficulty: 'easy',
+                        title: 'Prática',
+                        prompt: 'Mostre o valor de "x" no console:',
+                        options: [
+                            { id: '1', text: 'console.log(x);', isCorrect: true },
+                            { id: '2', text: 'print(x);', isCorrect: false },
+                            { id: '3', text: 'console(x);', isCorrect: false }
+                        ],
+                        correctFeedback: 'Exato! .log() é o método.',
+                        wrongFeedback: 'Faltou o .log ou usou comando de outra linguagem.'
+                    }
                 ]
             },
-            // Continua mais 7 níveis na Unidade 1...
-            // Por questão de espaço, vou criar um resumo dos outros níveis
             {
                 id: 104,
-                title: "Tipo Number",
-                description: "Números e matemática",
+                title: "Números e Operações",
+                description: "Matemática básica.",
                 color: 'warn',
-                icon: 'code',
-                totalQuestions: 9,
+                icon: 'zap',
+                totalQuestions: 3,
                 stars: 0,
                 learnableConcepts: [
-                    { term: 'Number', definition: 'Tipo de dado para números', type: 'Lógica', example: '42, 3.14, -5' },
-                    { term: 'Operadores', definition: 'Símbolos para operações matemáticas', type: 'Sintaxe', example: '+ - * /' }
+                    { term: 'Number', definition: 'Tipo de dado numérico.', type: 'Lógica', example: 'let age = 25;' },
+                    { term: 'Operators', definition: 'Símbolos para operações (+, -, *, /).', type: 'Sintaxe', example: 'let sum = 10 + 5;' }
                 ],
                 questions: [
                     {
-                        id: 'q104_1',
+                        id: 't_num',
                         type: QuestionType.THEORY,
                         difficulty: 'easy',
-                        title: 'Intro',
-                        prompt: 'Números',
-                        englishWord: 'Number',
-                        phonetic: '/ˈnʌm.bər/',
-                        theory: {
-                            concept: 'Numbers (Números)',
-                            title: 'Matemática no JavaScript!',
-                            explanation: 'Números no JS são suuuper simples! Sem aspas, só digita o número. Pode ser inteiro (42), decimal (3.14), negativo (-5)... JavaScript faz contas tipo calculadora! Usa + pra somar, - pra subtrair, * pra multiplicar e / pra dividir. Igual na escola! 🧮',
-                            examples: [
-                                'let idade = 16;\n// Número inteiro',
-                                'let preco = 29.99;\n// Número decimal (usa PONTO, não vírgula!)',
-                                'let temperatura = -5;\n// Número negativo',
-                                'let resultado = 10 + 5 * 2;\n// Matemática: 10 + 10 = 20',
-                                'let media = (8 + 7 + 9) / 3;\n// Usa parênteses pra calcular antes!'
-                            ],
-                            tips: [
-                                'ATENÇÃO: 42 é número, "42" é texto! Sem aspas = número',
-                                'Decimais usam PONTO: 3.14 ✅  |  3,14 ❌',
-                                'Multiplicação é * e divisão é / (sem símbolo ÷)'
-                            ]
-                        },
-                        codeSnippet: 'let idade = 25;\nlet preco = 19.99;',
+                        title: 'Matemática',
+                        prompt: 'Numbers',
+                        englishWord: 'Integer',
+                        phonetic: '/ˈɪn.tɪ.dʒər/',
+                        theoryContent: 'JavaScript faz contas facilmente. Use `+` para somar, `-` para subtrair, `*` para multiplicar e `/` para dividir. Não use aspas para números!',
+                        codeSnippet: 'let score = 10 + 5; // 15\nlet double = score * 2; // 30',
                         options: [],
                         correctFeedback: '',
                         wrongFeedback: ''
                     },
-                    { id: 'q104_2', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'easy', title: 'Tipo', prompt: 'Qual é número?', options: [{ id: '1', text: '42', isCorrect: true }, { id: '2', text: '\"42\"', isCorrect: false }, { id: '3', text: 'true', isCorrect: false }], correctFeedback: 'Correto!', wrongFeedback: 'Sem aspas!' },
-                    { id: 'q104_3', type: QuestionType.CODE_BUILDER, difficulty: 'easy', title: 'Código', prompt: 'Crie número 100:', options: [{ id: '1', text: 'let num = 100;', isCorrect: true }, { id: '2', text: 'let num = \"100\";', isCorrect: false }, { id: '3', text: 'let num = 100', isCorrect: false }], correctFeedback: 'Perfeito!', wrongFeedback: 'Sem aspas e com ponto-e-vírgula' },
-                    { id: 'q104_4', type: QuestionType.FILL_IN_BLANK, difficulty: 'medium', title: 'Operador', prompt: 'Some dois números:', codeSnippet: 'let soma = 5 ___ 3;', correctAnswer: '+', options: [], correctFeedback: 'Ótimo!', wrongFeedback: 'Use +' },
-                    { id: 'q104_5', type: QuestionType.TRANSLATION, difficulty: 'easy', title: 'Inglês', prompt: 'Traduza "number":', options: [{ id: '1', text: 'Número', isCorrect: true }, { id: '2', text: 'Nome', isCorrect: false }, { id: '3', text: 'Numeral', isCorrect: false }], correctFeedback: 'Correto!', wrongFeedback: 'Number = Número' },
-                    { id: 'q104_6', type: QuestionType.DRAG_AND_DROP, difficulty: 'medium', title: 'Monte', prompt: 'Crie: let resultado = 10 * 2;', options: [], segments: ['let', 'resultado', '=', '10', '*', '2;'], distractors: ['const', '+', '\"10\"'], correctFeedback: 'Perfeito!', wrongFeedback: 'Ordem errada' },
-                    { id: 'q104_7', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'medium', title: 'Decimal', prompt: 'Number aceita decimal?', options: [{ id: '1', text: 'Sim', isCorrect: true }, { id: '2', text: 'Não', isCorrect: false }], correctFeedback: 'Sim! 3.14', wrongFeedback: 'JS aceita decimais' },
-                    { id: 'q104_8', type: QuestionType.PAIR_MATCH, difficulty: 'medium', title: 'Operadores', prompt: 'Associe:', options: [], pairs: [{ id: 'p1', text: '+', pairId: 'r1' }, { id: 'r1', text: 'Soma', pairId: 'p1' }, { id: 'p2', text: '-', pairId: 'r2' }, { id: 'r2', text: 'Subtração', pairId: 'p2' }, { id: 'p3', text: '*', pairId: 'r3' }, { id: 'r3', text: 'Multiplicação', pairId: 'p3' }], correctFeedback: 'Boa!', wrongFeedback: 'Revise os operadores' },
-                    { id: 'q104_9', type: QuestionType.CODE_BUILDER, difficulty: 'hard', title: 'Cálculo', prompt: 'Calcule média de 10 e 20:', options: [{ id: '1', text: 'let media = (10 + 20) / 2;', isCorrect: true }, { id: '2', text: 'let media = 10 + 20 / 2;', isCorrect: false }, { id: '3', text: 'let media = \"15\";', isCorrect: false }], correctFeedback: 'Excelente!', wrongFeedback: 'Use parênteses!' }
+                    {
+                        id: 'q_calc',
+                        type: QuestionType.FILL_IN_BLANK,
+                        difficulty: 'easy',
+                        title: 'Cálculo',
+                        prompt: 'Some 10 com 20:',
+                        codeSnippet: 'let total = 10 ___ 20;',
+                        correctAnswer: '+',
+                        options: [],
+                        correctFeedback: 'Isso! + soma valores.',
+                        wrongFeedback: 'Qual símbolo usamos para adição?'
+                    },
+                    {
+                        id: 'q_drag_math',
+                        type: QuestionType.DRAG_AND_DROP,
+                        difficulty: 'medium',
+                        title: 'Monte a Conta',
+                        prompt: 'Crie uma variável "price" igual a 50:',
+                        options: [],
+                        segments: ['let', 'price', '=', '50;'],
+                        distractors: ['"50"', 'const'],
+                        correctFeedback: 'Correto! Sem aspas para números.',
+                        wrongFeedback: 'Números não levam aspas.'
+                    }
                 ]
             },
             {
                 id: 105,
-                title: "Operadores Aritméticos",
-                description: "+, -, *, /",
+                title: "Variáveis: Reatribuição",
+                description: "Mudando o passado.",
                 color: 'brand',
-                icon: 'zap',
-                totalQuestions: 10,
+                icon: 'code',
+                totalQuestions: 3,
                 stars: 0,
-                learnableConcepts: [{ term: 'Operators', definition: 'Símbolos de operação', type: 'Sintaxe' }],
+                learnableConcepts: [
+                    { term: 'Reassignment', definition: 'Dar um novo valor a uma variável existente.', type: 'Lógica', example: 'x = 5; x = 10;' }
+                ],
                 questions: [
                     {
-                        id: 'q105_1',
+                        id: 't_reassign',
                         type: QuestionType.THEORY,
                         difficulty: 'easy',
-                        title: 'Operadores',
-                        prompt: 'Matemática Básica',
-                        theory: {
-                            concept: 'Operadores Aritméticos',
-                            title: 'Fazendo contas no código',
-                            explanation: 'O JavaScript funciona como uma calculadora super potente. Os símbolos que usamos para fazer contas são chamados de "Operadores".',
-                            examples: [
-                                '10 + 5  // Soma (15)',
-                                '10 - 5  // Subtração (5)',
-                                '10 * 5  // Multiplicação (50) -> Usa asterisco!',
-                                '10 / 5  // Divisão (2) -> Usa barra!'
-                            ],
-                            tips: [
-                                'Para multiplicar use * (asterisco), não x',
-                                'Para dividir use / (barra)',
-                                'O computador segue a ordem matemática: multiplicação vem antes da soma!'
-                            ]
-                        },
+                        title: 'Mudando Valores',
+                        prompt: 'Reassignment',
+                        englishWord: 'Update',
+                        phonetic: '/ʌpˈdeɪt/',
+                        theoryContent: 'Com `let`, você pode atualizar o valor de uma variável. Basta usar o nome dela e o sinal de igual. Não use `let` novamente!',
+                        codeSnippet: 'let points = 0;\npoints = 10; // ✅ Atualizou!\nlet points = 20; // ❌ Erro: já existe!',
                         options: [],
                         correctFeedback: '',
                         wrongFeedback: ''
                     },
-                    { id: 'q105_2', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'easy', title: 'Soma', prompt: 'Qual o resultado de: 10 + 8?', options: [{ id: '1', text: '18', isCorrect: true }, { id: '2', text: '108', isCorrect: false }, { id: '3', text: '2', isCorrect: false }], correctFeedback: 'Isso aí!', wrongFeedback: 'É uma soma simples.' },
-                    { id: 'q105_3', type: QuestionType.CODE_BUILDER, difficulty: 'easy', title: 'Subtração', prompt: 'Calcule 20 menos 5:', options: [{ id: '1', text: '20 - 5', isCorrect: true }, { id: '2', text: '20 + 5', isCorrect: false }, { id: '3', text: '20 : 5', isCorrect: false }], correctFeedback: 'Correto!', wrongFeedback: 'Use o sinal de menos (-)' },
-                    { id: 'q105_4', type: QuestionType.FILL_IN_BLANK, difficulty: 'medium', title: 'Multiplicação', prompt: 'Complete para multiplicar:', codeSnippet: 'let total = 5 ___ 4;', correctAnswer: '*', options: [], correctFeedback: 'Boa! Asterisco multiplica.', wrongFeedback: 'Use * para multiplicar' },
-                    { id: 'q105_5', type: QuestionType.DRAG_AND_DROP, difficulty: 'medium', title: 'Divisão', prompt: 'Divida 50 por 2:', options: [], segments: ['let', 'res', '=', '50', '/', '2;'], distractors: [':', '%'], correctFeedback: 'Perfeito!', wrongFeedback: 'Ordem errada' },
-                    { id: 'q105_6', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'medium', title: 'Símbolo', prompt: 'Qual símbolo faz multiplicação?', options: [{ id: '1', text: '*', isCorrect: true }, { id: '2', text: 'x', isCorrect: false }, { id: '3', text: '.', isCorrect: false }], correctFeedback: 'Exato! O asterisco.', wrongFeedback: 'No código usamos *' },
-                    { id: 'q105_7', type: QuestionType.CODE_BUILDER, difficulty: 'hard', title: 'Expressão', prompt: 'Soma e Multiplicação:', options: [{ id: '1', text: 'let x = 2 + 3 * 4;', isCorrect: true }, { id: '2', text: 'let x = (2 + 3) x 4;', isCorrect: false }], correctFeedback: 'Correto! JS respeita a ordem.', wrongFeedback: 'Use * e sintaxe correta' },
-                    { id: 'q105_8', type: QuestionType.FILL_IN_BLANK, difficulty: 'easy', title: 'Soma', prompt: 'Complete:', codeSnippet: '10 ___ 10 = 20', correctAnswer: '+', options: [], correctFeedback: 'Fácil!', wrongFeedback: 'Use +' }
+                    {
+                        id: 'q_update',
+                        type: QuestionType.CODE_BUILDER,
+                        difficulty: 'medium',
+                        title: 'Atualize',
+                        prompt: 'Mude o valor de "lives" para 0:',
+                        options: [
+                            { id: '1', text: 'lives = 0;', isCorrect: true },
+                            { id: '2', text: 'let lives = 0;', isCorrect: false },
+                            { id: '3', text: 'lives == 0;', isCorrect: false }
+                        ],
+                        correctFeedback: 'Perfeito! Sem "let" para atualizar.',
+                        wrongFeedback: 'Não redeclare a variável, apenas atribua.'
+                    },
+                    {
+                        id: 'q_match_var',
+                        type: QuestionType.PAIR_MATCH,
+                        difficulty: 'easy',
+                        title: 'Conceitos',
+                        prompt: 'Associe:',
+                        options: [],
+                        pairs: [
+                            { id: 'p1', text: 'let', pairId: 'r1' },
+                            { id: 'r1', text: 'Pode mudar', pairId: 'p1' },
+                            { id: 'p2', text: 'const', pairId: 'r2' },
+                            { id: 'r2', text: 'Fixo', pairId: 'p2' }
+                        ],
+                        correctFeedback: 'Isso aí!',
+                        wrongFeedback: 'Revise let vs const.'
+                    }
                 ]
             },
             {
                 id: 106,
-                title: "Tipo Boolean",
-                description: "true e false",
+                title: "Tipos Booleanos",
+                description: "Verdadeiro ou Falso?",
                 color: 'info',
-                icon: 'book',
-                totalQuestions: 8,
+                icon: 'zap',
+                totalQuestions: 3,
                 stars: 0,
-                learnableConcepts: [{ term: 'Boolean', definition: 'Verdadeiro ou Falso', type: 'Lógica' }],
+                learnableConcepts: [
+                    { term: 'Boolean', definition: 'Um valor que é true (verdadeiro) ou false (falso).', type: 'Lógica', example: 'let isActive = true;' }
+                ],
                 questions: [
                     {
-                        id: 'q106_1',
+                        id: 't_bool',
                         type: QuestionType.THEORY,
                         difficulty: 'easy',
-                        title: 'Boolean',
-                        prompt: 'Verdadeiro ou Falso',
-                        theory: {
-                            concept: 'Boolean',
-                            title: 'Sim ou Não?',
-                            explanation: 'O tipo Boolean é o mais simples de todos! Ele só tem dois valores possíveis: true (verdadeiro) ou false (falso). É usado para tomar decisões no código, tipo "o usuário está logado?" ou "o jogo acabou?".',
-                            examples: [
-                                'let estaChovendo = true;  // Sim, está chovendo',
-                                'let jogoAcabou = false;   // Não, ainda não acabou',
-                                'let temSaldo = true;      // Sim, tem dinheiro'
-                            ],
-                            tips: [
-                                'Sempre escreva em minúsculas: true e false',
-                                'Sem aspas! "true" é texto, true é boolean',
-                                'Use nomes de variáveis que pareçam perguntas: ehMaior, temPermissao'
-                            ]
-                        },
+                        title: 'Sim ou Não',
+                        prompt: 'Boolean',
+                        englishWord: 'True/False',
+                        phonetic: '/truː/',
+                        theoryContent: 'Booleans são a base da lógica. Eles só podem ser `true` ou `false`. Sem aspas! Usamos para "ligar/desligar" coisas.',
+                        codeSnippet: 'let isGameOver = false;\nlet hasKey = true;',
                         options: [],
                         correctFeedback: '',
                         wrongFeedback: ''
                     },
-                    { id: 'q106_2', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'easy', title: 'Identifique', prompt: 'Qual destes é um Boolean?', options: [{ id: '1', text: 'true', isCorrect: true }, { id: '2', text: '"true"', isCorrect: false }, { id: '3', text: '1', isCorrect: false }], correctFeedback: 'Isso! Sem aspas.', wrongFeedback: 'Lembre-se: sem aspas.' },
-                    { id: 'q106_3', type: QuestionType.CODE_BUILDER, difficulty: 'easy', title: 'Declaração', prompt: 'Declare "ativo" como verdadeiro:', options: [{ id: '1', text: 'let ativo = true;', isCorrect: true }, { id: '2', text: 'let ativo = "true";', isCorrect: false }, { id: '3', text: 'let ativo = True;', isCorrect: false }], correctFeedback: 'Perfeito!', wrongFeedback: 'Use true minúsculo.' },
-                    { id: 'q106_4', type: QuestionType.FILL_IN_BLANK, difficulty: 'medium', title: 'Falso', prompt: 'Defina como falso:', codeSnippet: 'let gameover = ___;', correctAnswer: 'false', options: [], correctFeedback: 'Correto!', wrongFeedback: 'Use false' },
-                    { id: 'q106_5', type: QuestionType.DRAG_AND_DROP, difficulty: 'medium', title: 'Constante', prompt: 'Crie: const admin = true;', options: [], segments: ['const', 'admin', '=', 'true;'], distractors: ['let', 'false', '"true"'], correctFeedback: 'Boa!', wrongFeedback: 'Ordem errada' },
-                    { id: 'q106_6', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'hard', title: 'Case Sensitive', prompt: 'Qual está correto?', options: [{ id: '1', text: 'false', isCorrect: true }, { id: '2', text: 'False', isCorrect: false }, { id: '3', text: 'FALSE', isCorrect: false }], correctFeedback: 'Isso! Sempre minúsculo.', wrongFeedback: 'JS diferencia maiúsculas.' },
-                    { id: 'q106_7', type: QuestionType.CODE_BUILDER, difficulty: 'medium', title: 'Prática', prompt: 'Declare "offline" como falso:', options: [{ id: '1', text: 'let offline = false;', isCorrect: true }, { id: '2', text: 'let offline = "false";', isCorrect: false }], correctFeedback: 'Excelente!', wrongFeedback: 'Sem aspas.' },
-                    { id: 'q106_8', type: QuestionType.TRANSLATION, difficulty: 'easy', title: 'Inglês', prompt: 'Traduza "true":', options: [{ id: '1', text: 'Verdadeiro', isCorrect: true }, { id: '2', text: 'Falso', isCorrect: false }], correctFeedback: 'Sim!', wrongFeedback: 'True = Verdadeiro' }
+                    {
+                        id: 'q_bool_val',
+                        type: QuestionType.TRANSLATION,
+                        difficulty: 'easy',
+                        title: 'Tradução',
+                        prompt: 'O que significa "false"?',
+                        options: [
+                            { id: '1', text: 'Falso', isCorrect: true },
+                            { id: '2', text: 'Falha', isCorrect: false },
+                            { id: '3', text: 'Vazio', isCorrect: false }
+                        ],
+                        correctFeedback: 'Correct!',
+                        wrongFeedback: 'False = Falso.'
+                    },
+                    {
+                        id: 'q_drag_bool',
+                        type: QuestionType.DRAG_AND_DROP,
+                        difficulty: 'medium',
+                        title: 'Código',
+                        prompt: 'Declare que o usuário é admin:',
+                        options: [],
+                        segments: ['let', 'isAdmin', '=', 'true;'],
+                        distractors: ['"true"', 'yes'],
+                        correctFeedback: 'Boa!',
+                        wrongFeedback: 'Booleans são palavras reservadas, sem aspas.'
+                    }
                 ]
             },
             {
                 id: 107,
-                title: "console.log",
-                description: "Exibindo dados",
+                title: "Comentários",
+                description: "Notas invisíveis.",
                 color: 'secondary',
-                icon: 'zap',
-                totalQuestions: 9,
+                icon: 'book',
+                totalQuestions: 3,
                 stars: 0,
-                learnableConcepts: [{ term: 'console.log', definition: 'Exibe no console', type: 'Sintaxe' }],
+                learnableConcepts: [
+                    { term: 'Comment', definition: 'Texto ignorado pelo computador, útil para humanos.', type: 'Sintaxe', example: '// Isso é um comentário' }
+                ],
                 questions: [
                     {
-                        id: 'q107_1',
+                        id: 't_comment',
                         type: QuestionType.THEORY,
                         difficulty: 'easy',
-                        title: 'Console',
-                        prompt: 'Falando com o computador',
-                        theory: {
-                            concept: 'console.log()',
-                            title: 'Como ver o que está acontecendo?',
-                            explanation: 'O console.log() é o melhor amigo do programador! Ele serve para "imprimir" mensagens na tela preta do sistema (o console). É muito usado para testar se o código está funcionando ou ver o valor de uma variável.',
-                            examples: [
-                                'console.log("Olá Mundo!"); // Escreve: Olá Mundo!',
-                                'console.log(10 + 5);       // Escreve: 15',
-                                'let nome = "Ana";',
-                                'console.log(nome);         // Escreve: Ana'
-                            ],
-                            tips: [
-                                'Não esqueça dos parênteses ()',
-                                'O "log" significa "registro" ou "diário"',
-                                'Você pode imprimir qualquer coisa: texto, números, variáveis...'
-                            ]
-                        },
+                        title: 'Anotações',
+                        prompt: 'Comments',
+                        englishWord: 'Ignore',
+                        phonetic: '/ɪɡˈnɔːr/',
+                        theoryContent: 'Use `//` para criar um comentário de uma linha. O computador ignora tudo depois das barras. É ótimo para explicar seu código!',
+                        codeSnippet: 'let x = 10; // Define x como 10\n// Este código não faz nada',
                         options: [],
                         correctFeedback: '',
                         wrongFeedback: ''
                     },
-                    { id: 'q107_2', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'easy', title: 'Função', prompt: 'Para que serve console.log?', options: [{ id: '1', text: 'Mostrar dados', isCorrect: true }, { id: '2', text: 'Deletar dados', isCorrect: false }, { id: '3', text: 'Criar site', isCorrect: false }], correctFeedback: 'Isso! Mostra no console.', wrongFeedback: 'Ele exibe informações.' },
-                    { id: 'q107_3', type: QuestionType.CODE_BUILDER, difficulty: 'easy', title: 'Sintaxe', prompt: 'Imprima "Oi":', options: [{ id: '1', text: 'console.log("Oi");', isCorrect: true }, { id: '2', text: 'print("Oi");', isCorrect: false }, { id: '3', text: 'log.console("Oi");', isCorrect: false }], correctFeedback: 'Perfeito!', wrongFeedback: 'Use console.log' },
-                    { id: 'q107_4', type: QuestionType.FILL_IN_BLANK, difficulty: 'medium', title: 'Comando', prompt: 'Complete o comando:', codeSnippet: 'console.___("Teste");', correctAnswer: 'log', options: [], correctFeedback: 'Correto!', wrongFeedback: 'É console.log' },
-                    { id: 'q107_5', type: QuestionType.DRAG_AND_DROP, difficulty: 'medium', title: 'Variável', prompt: 'Imprima a variável x:', options: [], segments: ['console', '.', 'log', '(', 'x', ');'], distractors: ['print', '='], correctFeedback: 'Boa!', wrongFeedback: 'Ordem errada' },
-                    { id: 'q107_6', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'medium', title: 'Números', prompt: 'Posso imprimir números?', options: [{ id: '1', text: 'Sim', isCorrect: true }, { id: '2', text: 'Não', isCorrect: false }], correctFeedback: 'Sim! console.log(42)', wrongFeedback: 'Pode sim!' },
-                    { id: 'q107_7', type: QuestionType.CODE_BUILDER, difficulty: 'hard', title: 'Prática', prompt: 'Imprima o resultado de 2+2:', options: [{ id: '1', text: 'console.log(2 + 2);', isCorrect: true }, { id: '2', text: 'console.log "2+2";', isCorrect: false }], correctFeedback: 'Excelente!', wrongFeedback: 'Use parênteses.' },
-                    { id: 'q107_8', type: QuestionType.FILL_IN_BLANK, difficulty: 'easy', title: 'Objeto', prompt: 'O objeto global é:', codeSnippet: '___.log("Erro");', correctAnswer: 'console', options: [], correctFeedback: 'Isso!', wrongFeedback: 'console' },
-                    { id: 'q107_9', type: QuestionType.DRAG_AND_DROP, difficulty: 'hard', title: 'Múltiplos', prompt: 'Imprima x e y:', options: [], segments: ['console.log', '(', 'x', ',', 'y', ');'], distractors: ['+', 'and'], correctFeedback: 'Perfeito! Use vírgula.', wrongFeedback: 'Separe com vírgula' }
+                    {
+                        id: 'q_comment_syntax',
+                        type: QuestionType.FILL_IN_BLANK,
+                        difficulty: 'easy',
+                        title: 'Sintaxe',
+                        prompt: 'Crie um comentário:',
+                        codeSnippet: '___ Minha anotação',
+                        correctAnswer: '//',
+                        options: [],
+                        correctFeedback: 'Isso! Duas barras.',
+                        wrongFeedback: 'Use duas barras.'
+                    },
+                    {
+                        id: 'q_listening_comment',
+                        type: QuestionType.LISTENING,
+                        difficulty: 'easy',
+                        title: 'Listening',
+                        prompt: 'O que o código faz com comentários?',
+                        englishWord: 'The computer ignores comments.',
+                        options: [
+                            { id: '1', text: 'Ignora', isCorrect: true },
+                            { id: '2', text: 'Executa', isCorrect: false },
+                            { id: '3', text: 'Apaga', isCorrect: false }
+                        ],
+                        correctFeedback: 'Yes! It ignores them.',
+                        wrongFeedback: 'Ouça: "ignores".'
+                    }
                 ]
             },
             {
                 id: 108,
-                title: "Concatenação",
-                description: "Juntando strings",
+                title: "Juntando Textos",
+                description: "Concatenação.",
                 color: 'warn',
                 icon: 'code',
-                totalQuestions: 10,
+                totalQuestions: 3,
                 stars: 0,
-                learnableConcepts: [{ term: 'Concatenation', definition: 'Juntar textos', type: 'Lógica' }],
+                learnableConcepts: [
+                    { term: 'Concatenation', definition: 'Unir duas strings.', type: 'Lógica', example: '"A" + "B" = "AB"' }
+                ],
                 questions: [
                     {
-                        id: 'q108_1',
+                        id: 't_concat',
                         type: QuestionType.THEORY,
                         difficulty: 'easy',
-                        title: 'Concatenação',
-                        prompt: 'Juntando pedaços',
-                        theory: {
-                            concept: 'Concatenação',
-                            title: 'Colando textos',
-                            explanation: 'Concatenar é uma palavra chique para "juntar". Em JavaScript, usamos o sinal de mais (+) para colar dois textos um no outro, ou colar texto com números.',
-                            examples: [
-                                'let nome = "Ana" + " " + "Silva"; // "Ana Silva"',
-                                'let saudacao = "Olá " + "Mundo";   // "Olá Mundo"',
-                                'let pontos = "Pontos: " + 100;     // "Pontos: 100"'
-                            ],
-                            tips: [
-                                'Cuidado com os espaços! O computador não coloca espaço automático.',
-                                '"1" + "1" vira "11", não 2! Texto + Texto = Texto maior.',
-                                'Você pode juntar quantas coisas quiser: "A" + "B" + "C"'
-                            ]
-                        },
+                        title: 'Somando Palavras',
+                        prompt: 'Concatenation',
+                        englishWord: 'Join',
+                        phonetic: '/dʒɔɪn/',
+                        theoryContent: 'Você pode "somar" strings para juntá-las. Isso se chama **Concatenação**. Cuidado com os espaços!',
+                        codeSnippet: 'let nome = "Ana";\nlet saudacao = "Oi " + nome; // "Oi Ana"',
                         options: [],
                         correctFeedback: '',
                         wrongFeedback: ''
                     },
-                    { id: 'q108_2', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'easy', title: 'Operador', prompt: 'Qual sinal junta strings?', options: [{ id: '1', text: '+', isCorrect: true }, { id: '2', text: '&', isCorrect: false }, { id: '3', text: '.', isCorrect: false }], correctFeedback: 'Isso! O mais (+).', wrongFeedback: 'É o sinal de mais (+)' },
-                    { id: 'q108_3', type: QuestionType.CODE_BUILDER, difficulty: 'easy', title: 'Juntar', prompt: 'Junte "A" e "B":', options: [{ id: '1', text: '"A" + "B"', isCorrect: true }, { id: '2', text: '"A" . "B"', isCorrect: false }], correctFeedback: 'Perfeito!', wrongFeedback: 'Use +' },
-                    { id: 'q108_4', type: QuestionType.FILL_IN_BLANK, difficulty: 'medium', title: 'Espaço', prompt: 'Complete com espaço:', codeSnippet: 'let x = "Oi" + ___ + "Mundo";', correctAnswer: '" "', options: [], correctFeedback: 'Boa! Precisa do espaço.', wrongFeedback: 'Use " " (aspas com espaço)' },
-                    { id: 'q108_5', type: QuestionType.DRAG_AND_DROP, difficulty: 'medium', title: 'Variável', prompt: 'Junte "Olá " com nome:', options: [], segments: ['let', 'msg', '=', '"Olá "', '+', 'nome;'], distractors: ['-', 'concat'], correctFeedback: 'Isso!', wrongFeedback: 'Ordem errada' },
-                    { id: 'q108_6', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'hard', title: 'Pegadinha', prompt: 'Quanto é "10" + 5?', options: [{ id: '1', text: '"105"', isCorrect: true }, { id: '2', text: '15', isCorrect: false }], correctFeedback: 'Exato! Texto ganha.', wrongFeedback: 'String + Número = String' },
-                    { id: 'q108_7', type: QuestionType.CODE_BUILDER, difficulty: 'medium', title: 'Frase', prompt: 'Crie "Level 5":', options: [{ id: '1', text: '"Level " + 5', isCorrect: true }, { id: '2', text: '"Level" + 5', isCorrect: false }], correctFeedback: 'Atenção ao espaço!', wrongFeedback: 'Faltou o espaço dentro das aspas' },
-                    { id: 'q108_8', type: QuestionType.FILL_IN_BLANK, difficulty: 'easy', title: 'Soma', prompt: 'Complete:', codeSnippet: 'let res = "A" ___ "B";', correctAnswer: '+', options: [], correctFeedback: 'Fácil!', wrongFeedback: 'Use +' },
-                    { id: 'q108_9', type: QuestionType.DRAG_AND_DROP, difficulty: 'hard', title: 'Complexo', prompt: 'Monte: "Eu tenho " + idade + " anos"', options: [], segments: ['"Eu tenho "', '+', 'idade', '+', '" anos"'], distractors: ['&', ','], correctFeedback: 'Muito bom!', wrongFeedback: 'Ordem errada' },
-                    { id: 'q108_10', type: QuestionType.MULTIPLE_CHOICE, difficulty: 'medium', title: 'Tipo', prompt: 'O resultado de "A" + 1 é?', options: [{ id: '1', text: 'String', isCorrect: true }, { id: '2', text: 'Number', isCorrect: false }], correctFeedback: 'Sempre String!', wrongFeedback: 'Vira texto' }
+                    {
+                        id: 'q_concat_res',
+                        type: QuestionType.CODE_BUILDER,
+                        difficulty: 'medium',
+                        title: 'Resultado',
+                        prompt: 'Qual o resultado de "Java" + "Script"?',
+                        options: [
+                            { id: '1', text: '"JavaScript"', isCorrect: true },
+                            { id: '2', text: '"Java Script"', isCorrect: false },
+                            { id: '3', text: 'Erro', isCorrect: false }
+                        ],
+                        correctFeedback: 'Exato! Cola sem espaço.',
+                        wrongFeedback: 'O computador não adiciona espaço sozinho.'
+                    },
+                    {
+                        id: 'q_drag_concat',
+                        type: QuestionType.DRAG_AND_DROP,
+                        difficulty: 'hard',
+                        title: 'Monte a Frase',
+                        prompt: 'Crie "Super Mario":',
+                        options: [],
+                        segments: ['"Super"', '+', '" "', '+', '"Mario"'],
+                        distractors: ['-'],
+                        correctFeedback: 'Perfeito!',
+                        wrongFeedback: 'Precisa do espaço no meio.'
+                    }
                 ]
             },
             {
                 id: 109,
                 title: "Template Literals",
-                description: "Strings com variáveis",
-                color: 'brand',
+                description: "Strings modernas.",
+                color: 'info',
                 icon: 'zap',
-                totalQuestions: 8,
+                totalQuestions: 3,
                 stars: 0,
-                learnableConcepts: [{ term: 'Template Literal', definition: 'String com ${}', type: 'Sintaxe' }],
-                questions: [...Array(8)].map((_, i) => createQuestion(`q109_${i + 1}`, QuestionType.FILL_IN_BLANK, 'medium', `Questão ${i + 1}`, 'Template', [], 'Perfeito!'))
+                learnableConcepts: [
+                    { term: 'Template Literal', definition: 'String com crases que aceita variáveis dentro.', type: 'Sintaxe', example: '`Oi ${nome}`' }
+                ],
+                questions: [
+                    {
+                        id: 't_template',
+                        type: QuestionType.THEORY,
+                        difficulty: 'medium',
+                        title: 'Super Strings',
+                        prompt: 'Backticks',
+                        englishWord: 'Embed',
+                        phonetic: '/ɪmˈbed/',
+                        theoryContent: 'Em vez de usar `+`, use crases (`` ` ``) e `${}` para colocar variáveis dentro do texto. É muito mais limpo!',
+                        codeSnippet: 'let user = "Leo";\nlet msg = `Bem-vindo ${user}!`;',
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
+                    {
+                        id: 'q_template_syntax',
+                        type: QuestionType.FILL_IN_BLANK,
+                        difficulty: 'medium',
+                        title: 'Sintaxe',
+                        prompt: 'Complete para interpolar:',
+                        codeSnippet: '`Olá ___{name}`',
+                        correctAnswer: '$',
+                        options: [],
+                        correctFeedback: 'Isso! Cifrão antes das chaves.',
+                        wrongFeedback: 'Sintaxe é ${variavel}.'
+                    },
+                    {
+                        id: 'q_match_quote',
+                        type: QuestionType.PAIR_MATCH,
+                        difficulty: 'easy',
+                        title: 'Aspas',
+                        prompt: 'Qual usa qual?',
+                        options: [],
+                        pairs: [
+                            { id: 'p1', text: 'String Normal', pairId: 'r1' },
+                            { id: 'r1', text: '"Aspas"', pairId: 'p1' },
+                            { id: 'p2', text: 'Template Literal', pairId: 'r2' },
+                            { id: 'r2', text: '`Crases`', pairId: 'p2' }
+                        ],
+                        correctFeedback: 'Boa!',
+                        wrongFeedback: 'Confundiu aspas com crases.'
+                    }
+                ]
             },
             {
                 id: 110,
                 title: "Revisão Unidade 1",
-                description: "Teste final",
-                color: 'info',
+                description: "Teste seus conhecimentos.",
+                color: 'brand',
                 icon: 'trophy',
-                totalQuestions: 12,
+                totalQuestions: 5,
                 stars: 0,
                 learnableConcepts: [],
-                questions: [...Array(12)].map((_, i) => createQuestion(`q110_${i + 1}`, [QuestionType.MULTIPLE_CHOICE, QuestionType.CODE_BUILDER, QuestionType.FILL_IN_BLANK][i % 3], 'hard', `Desafio ${i + 1}`, 'Revisão', [{ id: '1', text: 'Correta', isCorrect: true }]))
+                questions: [
+                    {
+                        id: 'rev_1',
+                        type: QuestionType.CODE_BUILDER,
+                        difficulty: 'hard',
+                        title: 'Desafio Final',
+                        prompt: 'Declare uma constante "pi" com valor 3.14:',
+                        options: [
+                            { id: '1', text: 'const pi = 3.14;', isCorrect: true },
+                            { id: '2', text: 'let pi = 3.14;', isCorrect: false },
+                            { id: '3', text: 'var pi = 3.14;', isCorrect: false }
+                        ],
+                        correctFeedback: 'Excelente!',
+                        wrongFeedback: 'Pi é constante.'
+                    },
+                    {
+                        id: 'rev_2',
+                        type: QuestionType.TRANSLATION,
+                        difficulty: 'medium',
+                        title: 'Conceito',
+                        prompt: 'O que é uma "String"?',
+                        options: [
+                            { id: '1', text: 'Texto', isCorrect: true },
+                            { id: '2', text: 'Número', isCorrect: false },
+                            { id: '3', text: 'Lista', isCorrect: false }
+                        ],
+                        correctFeedback: 'Isso!',
+                        wrongFeedback: 'String é texto.'
+                    },
+                    {
+                        id: 'rev_3',
+                        type: QuestionType.FILL_IN_BLANK,
+                        difficulty: 'medium',
+                        title: 'Output',
+                        prompt: 'Comando para mostrar na tela:',
+                        codeSnippet: 'console.___(msg);',
+                        correctAnswer: 'log',
+                        options: [],
+                        correctFeedback: 'console.log!',
+                        wrongFeedback: 'log.'
+                    },
+                    {
+                        id: 'rev_4',
+                        type: QuestionType.DRAG_AND_DROP,
+                        difficulty: 'hard',
+                        title: 'Lógica',
+                        prompt: 'Crie uma mensagem "Oi Dev":',
+                        options: [],
+                        segments: ['let', 'm', '=', '`Oi ${role}`;'],
+                        distractors: ['+'],
+                        correctFeedback: 'Muito bem!',
+                        wrongFeedback: 'Use template literals.'
+                    },
+                    {
+                        id: 'rev_5',
+                        type: QuestionType.LISTENING,
+                        difficulty: 'easy',
+                        title: 'Inglês',
+                        prompt: 'Qual palavra significa "Variável"?',
+                        englishWord: 'Variable',
+                        options: [
+                            { id: '1', text: 'Variable', isCorrect: true },
+                            { id: '2', text: 'Value', isCorrect: false },
+                            { id: '3', text: 'Variety', isCorrect: false }
+                        ],
+                        correctFeedback: 'Yes!',
+                        wrongFeedback: 'Variable.'
+                    }
+                ]
+            },
+        ]
+    },
+    {
+        id: 2,
+        title: "Unidade 2: Lógica Booleana",
+        description: "Verdadeiro, Falso e Decisões.",
+        levels: [
+            {
+                id: 201,
+                title: "True ou False?",
+                description: "O tipo Boolean.",
+                color: 'warn',
+                icon: 'trophy',
+                totalQuestions: 3,
+                learnableConcepts: [
+                    { term: 'Boolean', definition: 'Um valor que pode ser apenas verdadeiro ou falso.', type: 'Lógica' },
+                    { term: 'Condition', definition: 'Uma condição que determina o fluxo do código.', type: 'Inglês' }
+                ],
+                questions: [
+                    {
+                        id: 't_bool',
+                        type: QuestionType.THEORY,
+                        difficulty: 'easy',
+                        title: 'Binário',
+                        prompt: 'Booleans',
+                        englishWord: 'Condition',
+                        phonetic: '/kənˈdɪʃ.ən/',
+                        theoryContent: 'Um **Boolean** é o tipo de dado mais simples: só pode ser `true` (verdadeiro) ou `false` (falso). É a base de toda tomada de decisão no código.',
+                        codeSnippet: 'let isOnline = true;\nlet hasError = false;',
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
+                    {
+                        id: 'q_match_bool',
+                        type: QuestionType.PAIR_MATCH,
+                        difficulty: 'medium',
+                        title: 'Tradução',
+                        prompt: 'Traduza os termos lógicos:',
+                        options: [],
+                        pairs: [
+                            { id: '1', text: 'True', pairId: '1a' },
+                            { id: '1a', text: 'Verdadeiro', pairId: '1' },
+                            { id: '2', text: 'False', pairId: '2a' },
+                            { id: '2a', text: 'Falso', pairId: '2' },
+                            { id: '3', text: 'Boolean', pairId: '3a' },
+                            { id: '3a', text: 'Lógico', pairId: '3' }
+                        ],
+                        correctFeedback: 'Ótimo!',
+                        wrongFeedback: 'Ups, tente de novo.'
+                    },
+                    {
+                        id: 'q_fill_bool',
+                        type: QuestionType.FILL_IN_BLANK,
+                        difficulty: 'medium',
+                        title: 'Código',
+                        prompt: 'Declare que o usuário é admin (verdadeiro):',
+                        codeSnippet: 'let isAdmin = ___;',
+                        correctAnswer: 'true',
+                        options: [],
+                        correctFeedback: 'Isso! Sem aspas, pois é uma palavra reservada.',
+                        wrongFeedback: 'Use "true" (minúsculo).'
+                    }
+                ],
+                stars: 0
+            },
+            {
+                id: 202,
+                title: "If / Else",
+                description: "Tomando caminhos diferentes.",
+                color: 'brand',
+                icon: 'code',
+                totalQuestions: 4,
+                stars: 0,
+                learnableConcepts: [
+                    { term: 'if', definition: 'Executa um bloco se a condição for verdadeira.', type: 'Sintaxe' },
+                    { term: 'else', definition: 'Executa um bloco caso a condição do if falhe.', type: 'Sintaxe' },
+                    { term: 'Statement', definition: 'Uma instrução ou comando no código.', type: 'Inglês' }
+                ],
+                questions: [
+                    {
+                        id: 't_if',
+                        type: QuestionType.THEORY,
+                        difficulty: 'easy',
+                        title: 'Se... Senão...',
+                        prompt: 'Statements',
+                        englishWord: 'Statement',
+                        theoryContent: 'Usamos `if` para executar código APENAS se uma condição for `true`. O `else` captura qualquer outro caso.',
+                        codeSnippet: 'if (age >= 18) {\n  enterParty();\n} else {\n  goHome();\n}',
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
+                    {
+                        id: 'q_drag_if',
+                        type: QuestionType.DRAG_AND_DROP,
+                        difficulty: 'hard',
+                        title: 'Lógica',
+                        prompt: 'Monte: Se pontuação > 10, ganha.',
+                        segments: ['if', '(score > 10)', '{', 'win();', '}'],
+                        distractors: ['else', 'then'],
+                        options: [],
+                        correctFeedback: 'Código válido!',
+                        wrongFeedback: 'Siga a estrutura: if (condição) { ação }'
+                    },
+                    {
+                        id: 'q_trans_if',
+                        type: QuestionType.TRANSLATION,
+                        difficulty: 'medium',
+                        title: 'Inglês',
+                        prompt: 'O que significa "Else"?',
+                        options: [
+                            { id: '1', text: 'Senão / Caso contrário', isCorrect: true },
+                            { id: '2', text: 'Então', isCorrect: false },
+                            { id: '3', text: 'Fim', isCorrect: false }
+                        ],
+                        correctFeedback: 'Correto. Else cobre o que sobra.',
+                        wrongFeedback: 'Else é a alternativa.'
+                    },
+                    {
+                        id: 'q_fill_else',
+                        type: QuestionType.FILL_IN_BLANK,
+                        difficulty: 'medium',
+                        title: 'Syntax',
+                        prompt: 'Complete a estrutura condicional:',
+                        codeSnippet: 'if (x) { ... } ___ { ... }',
+                        correctAnswer: 'else',
+                        options: [],
+                        correctFeedback: 'Boa!',
+                        wrongFeedback: 'O oposto do if é o else.'
+                    }
+                ]
             }
         ]
     },
-
-    // ==================== UNIDADE 2: CONTROLE DE FLUXO ====================
-    {
-        id: 2,
-        title: "Unidade 2: Controle de Fluxo",
-        description: "Decisões e lógica",
-        levels: [
-            ...Array.from({ length: 10 }, (_, i) => ({
-                id: 200 + i + 1,
-                title: `Nível ${i + 1}`,
-                description: ["if/else", "Operadores de comparação", "AND/OR", "Operador ternário", "switch", "Condições aninhadas", "Truthy/Falsy", "Operadores lógicos avançados", "Short-circuit", "Revisão"][i],
-                color: ['brand', 'info', 'secondary', 'warn'][i % 4] as any,
-                icon: ['code', 'book', 'zap', 'trophy'][i % 4] as any,
-                totalQuestions: [8, 9, 10, 8, 9, 10, 8, 9, 10, 12][i],
-                stars: 0,
-                learnableConcepts: [{ term: `Conceito ${i + 1}`, definition: 'Descrição', type: 'Lógica' as const }],
-                questions: [...Array([8, 9, 10, 8, 9, 10, 8, 9, 10, 12][i])].map((_, j) => createQuestion(
-                    `q${200 + i + 1}_${j + 1}`,
-                    [QuestionType.MULTIPLE_CHOICE, QuestionType.CODE_BUILDER, QuestionType.PAIR_MATCH, QuestionType.FILL_IN_BLANK][j % 4],
-                    ['easy', 'medium', 'hard'][j % 3] as any,
-                    `Questão ${j + 1}`,
-                    'Prompt',
-                    [{ id: '1', text: 'Correta', isCorrect: true }]
-                ))
-            }))
-        ]
-    },
-
-    // ==================== UNIDADE 3: LOOPS ====================
     {
         id: 3,
-        title: "Unidade 3: Loops e Iteração",
-        description: "Repetição de código",
+        title: "Unidade 3: Arrays & Listas",
+        description: "Organizando coleções de dados.",
         levels: [
-            ...Array.from({ length: 10 }, (_, i) => ({
-                id: 300 + i + 1,
-                title: `Nível ${i + 1}`,
-                description: ["for loop", "while loop", "do...while", "break/continue", "Loop aninhado", "Arrays intro", "forEach", "Iteração com índice", "Loop infinito", "Revisão"][i],
-                color: ['brand', 'info', 'secondary', 'warn'][i % 4] as any,
-                icon: ['code', 'book', 'zap', 'trophy'][i % 4] as any,
-                totalQuestions: [9, 10, 8, 9, 10, 8, 9, 10, 8, 12][i],
+            {
+                id: 301,
+                title: "O que é um Array?",
+                description: "Listas ordenadas.",
+                color: 'secondary',
+                icon: 'book',
+                totalQuestions: 3,
                 stars: 0,
-                learnableConcepts: [{ term: `Loop ${i + 1}`, definition: 'Conceito', type: 'Sintaxe' as const }],
-                questions: [...Array([9, 10, 8, 9, 10, 8, 9, 10, 8, 12][i])].map((_, j) => createQuestion(
-                    `q${300 + i + 1}_${j + 1}`,
-                    [QuestionType.CODE_BUILDER, QuestionType.MULTIPLE_CHOICE, QuestionType.DRAG_AND_DROP, QuestionType.FILL_IN_BLANK][j % 4],
-                    ['easy', 'medium', 'hard'][j % 3] as any,
-                    `Questão ${j + 1}`,
-                    'Loop',
-                    [{ id: '1', text: 'Correta', isCorrect: true }]
-                ))
-            }))
+                learnableConcepts: [
+                    { term: 'Array', definition: 'Uma estrutura para armazenar múltiplos itens.', type: 'Lógica', example: '[1, 2, 3]' },
+                    { term: 'Brackets', definition: 'Colchetes [ ]. Usados para criar arrays.', type: 'Inglês' }
+                ],
+                questions: [
+                    {
+                        id: 't_arr',
+                        type: QuestionType.THEORY,
+                        difficulty: 'easy',
+                        title: 'Listas',
+                        prompt: 'Arrays',
+                        englishWord: 'Array',
+                        phonetic: '/əˈreɪ/',
+                        theoryContent: 'Um **Array** é uma super-variável que guarda vários itens em ordem. Usamos colchetes `[]` para criá-lo.',
+                        codeSnippet: 'let fruits = ["Maçã", "Banana", "Uva"];',
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
+                    {
+                        id: 'q_mc_arr',
+                        type: QuestionType.MULTIPLE_CHOICE,
+                        difficulty: 'easy',
+                        title: 'Identificação',
+                        prompt: 'Qual destas opções é um Array válido?',
+                        options: [
+                            { id: '1', text: '["A", "B", "C"]', isCorrect: true },
+                            { id: '2', text: '(1, 2, 3)', isCorrect: false },
+                            { id: '3', text: '{1, 2, 3}', isCorrect: false }
+                        ],
+                        correctFeedback: 'Correto! Colchetes [] definem arrays.',
+                        wrongFeedback: 'Arrays usam colchetes [].'
+                    },
+                    {
+                        id: 'q_code_arr',
+                        type: QuestionType.CODE_BUILDER,
+                        difficulty: 'medium',
+                        title: 'Criação',
+                        prompt: 'Crie um array vazio chamado "list":',
+                        options: [
+                            { id: '1', text: 'const list = [];', isCorrect: true },
+                            { id: '2', text: 'const list = {};', isCorrect: false },
+                            { id: '3', text: 'const list = new Array;', isCorrect: false }
+                        ],
+                        correctFeedback: 'Moderna e limpa. [] é o ideal.',
+                        wrongFeedback: 'Use a notação literal [].'
+                    }
+                ]
+            },
+            {
+                id: 302,
+                title: "Acessando Itens",
+                description: "O Índice Zero.",
+                color: 'info',
+                icon: 'zap',
+                totalQuestions: 3,
+                stars: 0,
+                learnableConcepts: [
+                    { term: 'Index', definition: 'A posição numérica de um item em um array.', type: 'Inglês' },
+                    { term: 'Zero-based', definition: 'Contagem que começa em 0, não em 1.', type: 'Lógica' }
+                ],
+                questions: [
+                    {
+                        id: 't_idx',
+                        type: QuestionType.THEORY,
+                        difficulty: 'easy',
+                        title: 'Zero-based Indexing',
+                        prompt: 'Index',
+                        englishWord: 'Index',
+                        theoryContent: 'Em JS, a contagem começa no **ZERO**. O primeiro item da lista está na posição 0, não 1. Isso confunde todo mundo no começo!',
+                        codeSnippet: 'let colors = ["Red", "Blue"];\n// colors[0] é "Red"\n// colors[1] é "Blue"',
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
+                    {
+                        id: 'q_fill_idx',
+                        type: QuestionType.FILL_IN_BLANK,
+                        difficulty: 'hard',
+                        title: 'Lógica',
+                        prompt: 'Pegue o PRIMEIRO item do array "users":',
+                        codeSnippet: 'let first = users[___];',
+                        correctAnswer: '0',
+                        options: [],
+                        correctFeedback: 'Exato! O índice 0 é o primeiro.',
+                        wrongFeedback: 'Lembre-se: programadores contam a partir do 0.'
+                    },
+                    {
+                        id: 'q_match_idx',
+                        type: QuestionType.PAIR_MATCH,
+                        difficulty: 'medium',
+                        title: 'Conceitos',
+                        prompt: 'Ligue o conceito:',
+                        options: [],
+                        pairs: [
+                            { id: '1', text: 'Index 0', pairId: '1a' },
+                            { id: '1a', text: 'Primeiro Item', pairId: '1' },
+                            { id: '2', text: 'Length', pairId: '2a' },
+                            { id: '2a', text: 'Tamanho Total', pairId: '2' },
+                            { id: '3', text: 'Undefined', pairId: '3a' },
+                            { id: '3a', text: 'Item não existe', pairId: '3' }
+                        ],
+                        correctFeedback: 'Excelente memória!',
+                        wrongFeedback: 'Tente novamente.'
+                    }
+                ]
+            }
         ]
     },
-
-    // ==================== UNIDADE 4: FUNÇÕES ====================
     {
         id: 4,
         title: "Unidade 4: Funções",
-        description: "Blocos reutilizáveis",
+        description: "Reutilizando lógica.",
         levels: [
-            ...Array.from({ length: 10 }, (_, i) => ({
-                id: 400 + i + 1,
-                title: `Nível ${i + 1}`,
-                description: ["Declaração de função", "Parâmetros", "Return", "Escopo", "Function expression", "Arrow functions", "Callback", "Funções anônimas", "IIFE", "Revisão"][i],
-                color: ['brand', 'info', 'secondary', 'warn'][i % 4] as any,
-                icon: ['code', 'book', 'zap', 'trophy'][i % 4] as any,
-                totalQuestions: [8, 9, 10, 9, 8, 10, 9, 8, 10, 12][i],
+            {
+                id: 401,
+                title: "Declarando Funções",
+                description: "Criando comandos novos.",
+                color: 'warn',
+                icon: 'code',
+                totalQuestions: 3,
                 stars: 0,
-                learnableConcepts: [{ term: 'Function', definition: 'Bloco de código', type: 'Lógica' as const }],
-                questions: [...Array([8, 9, 10, 9, 8, 10, 9, 8, 10, 12][i])].map((_, j) => createQuestion(
-                    `q${400 + i + 1}_${j + 1}`,
-                    [QuestionType.CODE_BUILDER, QuestionType.MULTIPLE_CHOICE, QuestionType.FILL_IN_BLANK, QuestionType.PAIR_MATCH][j % 4],
-                    ['easy', 'medium', 'hard'][j % 3] as any,
-                    `Questão ${j + 1}`,
-                    'Função',
-                    [{ id: '1', text: 'Correta', isCorrect: true }]
-                ))
-            }))
+                learnableConcepts: [
+                    { term: 'Function', definition: 'Um bloco de código reutilizável.', type: 'Inglês' },
+                    { term: 'Call', definition: 'Ação de executar a função.', type: 'Inglês' }
+                ],
+                questions: [
+                    {
+                        id: 't_func',
+                        type: QuestionType.THEORY,
+                        difficulty: 'easy',
+                        title: 'Receitas de Código',
+                        prompt: 'Functions',
+                        theoryContent: 'Funções são blocos de código que você dá um nome. Quando você "chama" o nome, o código roda. É como ensinar um truque novo pro computador.',
+                        codeSnippet: 'function pular() {\n  player.y += 10;\n}',
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
+                    {
+                        id: 'q_drag_func',
+                        type: QuestionType.DRAG_AND_DROP,
+                        difficulty: 'medium',
+                        title: 'Estrutura',
+                        prompt: 'Crie uma função vazia chamada "start":',
+                        segments: ['function', 'start()', '{', '}'],
+                        distractors: ['call', 'var'],
+                        options: [],
+                        correctFeedback: 'Correto!',
+                        wrongFeedback: 'Sintaxe: function nome() { }'
+                    },
+                    {
+                        id: 'q_listen_call',
+                        type: QuestionType.LISTENING,
+                        difficulty: 'hard',
+                        title: 'Inglês',
+                        prompt: 'Qual ação o código faz?',
+                        englishWord: 'Call the function to execute the code.',
+                        options: [
+                            { id: '1', text: 'Chamar a função', isCorrect: true },
+                            { id: '2', text: 'Apagar a função', isCorrect: false },
+                            { id: '3', text: 'Criar a função', isCorrect: false }
+                        ],
+                        correctFeedback: 'Yes! Call = Chamar/Executar.',
+                        wrongFeedback: 'Call significa chamar.'
+                    }
+                ]
+            }
         ]
     },
-
-    // ==================== UNIDADE 5: ARRAYS AVANÇADOS ====================
     {
         id: 5,
-        title: "Unidade 5: Arrays",
-        description: "Listas e coleções",
+        title: "Unidade 5: Objetos",
+        description: "Modelando o mundo real.",
         levels: [
-            ...Array.from({ length: 10 }, (_, i) => ({
-                id: 500 + i + 1,
-                title: `Nível ${i + 1}`,
-                description: ["Criando arrays", "Acessando índices", "push/pop", "shift/unshift", "slice/splice", "map", "filter", "reduce", "find", "Revisão"][i],
-                color: ['brand', 'info', 'secondary', 'warn'][i % 4] as any,
-                icon: ['code', 'book', 'zap', 'trophy'][i % 4] as any,
-                totalQuestions: [9, 8, 10, 9, 8, 10, 9, 10, 8, 12][i],
+            {
+                id: 501,
+                title: "Chave e Valor",
+                description: "O formato JSON.",
+                color: 'brand',
+                icon: 'trophy',
+                totalQuestions: 3,
                 stars: 0,
-                learnableConcepts: [{ term: 'Array', definition: 'Lista de valores', type: 'Lógica' as const }],
-                questions: [...Array([9, 8, 10, 9, 8, 10, 9, 10, 8, 12][i])].map((_, j) => createQuestion(
-                    `q${500 + i + 1}_${j + 1}`,
-                    [QuestionType.CODE_BUILDER, QuestionType.DRAG_AND_DROP, QuestionType.MULTIPLE_CHOICE, QuestionType.FILL_IN_BLANK][j % 4],
-                    ['easy', 'medium', 'hard'][j % 3] as any,
-                    `Questão ${j + 1}`,
-                    'Array',
-                    [{ id: '1', text: 'Correta', isCorrect: true }]
-                ))
-            }))
+                learnableConcepts: [
+                    { term: 'Object', definition: 'Coleção de propriedades (chave: valor).', type: 'Lógica' },
+                    { term: 'Property', definition: 'Uma característica de um objeto.', type: 'Inglês' },
+                    { term: 'Dot Notation', definition: 'Acessar valores usando ponto (obj.prop).', type: 'Sintaxe' }
+                ],
+                questions: [
+                    {
+                        id: 't_obj',
+                        type: QuestionType.THEORY,
+                        difficulty: 'easy',
+                        title: 'Dicionários',
+                        prompt: 'Objects',
+                        englishWord: 'Properties',
+                        theoryContent: 'Objetos agrupam dados relacionados usando **chaves** e **valores**. Usamos chaves `{}`. É perfeito para descrever um usuário, um produto ou um post.',
+                        codeSnippet: 'const user = {\n  name: "Ana",\n  age: 25\n};',
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
+                    {
+                        id: 'q_code_obj',
+                        type: QuestionType.CODE_BUILDER,
+                        difficulty: 'medium',
+                        title: 'Acesso',
+                        prompt: 'Como pegamos o nome do usuário?',
+                        options: [
+                            { id: '1', text: 'user.name', isCorrect: true },
+                            { id: '2', text: 'user[name]', isCorrect: false },
+                            { id: '3', text: 'user->name', isCorrect: false }
+                        ],
+                        correctFeedback: 'Dot notation (ponto) é o padrão!',
+                        wrongFeedback: 'Use o ponto (.) para acessar propriedades.'
+                    },
+                    {
+                        id: 'q_fill_obj',
+                        type: QuestionType.FILL_IN_BLANK,
+                        difficulty: 'hard',
+                        title: 'Sintaxe',
+                        prompt: 'Defina a chave "id" como 1:',
+                        codeSnippet: 'const item = { id___ 1 };',
+                        correctAnswer: ':',
+                        options: [],
+                        correctFeedback: 'Isso! Dois pontos separam chave e valor.',
+                        wrongFeedback: 'Em objetos, usamos dois pontos (:).'
+                    }
+                ]
+            }
         ]
-    },
-
-    // ==================== UNIDADE 6: OBJETOS ====================
-    {
-        id: 6,
-        title: "Unidade 6: Objetos",
-        description: "Dados estruturados",
-        levels: [
-            ...Array.from({ length: 10 }, (_, i) => ({
-                id: 600 + i + 1,
-                title: `Nível ${i + 1}`,
-                description: ["Criando objetos", "Propriedades", "Métodos", "this", "Object.keys", "Object.values", "Destructuring", "Spread operator", "JSON", "Revisão"][i],
-                color: ['brand', 'info', 'secondary', 'warn'][i % 4] as any,
-                icon: ['code', 'book', 'zap', 'trophy'][i % 4] as any,
-                totalQuestions: [8, 9, 10, 8, 9, 10, 8, 9, 10, 12][i],
-                stars: 0,
-                learnableConcepts: [{ term: 'Object', definition: 'Estrutura de dados', type: 'Lógica' as const }],
-                questions: [...Array([8, 9, 10, 8, 9, 10, 8, 9, 10, 12][i])].map((_, j) => createQuestion(
-                    `q${600 + i + 1}_${j + 1}`,
-                    [QuestionType.CODE_BUILDER, QuestionType.PAIR_MATCH, QuestionType.MULTIPLE_CHOICE, QuestionType.FILL_IN_BLANK][j % 4],
-                    ['easy', 'medium', 'hard'][j % 3] as any,
-                    `Questão ${j + 1}`,
-                    'Objeto',
-                    [{ id: '1', text: 'Correta', isCorrect: true }]
-                ))
-            }))
-        ]
-    },
-
-    // ==================== UNIDADE 7-10 (estrutura similar) ====================
-    ...Array.from({ length: 4 }, (_, unitIndex) => ({
-        id: 7 + unitIndex,
-        title: `Unidade ${7 + unitIndex}: ${['DOM Básico', 'Eventos', 'ES6+', 'Projeto Final'][unitIndex]}`,
-        description: ['Manipulação da página', 'Interação com usuário', 'JavaScript moderno', 'Aplicação completa'][unitIndex],
-        levels: [
-            ...Array.from({ length: 10 }, (_, i) => ({
-                id: (700 + unitIndex * 100) + i + 1,
-                title: `Nível ${i + 1}`,
-                description: `Conceito ${i + 1}`,
-                color: ['brand', 'info', 'secondary', 'warn'][i % 4] as any,
-                icon: ['code', 'book', 'zap', 'trophy'][i % 4] as any,
-                totalQuestions: [8, 9, 10, 8, 9, 10, 8, 9, 10, 12][i],
-                stars: 0,
-                learnableConcepts: [{ term: `Tópico ${i + 1}`, definition: 'Descrição', type: 'Lógica' as const }],
-                questions: [...Array([8, 9, 10, 8, 9, 10, 8, 9, 10, 12][i])].map((_, j) => createQuestion(
-                    `q${(700 + unitIndex * 100) + i + 1}_${j + 1}`,
-                    [QuestionType.CODE_BUILDER, QuestionType.MULTIPLE_CHOICE, QuestionType.DRAG_AND_DROP, QuestionType.FILL_IN_BLANK][j % 4],
-                    ['easy', 'medium', 'hard'][j % 3] as any,
-                    `Questão ${j + 1}`,
-                    'Exercício',
-                    [{ id: '1', text: 'Correta', isCorrect: true }]
-                ))
-            }))
-        ]
-    }))
+    }
 ];
 
 // --- DYNAMIC LEVEL GENERATION FOR INFINITE SCROLL ---
@@ -842,7 +1107,8 @@ export const generateRandomUnit = (startUnitId: number, startLevelId: number): U
         const color = colors[Math.floor(Math.random() * colors.length)];
         const icon = icons[Math.floor(Math.random() * icons.length)];
 
-        // Recycle questions from existing levels to simulate content
+        // Recycle questions from existing levels to simulate content for now
+        // In a real app, this would call an AI endpoint or DB
         const randomSourceUnit = CURRICULUM[Math.floor(Math.random() * CURRICULUM.length)];
         const randomSourceLevel = randomSourceUnit.levels[Math.floor(Math.random() * randomSourceUnit.levels.length)];
         const questions = [...randomSourceLevel.questions].sort(() => 0.5 - Math.random()).slice(0, 3);
@@ -868,47 +1134,22 @@ export const generateRandomUnit = (startUnitId: number, startLevelId: number): U
     };
 };
 
-// Helper function to get level by ID
+// Helper to get a level even if it's dynamically generated
 export const getLevelById = (id: number): Level | undefined => {
     // 1. Try static curriculum
     for (const unit of CURRICULUM) {
         const level = unit.levels.find(l => l.id === id);
-        if (level) {
-            // GARANTIA DE TEORIA: Separa questões de teoria das práticas
-            const theoryQuestions = level.questions.filter(q => q.type === QuestionType.THEORY || q.theory);
-            const practiceQuestions = level.questions.filter(q => q.type !== QuestionType.THEORY && !q.theory);
-
-            let selectedQuestions: typeof level.questions = [];
-
-            // Se houver teoria, garante que a primeira questão seja de teoria
-            if (theoryQuestions.length > 0) {
-                // Pega a primeira teoria definida (geralmente a intro)
-                selectedQuestions.push(theoryQuestions[0]);
-
-                // Mistura o resto (outras teorias + práticas)
-                const remaining = [...theoryQuestions.slice(1), ...practiceQuestions];
-                const shuffledRemaining = remaining.sort(() => Math.random() - 0.5);
-
-                // Preenche até 5 questões (1 teoria + 4 aleatórias)
-                const countToTake = Math.min(4, shuffledRemaining.length);
-                selectedQuestions = [...selectedQuestions, ...shuffledRemaining.slice(0, countToTake)];
-            } else {
-                // Se não tiver teoria, segue o fluxo normal aleatório
-                selectedQuestions = [...level.questions].sort(() => Math.random() - 0.5).slice(0, 5);
-            }
-
-            return {
-                ...level,
-                questions: selectedQuestions,
-                totalQuestions: selectedQuestions.length
-            };
-        }
+        if (level) return level;
     }
 
-    // 2. If id is high, it might be generated
+    // 2. If id is high, it might be generated. 
+    // Since we don't store generated levels in constants, we re-generate 
+    // deterministically or assume App/Home passed the data context. 
+    // However, for this demo, we'll implement a simple deterministic generator based on ID 
+    // so direct linking works.
     if (id > 900) {
-        const seedUnitId = Math.floor(id / 100);
-        const generatedUnit = generateRandomUnit(seedUnitId, Math.floor(id / 10) * 10);
+        const seedUnitId = Math.floor(id / 100); // approx
+        const generatedUnit = generateRandomUnit(seedUnitId, Math.floor(id / 10) * 10); // approximate logic
         return generatedUnit.levels.find(l => l.id === id) || generatedUnit.levels[0];
     }
 
