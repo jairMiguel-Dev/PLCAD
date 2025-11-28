@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CURRICULUM, HEART_REFILL_TIME_MS, generateRandomUnit } from '../constants';
-import { Star, Lock, Check, Code, Book, Trophy, Zap, Flag, Sparkles, Clock, Heart, CheckCircle, Gift, Loader, ChevronUp, ChevronDown, RefreshCw, Cpu, Bug } from 'lucide-react';
+import { Star, Lock, Check, Code, Book, Trophy, Zap, Flag, Sparkles, Clock, Heart, CheckCircle, Gift, Loader, ChevronUp, ChevronDown, RefreshCw, Cpu, Bug, Rocket } from 'lucide-react';
 import { Level, Quest, Unit } from '../types';
 
 interface HomeProps {
@@ -20,6 +20,18 @@ interface HomeProps {
     onResetQuest: (questId: string) => void;
     conceptMastery: Record<string, number>;
 }
+
+// Generate random stars for the background
+const generateStars = (count: number) => {
+    return Array.from({ length: count }).map((_, i) => ({
+        id: i,
+        top: `${Math.random() * 100}%`,
+        left: `${Math.random() * 100}%`,
+        size: Math.random() * 2 + 1,
+        delay: Math.random() * 5,
+        duration: Math.random() * 3 + 2
+    }));
+};
 
 export const Home: React.FC<HomeProps> = ({
     onStartLevel,
@@ -45,8 +57,11 @@ export const Home: React.FC<HomeProps> = ({
     const [animatingUnlockId, setAnimatingUnlockId] = useState<number | null>(null);
     const [showLevelUpToast, setShowLevelUpToast] = useState(false);
     const [timeToRefill, setTimeToRefill] = useState<string>('');
-    const [isQuestsExpanded, setIsQuestsExpanded] = useState(true);
+    const [isQuestsExpanded, setIsQuestsExpanded] = useState(false); // Collapsed by default to show the galaxy
     const [timeToNextQuests, setTimeToNextQuests] = useState<string>('');
+
+    // Memoize stars to prevent re-rendering
+    const stars = useMemo(() => generateStars(50), []);
 
     // Flatten displayed levels
     const visibleLevels = displayedUnits.flatMap(u => u.levels);
@@ -108,12 +123,14 @@ export const Home: React.FC<HomeProps> = ({
             }
         };
 
+        // Initial scroll
         scrollToCurrent();
         const timer = setTimeout(scrollToCurrent, 500);
 
         return () => clearTimeout(timer);
     }, [currentActiveId]);
 
+    // Handle Level Completion Animation
     useEffect(() => {
         if (lastCompletedLevelId && scrollRef.current) {
             const completedIndex = visibleLevels.findIndex(l => l.id === lastCompletedLevelId);
@@ -146,6 +163,7 @@ export const Home: React.FC<HomeProps> = ({
         }
     }, [lastCompletedLevelId]);
 
+    // Heart Refill Timer
     useEffect(() => {
         if (userHearts > 0 || !lastHeartLostTime) return;
 
@@ -168,7 +186,7 @@ export const Home: React.FC<HomeProps> = ({
         return () => clearInterval(interval);
     }, [userHearts, lastHeartLostTime]);
 
-    // Timer for next daily quests (resets at midnight)
+    // Quest Timer
     useEffect(() => {
         const updateQuestTimer = () => {
             const now = new Date();
@@ -191,46 +209,79 @@ export const Home: React.FC<HomeProps> = ({
 
     const getIcon = (level: Level) => {
         switch (level.icon) {
-            case 'code': return <Code size={32} fill="currentColor" className="text-white" />;
-            case 'book': return <Book size={32} fill="currentColor" className="text-white" />;
-            case 'trophy': return <Trophy size={32} fill="currentColor" className="text-white" />;
-            case 'zap': return <Zap size={32} fill="currentColor" className="text-white" />;
-            default: return <Star size={32} fill="currentColor" className="text-white" />;
+            case 'code': return <Code size={24} fill="currentColor" className="text-white drop-shadow-md" />;
+            case 'book': return <Book size={24} fill="currentColor" className="text-white drop-shadow-md" />;
+            case 'trophy': return <Trophy size={24} fill="currentColor" className="text-white drop-shadow-md" />;
+            case 'zap': return <Zap size={24} fill="currentColor" className="text-white drop-shadow-md" />;
+            default: return <Star size={24} fill="currentColor" className="text-white drop-shadow-md" />;
         }
     }
 
+    // Colors for planets based on unit index
+    const planetColors = [
+        'from-purple-500 to-indigo-600',
+        'from-blue-400 to-cyan-600',
+        'from-emerald-400 to-green-600',
+        'from-orange-400 to-red-600',
+        'from-pink-500 to-rose-600',
+    ];
+
     return (
-        <div 
-            className="flex flex-col w-full bg-neutral-200 dark:bg-neutral-900 relative transition-colors duration-300 overflow-hidden"
-            style={{ height: '100dvh' }} // Força altura real da viewport (mobile fix)
+        <div
+            className="flex flex-col w-full bg-[#0f172a] relative transition-colors duration-300 overflow-hidden"
+            style={{ height: '100dvh' }}
         >
-            {/* Header Fixo com suporte a Safe Area */}
-            <header 
-                className="fixed top-0 left-0 right-0 z-50 bg-neutral-200/95 dark:bg-neutral-900/95 backdrop-blur-sm border-b-2 border-neutral-300 dark:border-neutral-800 flex items-center justify-between px-4 py-3 shadow-sm no-select"
-                style={{ 
+            {/* Galaxy Background with Stars */}
+            <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+                {/* Nebula Effects */}
+                <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-[#0f172a] to-[#0f172a]"></div>
+                <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-900/10 rounded-full blur-3xl"></div>
+
+                {/* Stars */}
+                {stars.map((star) => (
+                    <motion.div
+                        key={star.id}
+                        className="absolute bg-white rounded-full"
+                        style={{
+                            top: star.top,
+                            left: star.left,
+                            width: star.size,
+                            height: star.size,
+                            boxShadow: `0 0 ${star.size * 2}px rgba(255, 255, 255, 0.8)`
+                        }}
+                        animate={{ opacity: [0.2, 1, 0.2] }}
+                        transition={{ duration: star.duration, repeat: Infinity, delay: star.delay, ease: "easeInOut" }}
+                    />
+                ))}
+            </div>
+
+            {/* Header Fixo */}
+            <header
+                className="fixed top-0 left-0 right-0 z-50 bg-[#0f172a]/80 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-4 py-3 shadow-lg no-select"
+                style={{
                     paddingTop: 'calc(0.75rem + env(safe-area-inset-top))',
-                    height: 'calc(62px + env(safe-area-inset-top))' 
+                    height: 'calc(62px + env(safe-area-inset-top))'
                 }}
             >
                 <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg border-2 border-neutral-200 dark:border-neutral-700 flex items-center justify-center">
-                        <Flag size={18} className="text-brand" fill="currentColor" />
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand to-brand-dark flex items-center justify-center shadow-lg shadow-brand/20">
+                        <Flag size={18} className="text-white" fill="currentColor" />
                     </div>
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <div id="header-streak" className="flex items-center gap-1 cursor-default">
-                        <span className="text-orange-500 font-bold">{userStreak}</span>
-                        <div className="text-orange-500 text-xl">🔥</div>
+                    <div id="header-streak" className="flex items-center gap-1 cursor-default bg-white/5 px-3 py-1 rounded-full border border-white/10">
+                        <span className="text-orange-400 font-bold">{userStreak}</span>
+                        <div className="text-orange-500 text-lg">🔥</div>
                     </div>
-                    <div id="header-gems" className="flex items-center gap-1 cursor-default">
-                        <span className="text-blue-500 font-bold">{userGems}</span>
-                        <div className="text-blue-400 text-xl">💎</div>
+                    <div id="header-gems" className="flex items-center gap-1 cursor-default bg-white/5 px-3 py-1 rounded-full border border-white/10">
+                        <span className="text-blue-400 font-bold">{userGems}</span>
+                        <div className="text-blue-400 text-lg">💎</div>
                     </div>
                 </div>
             </header>
 
-            {/* Zero Hearts Warning Banner (Fixo abaixo do header) */}
+            {/* Zero Hearts Warning Banner */}
             <AnimatePresence>
                 {userHearts === 0 && (
                     <motion.div
@@ -260,30 +311,32 @@ export const Home: React.FC<HomeProps> = ({
                 )}
             </AnimatePresence>
 
-            {/* Scroll Container (Com padding top compensatório) */}
-            <div 
-                ref={scrollRef} 
-                className="flex-1 overflow-y-auto px-4 relative bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] dark:bg-none"
-                style={{ 
-                    // Empurra o conteúdo para baixo da altura do header + safe area
-                    paddingTop: 'calc(80px + env(safe-area-inset-top))', 
+            {/* Scroll Container */}
+            <div
+                ref={scrollRef}
+                className="flex-1 overflow-y-auto px-4 relative z-10"
+                style={{
+                    paddingTop: 'calc(80px + env(safe-area-inset-top))',
                     paddingBottom: 'calc(6rem + env(safe-area-inset-bottom))'
                 }}
             >
-                {/* Daily Quests Widget */}
-                <div className="mb-6">
-                    <div className="bg-white dark:bg-neutral-800 border-2 border-neutral-200 dark:border-neutral-700 rounded-2xl p-4 shadow-sm transition-all duration-300">
+                {/* Daily Quests Widget (Collapsed by default to show galaxy) */}
+                <div className="mb-8 max-w-md mx-auto">
+                    <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 shadow-lg transition-all duration-300 hover:bg-white/10">
                         <div
                             className="flex justify-between items-center cursor-pointer no-select"
                             onClick={() => setIsQuestsExpanded(!isQuestsExpanded)}
                         >
-                            <h3 className="text-neutral-700 dark:text-neutral-200 font-extrabold uppercase tracking-wide text-sm">Missões Diárias</h3>
+                            <h3 className="text-white/90 font-extrabold uppercase tracking-wide text-sm flex items-center gap-2">
+                                <Rocket size={16} className="text-purple-400" />
+                                Missões Diárias
+                            </h3>
                             <div className="flex items-center gap-2">
-                                <div className="flex items-center gap-1.5 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-400 px-2.5 py-1 rounded-lg border border-blue-200 dark:border-blue-800">
+                                <div className="flex items-center gap-1.5 bg-blue-500/20 text-blue-300 px-2.5 py-1 rounded-lg border border-blue-500/30">
                                     <Clock size={14} className="animate-pulse" />
                                     <span className="text-xs font-mono font-bold">{timeToNextQuests}</span>
                                 </div>
-                                {isQuestsExpanded ? <ChevronUp size={16} className="text-neutral-400" /> : <ChevronDown size={16} className="text-neutral-400" />}
+                                {isQuestsExpanded ? <ChevronUp size={16} className="text-white/50" /> : <ChevronDown size={16} className="text-white/50" />}
                             </div>
                         </div>
 
@@ -299,15 +352,15 @@ export const Home: React.FC<HomeProps> = ({
                                         {quests.map(quest => (
                                             <div key={quest.id} className="flex items-center justify-between">
                                                 <div className="flex items-center gap-3 flex-1">
-                                                    <div className={`p-2 rounded-lg ${quest.completed ? 'bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-400' : 'bg-neutral-100 text-neutral-400 dark:bg-neutral-700'}`}>
+                                                    <div className={`p-2 rounded-lg ${quest.completed ? 'bg-green-500/20 text-green-400' : 'bg-white/10 text-white/40'}`}>
                                                         {quest.completed ? <CheckCircle size={16} /> : <Trophy size={16} />}
                                                     </div>
                                                     <div className="flex-1">
-                                                        <p className={`text-sm font-bold ${quest.completed ? 'text-neutral-400 line-through' : 'text-neutral-600 dark:text-neutral-300'}`}>
+                                                        <p className={`text-sm font-bold ${quest.completed ? 'text-white/30 line-through' : 'text-white/80'}`}>
                                                             {quest.description}
                                                         </p>
-                                                        <div className="w-full h-1.5 bg-neutral-100 dark:bg-neutral-700 rounded-full mt-1 overflow-hidden">
-                                                            <div className="h-full bg-yellow-400 rounded-full" style={{ width: `${Math.min(100, (quest.current / quest.target) * 100)}%` }}></div>
+                                                        <div className="w-full h-1.5 bg-white/10 rounded-full mt-1 overflow-hidden">
+                                                            <div className="h-full bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full" style={{ width: `${Math.min(100, (quest.current / quest.target) * 100)}%` }}></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -315,31 +368,17 @@ export const Home: React.FC<HomeProps> = ({
                                                     <motion.button
                                                         whileTap={{ scale: 0.9 }}
                                                         onClick={(e) => { e.stopPropagation(); onClaimQuest(quest.id); }}
-                                                        className="bg-info text-white p-2 rounded-xl shadow-btn-primary animate-bounce no-select"
+                                                        className="bg-info text-white p-2 rounded-xl shadow-lg shadow-info/30 animate-bounce no-select"
                                                     >
                                                         <Gift size={16} />
                                                     </motion.button>
                                                 )}
                                                 {quest.claimed && (
-                                                    <span className="text-xs font-bold text-neutral-300 uppercase no-select">Feito</span>
+                                                    <span className="text-xs font-bold text-white/30 uppercase no-select">Feito</span>
                                                 )}
                                                 {!quest.completed && (
                                                     <div className="flex items-center gap-2">
-                                                        <span className="text-xs font-bold text-neutral-400">{quest.current}/{quest.target}</span>
-                                                        <motion.button
-                                                            whileTap={{ scale: 0.9 }}
-                                                            onClick={(e) => {
-                                                                e.stopPropagation();
-                                                                if (userGems >= 50) {
-                                                                    onResetQuest(quest.id);
-                                                                }
-                                                            }}
-                                                            className={`p-1.5 rounded-lg transition-all no-select ${userGems >= 50 ? 'bg-purple-500 hover:bg-purple-600 text-white' : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'}`}
-                                                            title={userGems >= 50 ? "Resetar missão (50 gemas)" : "Gemas insuficientes"}
-                                                        >
-                                                            <RefreshCw size={14} />
-                                                        </motion.button>
-                                                        <span className="text-[10px] font-bold text-purple-500">50💎</span>
+                                                        <span className="text-xs font-bold text-white/40">{quest.current}/{quest.target}</span>
                                                     </div>
                                                 )}
                                             </div>
@@ -351,72 +390,119 @@ export const Home: React.FC<HomeProps> = ({
                     </div>
                 </div>
 
-                {/* The Path */}
-                <div className="flex flex-col items-center gap-8 max-w-md mx-auto">
-                    {displayedUnits.map((unit, unitIndex) => (
-                        <div key={unit.id} className="w-full mb-8">
-                            {/* Unit Header */}
-                            <div className="mb-6 bg-brand text-white p-4 rounded-xl shadow-md border-b-4 border-brand-dark">
-                                <h2 className="text-lg font-bold uppercase">{unit.title}</h2>
-                                <p className="text-sm opacity-90">{unit.description}</p>
-                            </div>
-                            
-                            {/* Levels Grid/Path */}
-                            <div className="flex flex-col items-center gap-4">
-                                {unit.levels.map((level) => {
-                                    const isCompleted = completedLevels.includes(level.id);
-                                    const isLocked = !isCompleted && currentActiveId !== level.id;
-                                    const isActive = currentActiveId === level.id;
-                                    
-                                    return (
-                                        <motion.div 
-                                            key={level.id}
-                                            id={`level-${level.id}`}
-                                            whileHover={{ scale: isLocked ? 1 : 1.05 }}
-                                            whileTap={{ scale: 0.95 }}
-                                            onClick={() => !isLocked && onStartLevel(level.id)}
-                                            className={`
-                                                relative w-20 h-20 rounded-full flex items-center justify-center border-b-4 cursor-pointer no-select transition-all
-                                                ${isActive 
-                                                    ? 'bg-brand border-brand-dark shadow-[0_0_15px_rgba(88,204,2,0.6)]' 
-                                                    : isCompleted 
-                                                        ? 'bg-yellow-400 border-yellow-600' 
-                                                        : 'bg-neutral-300 border-neutral-400 dark:bg-neutral-700 dark:border-neutral-800'
-                                                }
-                                            `}
-                                        >
-                                            {/* Icon Logic */}
-                                            <div className="z-10 relative">
-                                                {isLocked ? (
-                                                    <Lock size={24} className="text-neutral-500 dark:text-neutral-400" />
-                                                ) : isCompleted ? (
-                                                    <Check size={32} className="text-white font-bold" strokeWidth={4} />
-                                                ) : (
-                                                    getIcon(level)
-                                                )}
-                                            </div>
+                {/* The Galaxy Path */}
+                <div className="flex flex-col items-center gap-12 max-w-md mx-auto pb-20">
+                    {displayedUnits.map((unit, unitIndex) => {
+                        const unitColor = planetColors[unitIndex % planetColors.length];
 
-                                            {/* Stars/Rating (Optional) */}
-                                            {isCompleted && (
-                                                <div className="absolute -bottom-2 flex gap-0.5">
-                                                    {[1, 2, 3].map(i => (
-                                                        <Star key={i} size={12} className="text-yellow-400 fill-yellow-400 drop-shadow-sm" />
-                                                    ))}
-                                                </div>
-                                            )}
-                                        </motion.div>
-                                    );
-                                })}
+                        return (
+                            <div key={unit.id} className="w-full relative">
+                                {/* Unit Header (Floating in space) */}
+                                <div className="mb-12 text-center relative">
+                                    <div className="inline-block bg-white/10 backdrop-blur-md border border-white/20 px-6 py-2 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                                        <h2 className="text-sm font-black uppercase text-white tracking-widest">{unit.title}</h2>
+                                    </div>
+                                    <p className="text-xs text-white/50 mt-2">{unit.description}</p>
+                                </div>
+
+                                {/* Levels Grid/Path */}
+                                <div className="flex flex-col items-center gap-12 relative">
+                                    {unit.levels.map((level, levelIndex) => {
+                                        const isCompleted = completedLevels.includes(level.id);
+                                        const isLocked = !isCompleted && currentActiveId !== level.id;
+                                        const isActive = currentActiveId === level.id;
+
+                                        // Calculate zigzag position
+                                        // Use sine wave to create a winding path
+                                        // We need a global index to make it continuous across units, but local index is easier
+                                        // Let's just alternate left/right for simplicity or use a fixed pattern
+                                        const offset = Math.sin(levelIndex) * 60; // -60px to +60px
+
+                                        return (
+                                            <div key={level.id} className="relative flex justify-center w-full">
+                                                {/* Connecting Line (to next level) - Simplified vertical line for now, 
+                                                    could be SVG curve in future */}
+                                                {levelIndex < unit.levels.length - 1 && (
+                                                    <div
+                                                        className="absolute top-16 w-1 h-16 bg-white/10 border-l-2 border-dashed border-white/20"
+                                                        style={{
+                                                            left: `calc(50% + ${offset}px)`,
+                                                            transform: `translateX(0px) rotate(${Math.sin(levelIndex) * -15}deg)`,
+                                                            height: '80px',
+                                                            zIndex: 0
+                                                        }}
+                                                    />
+                                                )}
+
+                                                <motion.div
+                                                    id={`level-${level.id}`}
+                                                    whileHover={{ scale: isLocked ? 1 : 1.1 }}
+                                                    whileTap={{ scale: 0.9 }}
+                                                    onClick={() => !isLocked && onStartLevel(level.id)}
+                                                    className={`
+                                                        relative w-24 h-24 rounded-full flex items-center justify-center cursor-pointer no-select transition-all z-10
+                                                        ${isActive
+                                                            ? `bg-gradient-to-br ${unitColor} shadow-[0_0_30px_rgba(255,255,255,0.4)] ring-4 ring-white/20`
+                                                            : isCompleted
+                                                                ? 'bg-gradient-to-br from-yellow-400 to-orange-500 shadow-lg'
+                                                                : 'bg-gradient-to-br from-slate-700 to-slate-800 border-4 border-slate-600 opacity-80'
+                                                        }
+                                                    `}
+                                                    style={{
+                                                        transform: `translateX(${offset}px)`,
+                                                    }}
+                                                >
+                                                    {/* Planet Texture/Detail */}
+                                                    <div className="absolute inset-0 rounded-full bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+
+                                                    {/* Icon Logic */}
+                                                    <div className="z-10 relative">
+                                                        {isLocked ? (
+                                                            <Lock size={28} className="text-white/30" />
+                                                        ) : isCompleted ? (
+                                                            <Check size={36} className="text-white drop-shadow-md" strokeWidth={4} />
+                                                        ) : (
+                                                            getIcon(level)
+                                                        )}
+                                                    </div>
+
+                                                    {/* ROCKET ANIMATION */}
+                                                    {isActive && (
+                                                        <motion.div
+                                                            layoutId="rocket-travel"
+                                                            className="absolute -top-8 -right-8 z-20 pointer-events-none"
+                                                            transition={{ type: "spring", stiffness: 50, damping: 15 }}
+                                                        >
+                                                            <div className="relative">
+                                                                <Rocket size={48} className="text-white fill-white drop-shadow-[0_0_15px_rgba(255,100,0,0.8)] -rotate-45" />
+                                                                <div className="absolute top-full left-1/2 -translate-x-1/2 w-2 h-8 bg-gradient-to-b from-orange-500 to-transparent blur-sm"></div>
+                                                            </div>
+                                                        </motion.div>
+                                                    )}
+
+                                                    {/* Stars/Rating */}
+                                                    {isCompleted && (
+                                                        <div className="absolute -bottom-6 flex gap-1 justify-center w-full">
+                                                            {[1, 2, 3].map(i => (
+                                                                <Star key={i} size={14} className="text-yellow-400 fill-yellow-400 drop-shadow-[0_0_5px_rgba(255,215,0,0.5)]" />
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                </motion.div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                    
+                        );
+                    })}
+
                     <div ref={loaderRef} className="py-8 flex justify-center">
-                        {isLoadingMore && <Loader className="animate-spin text-brand" />}
+                        {isLoadingMore && <Loader className="animate-spin text-white/50" />}
                     </div>
                 </div>
 
-                {/* Level Up Toast (Fixo) */}
+                {/* Level Up Toast */}
                 <AnimatePresence>
                     {showLevelUpToast && (
                         <motion.div
@@ -426,9 +512,9 @@ export const Home: React.FC<HomeProps> = ({
                             className="fixed z-50 flex justify-center pointer-events-none left-0 right-0"
                             style={{ top: 'calc(150px + env(safe-area-inset-top))' }}
                         >
-                            <div className="bg-brand-dark text-white px-6 py-3 rounded-full shadow-lg flex items-center gap-2 border-4 border-brand-light">
+                            <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-full shadow-[0_0_30px_rgba(124,58,237,0.5)] flex items-center gap-2 border-2 border-white/20 backdrop-blur-md">
                                 <Sparkles size={20} className="text-yellow-300 animate-spin-slow" />
-                                <span className="font-black uppercase tracking-widest">Nível Desbloqueado!</span>
+                                <span className="font-black uppercase tracking-widest text-sm">Nível Desbloqueado!</span>
                             </div>
                         </motion.div>
                     )}
@@ -443,7 +529,7 @@ export const Home: React.FC<HomeProps> = ({
                         animate={{ scale: 1, x: 0 }}
                         exit={{ scale: 0, x: 100 }}
                         onClick={onStartSmartWorkout}
-                        className="fixed right-6 z-40 bg-secondary hover:bg-secondary-light text-white p-4 rounded-full shadow-lg border-4 border-white dark:border-neutral-800 flex items-center justify-center gap-2 group no-select"
+                        className="fixed right-6 z-40 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white p-4 rounded-full shadow-[0_0_20px_rgba(236,72,153,0.5)] border-4 border-white/10 flex items-center justify-center gap-2 group no-select"
                         style={{ bottom: 'calc(6rem + env(safe-area-inset-bottom))' }}
                     >
                         <Cpu size={28} className="group-hover:animate-pulse" />
@@ -461,7 +547,7 @@ export const Home: React.FC<HomeProps> = ({
                     animate={{ scale: 1, x: 0 }}
                     transition={{ delay: 0.2 }}
                     onClick={onStartDebug}
-                    className="fixed right-6 z-40 bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-full shadow-lg border-4 border-white dark:border-neutral-800 flex items-center justify-center group no-select"
+                    className="fixed right-6 z-40 bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-full shadow-lg border-4 border-white/10 flex items-center justify-center group no-select"
                     title="Desafios de Debug"
                     style={{ bottom: 'calc(11rem + env(safe-area-inset-bottom))' }}
                 >
