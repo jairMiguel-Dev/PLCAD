@@ -19,7 +19,7 @@ import { TermsOverlay } from './components/TermsOverlay';
 import { HeartRefillModal } from './components/HeartRefillModal';
 import { ResizableContainer } from './components/ResizableContainer';
 import { ScreenState, Level, UserStats, LessonResult, Achievement, ShopItem, ModuleType, Quest, ReviewConcept, QuestionType, Question } from './types';
-import { MAX_HEARTS, CURRICULUM, calculateLevel, ACHIEVEMENTS, HEART_REFILL_TIME_MS, DAILY_QUEST_TEMPLATES, getLevelById } from './constants';
+import { MAX_HEARTS, CURRICULUM, ENGLISH_CURRICULUM, LOGIC_CURRICULUM, COMBO_CURRICULUM, calculateLevel, ACHIEVEMENTS, HEART_REFILL_TIME_MS, DAILY_QUEST_TEMPLATES, getLevelById } from './constants';
 
 const INITIAL_STATS: UserStats = {
     hearts: MAX_HEARTS,
@@ -414,7 +414,7 @@ const App: React.FC = () => {
     }, [userStats.hearts, userStats.lastHeartLostTime]);
 
     const getLevelData = (id: number): Level | undefined => {
-        return getLevelById(id);
+        return getLevelById(id, userStats.selectedModule || ModuleType.COMBO);
     };
 
     const handleStartLevel = (id: number) => {
@@ -659,7 +659,11 @@ const App: React.FC = () => {
 
     const handlePracticeConcept = (conceptTerm: string) => {
         // Encontrar níveis que ensinam este conceito
-        const relevantLevels = CURRICULUM.flatMap(u => u.levels).filter(l =>
+        const currentCurriculum = userStats.selectedModule === ModuleType.ENGLISH ? ENGLISH_CURRICULUM :
+            userStats.selectedModule === ModuleType.LOGIC ? LOGIC_CURRICULUM :
+                COMBO_CURRICULUM;
+
+        const relevantLevels = currentCurriculum.flatMap(u => u.levels).filter(l =>
             l.learnableConcepts?.some(c => c.term === conceptTerm)
         );
 
