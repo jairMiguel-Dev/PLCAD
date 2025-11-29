@@ -729,6 +729,8 @@ const App: React.FC = () => {
         setScreen(ScreenState.LESSON);
     };
 
+
+
     const handleDebugChallengeComplete = (xp: number) => {
         setUserStats(prev => ({
             ...prev,
@@ -767,6 +769,7 @@ const App: React.FC = () => {
                         onClaimQuest={handleClaimQuest}
                         onResetQuest={handleResetQuest}
                         conceptMastery={userStats.conceptMastery}
+                        selectedModule={userStats.selectedModule}
                     />
                 );
             case ScreenState.LESSON:

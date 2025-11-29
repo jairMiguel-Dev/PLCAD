@@ -1,4 +1,4 @@
-import { QuestionType, Unit, Achievement, ShopItem, Quest, Level } from './types';
+import { QuestionType, Unit, Achievement, ShopItem, Quest, Level, ModuleType } from './types';
 import { Heart, Zap, Crown, Coins, Gem } from 'lucide-react';
 
 export const MAX_HEARTS = 5;
@@ -68,7 +68,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     {
         id: 'first_step',
         title: 'Hello World',
-        description: 'Complete sua primeira lição de JavaScript.',
+        description: 'Complete sua primeira lição.',
         icon: '🚀',
         condition: (stats) => stats.lessonsCompleted >= 1
     },
@@ -82,7 +82,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     {
         id: 'perfectionist',
         title: 'Clean Code',
-        description: 'Complete uma lição sem nenhum erro de sintaxe.',
+        description: 'Complete uma lição sem nenhum erro.',
         icon: '💎',
         condition: (_, result) => (result ? result.mistakeCount === 0 : false)
     },
@@ -102,7 +102,289 @@ export const ACHIEVEMENTS: Achievement[] = [
     }
 ];
 
-export const CURRICULUM: Unit[] = [
+// --- ENGLISH TRACK ---
+export const ENGLISH_CURRICULUM: Unit[] = [
+    {
+        id: 1,
+        title: "Unit 1: The Daily Standup",
+        description: "Fale sobre seu progresso diário.",
+        levels: [
+            {
+                id: 101,
+                title: "Greetings & Status",
+                description: "Iniciando a reunião.",
+                color: 'info',
+                icon: 'zap',
+                totalQuestions: 4,
+                stars: 0,
+                learnableConcepts: [
+                    { term: 'Standup', definition: 'Reunião diária rápida.', type: 'Inglês', example: 'Let\'s start the standup.' },
+                    { term: 'Blocker', definition: 'Algo que impede seu progresso.', type: 'Inglês', example: 'I have a blocker on the API.' }
+                ],
+                questions: [
+                    {
+                        id: 'e_t1',
+                        type: QuestionType.THEORY,
+                        difficulty: 'easy',
+                        title: 'The Standup',
+                        prompt: 'Standup Meeting',
+                        englishWord: 'Standup',
+                        phonetic: '/ˈstænd.ʌp/',
+                        theoryContent: 'A **Standup** is a short daily meeting where you say what you did yesterday, what you will do today, and if you have any **Blockers**.',
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
+                    {
+                        id: 'e_l1',
+                        type: QuestionType.LISTENING,
+                        difficulty: 'easy',
+                        title: 'Listening',
+                        prompt: 'What did they say?',
+                        englishWord: 'I am working on the login page.',
+                        options: [
+                            { id: '1', text: 'Estou trabalhando na página de login.', isCorrect: true },
+                            { id: '2', text: 'Terminei a página de login.', isCorrect: false },
+                            { id: '3', text: 'Vou começar a página de login.', isCorrect: false }
+                        ],
+                        correctFeedback: 'Correct!',
+                        wrongFeedback: 'Listen for "working on".'
+                    },
+                    {
+                        id: 'e_s1',
+                        type: QuestionType.SPEAKING,
+                        difficulty: 'medium',
+                        title: 'Speaking',
+                        prompt: 'Say: "I have no blockers"',
+                        englishWord: 'I have no blockers',
+                        options: [],
+                        correctFeedback: 'Perfect pronunciation!',
+                        wrongFeedback: 'Try to emphasize "blockers".'
+                    },
+                    {
+                        id: 'e_m1',
+                        type: QuestionType.PAIR_MATCH,
+                        difficulty: 'easy',
+                        title: 'Vocabulary',
+                        prompt: 'Match terms:',
+                        options: [],
+                        pairs: [
+                            { id: '1', text: 'Yesterday', pairId: '1a' },
+                            { id: '1a', text: 'Ontem', pairId: '1' },
+                            { id: '2', text: 'Today', pairId: '2a' },
+                            { id: '2a', text: 'Hoje', pairId: '2' },
+                            { id: '3', text: 'Blocker', pairId: '3a' },
+                            { id: '3a', text: 'Impedimento', pairId: '3' }
+                        ],
+                        correctFeedback: 'Good job!',
+                        wrongFeedback: 'Review the time words.'
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        id: 2,
+        title: "Unit 2: Code Review",
+        description: "Dando e recebendo feedback.",
+        levels: [
+            {
+                id: 201,
+                title: "LGTM & Comments",
+                description: "Aprovando código.",
+                color: 'brand',
+                icon: 'code',
+                totalQuestions: 3,
+                stars: 0,
+                learnableConcepts: [
+                    { term: 'LGTM', definition: 'Looks Good To Me (Parece bom para mim).', type: 'Inglês' },
+                    { term: 'Nitpick', definition: 'Um detalhe pequeno/chato.', type: 'Inglês' }
+                ],
+                questions: [
+                    {
+                        id: 'e_t2',
+                        type: QuestionType.THEORY,
+                        difficulty: 'easy',
+                        title: 'Review Acronyms',
+                        prompt: 'LGTM',
+                        englishWord: 'LGTM',
+                        theoryContent: '**LGTM** stands for "Looks Good To Me". Use it when you approve a Pull Request without changes.',
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
+                    {
+                        id: 'e_s2',
+                        type: QuestionType.SPEAKING,
+                        difficulty: 'hard',
+                        title: 'Speaking',
+                        prompt: 'Say: "Can you fix this typo?"',
+                        englishWord: 'Can you fix this typo?',
+                        options: [],
+                        correctFeedback: 'Excellent!',
+                        wrongFeedback: 'Clear enunciation helps.'
+                    },
+                    {
+                        id: 'e_l2',
+                        type: QuestionType.LISTENING,
+                        difficulty: 'medium',
+                        title: 'Listening',
+                        prompt: 'What is the request?',
+                        englishWord: 'Please update the documentation.',
+                        options: [
+                            { id: '1', text: 'Atualize a documentação.', isCorrect: true },
+                            { id: '2', text: 'Apague a documentação.', isCorrect: false },
+                            { id: '3', text: 'Leia a documentação.', isCorrect: false }
+                        ],
+                        correctFeedback: 'Correct!',
+                        wrongFeedback: 'Update = Atualizar.'
+                    }
+                ]
+            }
+        ]
+    }
+];
+
+// --- LOGIC TRACK ---
+export const LOGIC_CURRICULUM: Unit[] = [
+    {
+        id: 1,
+        title: "Unidade 1: Lógica Pura",
+        description: "Algoritmos e Estruturas.",
+        levels: [
+            {
+                id: 101,
+                title: "Fluxo de Controle",
+                description: "Sequência e Decisão.",
+                color: 'warn',
+                icon: 'code',
+                totalQuestions: 4,
+                stars: 0,
+                learnableConcepts: [
+                    { term: 'Sequence', definition: 'Ordem de execução.', type: 'Lógica' },
+                    { term: 'Branch', definition: 'Ramificação (if/else).', type: 'Lógica' }
+                ],
+                questions: [
+                    {
+                        id: 'l_q1',
+                        type: QuestionType.DRAG_AND_DROP,
+                        difficulty: 'easy',
+                        title: 'Sequência',
+                        prompt: 'Ordene para: Acordar -> Comer -> Codar',
+                        options: [],
+                        segments: ['wakeUp();', 'eat();', 'code();'],
+                        distractors: ['sleep();'],
+                        correctFeedback: 'Lógica correta!',
+                        wrongFeedback: 'A ordem importa.'
+                    },
+                    {
+                        id: 'l_q2',
+                        type: QuestionType.CODE_BUILDER,
+                        difficulty: 'medium',
+                        title: 'Decisão',
+                        prompt: 'Se x > 5, retorne true:',
+                        options: [
+                            { id: '1', text: 'if (x > 5) return true;', isCorrect: true },
+                            { id: '2', text: 'if (x < 5) return true;', isCorrect: false },
+                            { id: '3', text: 'return x > 5;', isCorrect: true } // Also correct technically but maybe strictly looking for if structure? Let's keep simple.
+                        ],
+                        correctFeedback: 'Boa!',
+                        wrongFeedback: 'Verifique a condição.'
+                    },
+                    {
+                        id: 'l_q3',
+                        type: QuestionType.FILL_IN_BLANK,
+                        difficulty: 'hard',
+                        title: 'Loop',
+                        prompt: 'Repita 10 vezes:',
+                        codeSnippet: 'for (let i = 0; i < ___; i++)',
+                        correctAnswer: '10',
+                        options: [],
+                        correctFeedback: 'Exato!',
+                        wrongFeedback: 'O limite é 10.'
+                    },
+                    {
+                        id: 'l_q4',
+                        type: QuestionType.MULTIPLE_CHOICE,
+                        difficulty: 'medium',
+                        title: 'Lógica',
+                        prompt: 'Qual o valor de !true?',
+                        options: [
+                            { id: '1', text: 'false', isCorrect: true },
+                            { id: '2', text: 'true', isCorrect: false },
+                            { id: '3', text: 'undefined', isCorrect: false }
+                        ],
+                        correctFeedback: 'Negação inverte o valor.',
+                        wrongFeedback: '! significa NÃO.'
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        id: 2,
+        title: "Unidade 2: Estruturas de Dados",
+        description: "Organizando informação.",
+        levels: [
+            {
+                id: 201,
+                title: "Arrays & Objects",
+                description: "Coleções complexas.",
+                color: 'secondary',
+                icon: 'book',
+                totalQuestions: 3,
+                stars: 0,
+                learnableConcepts: [
+                    { term: 'Index', definition: 'Posição no array.', type: 'Lógica' },
+                    { term: 'Key', definition: 'Identificador no objeto.', type: 'Lógica' }
+                ],
+                questions: [
+                    {
+                        id: 'l_q5',
+                        type: QuestionType.CODE_BUILDER,
+                        difficulty: 'medium',
+                        title: 'Acesso',
+                        prompt: 'Acesse o segundo item de "arr":',
+                        options: [
+                            { id: '1', text: 'arr[1]', isCorrect: true },
+                            { id: '2', text: 'arr[2]', isCorrect: false },
+                            { id: '3', text: 'arr.2', isCorrect: false }
+                        ],
+                        correctFeedback: 'Índice 1 é o segundo item.',
+                        wrongFeedback: 'Começa em 0.'
+                    },
+                    {
+                        id: 'l_q6',
+                        type: QuestionType.FILL_IN_BLANK,
+                        difficulty: 'hard',
+                        title: 'Objetos',
+                        prompt: 'Acesse a propriedade "id":',
+                        codeSnippet: 'user.___',
+                        correctAnswer: 'id',
+                        options: [],
+                        correctFeedback: 'Dot notation.',
+                        wrongFeedback: 'Use .id'
+                    },
+                    {
+                        id: 'l_q7',
+                        type: QuestionType.DRAG_AND_DROP,
+                        difficulty: 'hard',
+                        title: 'Construção',
+                        prompt: 'Crie um objeto vazio:',
+                        options: [],
+                        segments: ['const', 'obj', '=', '{}', ';'],
+                        distractors: ['[]', 'empty'],
+                        correctFeedback: 'Correct syntax.',
+                        wrongFeedback: 'Objects use {}'
+                    }
+                ]
+            }
+        ]
+    }
+];
+
+// --- COMBO TRACK (Original) ---
+export const COMBO_CURRICULUM: Unit[] = [
     {
         id: 1,
         title: "Unidade 1: Fundamentos & Vocabulário",
@@ -421,513 +703,6 @@ export const CURRICULUM: Unit[] = [
                 ]
             }
         ]
-    },
-    {
-        id: 3,
-        title: "Unidade 3: Arrays & Loops",
-        description: "Listas e Repetições.",
-        levels: [
-            {
-                id: 301,
-                title: "Arrays & Items",
-                description: "Coleções.",
-                color: 'secondary',
-                icon: 'book',
-                totalQuestions: 3,
-                stars: 0,
-                learnableConcepts: [
-                    { term: 'Array', definition: 'Lista de dados.', type: 'Inglês' },
-                    { term: 'Item/Element', definition: 'Um dado dentro do array.', type: 'Inglês' },
-                    { term: 'Empty', definition: 'Vazio (sem itens).', type: 'Inglês' }
-                ],
-                questions: [
-                    {
-                        id: 't_arr',
-                        type: QuestionType.THEORY,
-                        difficulty: 'easy',
-                        title: 'Listas',
-                        prompt: 'Array',
-                        englishWord: 'Array',
-                        phonetic: '/əˈreɪ/',
-                        theoryContent: 'Um **Array** é uma lista de **Items** (ou Elements). \n\nUm array sem nada dentro é chamado de **Empty Array** (Array Vazio).',
-                        codeSnippet: 'let list = []; // Empty Array\nlet nums = [1, 2, 3]; // 3 Items',
-                        options: [],
-                        correctFeedback: '',
-                        wrongFeedback: ''
-                    },
-                    {
-                        id: 'q_match_arr',
-                        type: QuestionType.PAIR_MATCH,
-                        difficulty: 'medium',
-                        title: 'Vocabulário',
-                        prompt: 'Conecte:',
-                        options: [],
-                        pairs: [
-                            { id: '1', text: 'Empty', pairId: '1a' },
-                            { id: '1a', text: 'Vazio', pairId: '1' },
-                            { id: '2', text: 'Item', pairId: '2a' },
-                            { id: '2a', text: 'Elemento', pairId: '2' },
-                            { id: '3', text: 'Array', pairId: '3a' },
-                            { id: '3a', text: 'Lista', pairId: '3' }
-                        ],
-                        correctFeedback: 'Nice!',
-                        wrongFeedback: 'Try again.'
-                    },
-                    {
-                        id: 'q_code_empty',
-                        type: QuestionType.CODE_BUILDER,
-                        difficulty: 'easy',
-                        title: 'Prática',
-                        prompt: 'Create an empty array "data":',
-                        options: [
-                            { id: '1', text: 'let data = [];', isCorrect: true },
-                            { id: '2', text: 'let data = {};', isCorrect: false },
-                            { id: '3', text: 'let data = empty;', isCorrect: false }
-                        ],
-                        correctFeedback: 'Correct! [] is an empty array.',
-                        wrongFeedback: 'Use brackets [].'
-                    }
-                ]
-            },
-            {
-                id: 302,
-                title: "Index & Length",
-                description: "Posições.",
-                color: 'info',
-                icon: 'zap',
-                totalQuestions: 3,
-                stars: 0,
-                learnableConcepts: [
-                    { term: 'Index', definition: 'Posição (começa em 0).', type: 'Inglês' },
-                    { term: 'Length', definition: 'Comprimento/Tamanho total.', type: 'Inglês' },
-                    { term: 'Last', definition: 'Último.', type: 'Inglês' }
-                ],
-                questions: [
-                    {
-                        id: 't_idx',
-                        type: QuestionType.THEORY,
-                        difficulty: 'easy',
-                        title: 'Posições',
-                        prompt: 'Index',
-                        englishWord: 'Index',
-                        theoryContent: 'Cada item tem um **Index** (Índice). O primeiro é 0. \n\nA propriedade **Length** diz quantos itens existem no total.',
-                        codeSnippet: 'let arr = ["A", "B"];\n// Index 0 is "A"\n// Length is 2',
-                        options: [],
-                        correctFeedback: '',
-                        wrongFeedback: ''
-                    },
-                    {
-                        id: 'q_trans_len',
-                        type: QuestionType.TRANSLATION,
-                        difficulty: 'medium',
-                        title: 'Tradução',
-                        prompt: 'O que "Length" significa?',
-                        options: [
-                            { id: '1', text: 'Tamanho/Comprimento', isCorrect: true },
-                            { id: '2', text: 'Largura', isCorrect: false },
-                            { id: '3', text: 'Lento', isCorrect: false }
-                        ],
-                        correctFeedback: 'Correct!',
-                        wrongFeedback: 'Length = Tamanho.'
-                    },
-                    {
-                        id: 'q_fill_len',
-                        type: QuestionType.FILL_IN_BLANK,
-                        difficulty: 'hard',
-                        title: 'Código',
-                        prompt: 'Get the size of the array:',
-                        codeSnippet: 'let size = list.___;',
-                        correctAnswer: 'length',
-                        options: [],
-                        correctFeedback: 'Yes! .length property.',
-                        wrongFeedback: 'Use .length'
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        id: 4,
-        title: "Unidade 4: Functions",
-        description: "Ações e Comandos.",
-        levels: [
-            {
-                id: 401,
-                title: "Functions & Calls",
-                description: "Criando ações.",
-                color: 'warn',
-                icon: 'code',
-                totalQuestions: 3,
-                stars: 0,
-                learnableConcepts: [
-                    { term: 'Function', definition: 'Bloco de código reutilizável.', type: 'Inglês' },
-                    { term: 'Call', definition: 'Executar/Chamar a função.', type: 'Inglês' },
-                    { term: 'Run', definition: 'Rodar o código.', type: 'Inglês' }
-                ],
-                questions: [
-                    {
-                        id: 't_func',
-                        type: QuestionType.THEORY,
-                        difficulty: 'easy',
-                        title: 'Funções',
-                        prompt: 'Call',
-                        englishWord: 'Call',
-                        theoryContent: 'Uma **Function** guarda código para usar depois. \n\nPara usar esse código, nós fazemos uma **Call** (Chamada) da função. Dizemos "Call the function" ou "Run the function".',
-                        codeSnippet: 'function sayHi() { ... }\nsayHi(); // Calling the function',
-                        options: [],
-                        correctFeedback: '',
-                        wrongFeedback: ''
-                    },
-                    {
-                        id: 'q_listen_call',
-                        type: QuestionType.LISTENING,
-                        difficulty: 'medium',
-                        title: 'Listening',
-                        prompt: 'O que devo fazer?',
-                        englishWord: 'Call the function immediately.',
-                        options: [
-                            { id: '1', text: 'Chamar a função', isCorrect: true },
-                            { id: '2', text: 'Criar a função', isCorrect: false },
-                            { id: '3', text: 'Parar a função', isCorrect: false }
-                        ],
-                        correctFeedback: 'Correct! Call = Chamar/Executar.',
-                        wrongFeedback: 'Call means execute.'
-                    },
-                    {
-                        id: 'q_drag_call',
-                        type: QuestionType.DRAG_AND_DROP,
-                        difficulty: 'easy',
-                        title: 'Prática',
-                        prompt: 'Call the function "start":',
-                        segments: ['start', '(', ')', ';'],
-                        distractors: ['call', 'func'],
-                        options: [],
-                        correctFeedback: 'Good!',
-                        wrongFeedback: 'Just use name().'
-                    }
-                ]
-            },
-            {
-                id: 402,
-                title: "Parameters & Returns",
-                description: "Entrada e Saída.",
-                color: 'brand',
-                icon: 'zap',
-                totalQuestions: 3,
-                stars: 0,
-                learnableConcepts: [
-                    { term: 'Parameter', definition: 'Variável de entrada da função.', type: 'Inglês' },
-                    { term: 'Argument', definition: 'Valor real passado para a função.', type: 'Inglês' },
-                    { term: 'Return', definition: 'Devolver um resultado.', type: 'Inglês' }
-                ],
-                questions: [
-                    {
-                        id: 't_param',
-                        type: QuestionType.THEORY,
-                        difficulty: 'medium',
-                        title: 'Entradas e Saídas',
-                        prompt: 'Return',
-                        englishWord: 'Return',
-                        theoryContent: 'Funções podem receber dados (**Parameters**) e devolver um resultado final usando **Return**. \n\nO `return` para a função e entrega o valor de volta.',
-                        codeSnippet: 'function add(a, b) { // Parameters\n  return a + b; // Return value\n}',
-                        options: [],
-                        correctFeedback: '',
-                        wrongFeedback: ''
-                    },
-                    {
-                        id: 'q_match_func',
-                        type: QuestionType.PAIR_MATCH,
-                        difficulty: 'hard',
-                        title: 'Conceitos',
-                        prompt: 'Ligue:',
-                        options: [],
-                        pairs: [
-                            { id: '1', text: 'Parameter', pairId: '1a' },
-                            { id: '1a', text: 'Input (Definição)', pairId: '1' },
-                            { id: '2', text: 'Argument', pairId: '2a' },
-                            { id: '2a', text: 'Input (Valor Real)', pairId: '2' },
-                            { id: '3', text: 'Return', pairId: '3a' },
-                            { id: '3a', text: 'Output/Devolução', pairId: '3' }
-                        ],
-                        correctFeedback: 'Excellent!',
-                        wrongFeedback: 'Review params vs args.'
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        id: 5,
-        title: "Unidade 5: Ambiente Dev",
-        description: "Ferramentas do dia a dia.",
-        levels: [
-            {
-                id: 501,
-                title: "Git Basics",
-                description: "Controle de versão.",
-                color: 'secondary',
-                icon: 'code',
-                totalQuestions: 4,
-                stars: 0,
-                learnableConcepts: [
-                    { term: 'Repository', definition: 'Onde o projeto fica guardado.', type: 'Inglês' },
-                    { term: 'Commit', definition: 'Salvar mudanças (ponto na história).', type: 'Inglês' },
-                    { term: 'Push', definition: 'Enviar mudanças para a nuvem.', type: 'Inglês' }
-                ],
-                questions: [
-                    {
-                        id: 't_git',
-                        type: QuestionType.THEORY,
-                        difficulty: 'easy',
-                        title: 'Git Vocabulary',
-                        prompt: 'Commit',
-                        englishWord: 'Commit',
-                        phonetic: '/kəˈmɪt/',
-                        theoryContent: 'No Git, um **Commit** é como um "Save Game". Você salva o estado atual do seu código. \n\nDepois, você faz um **Push** para enviar esses commits para o servidor (GitHub).',
-                        codeSnippet: 'git commit -m "Fix bugs"\ngit push origin main',
-                        options: [],
-                        correctFeedback: '',
-                        wrongFeedback: ''
-                    },
-                    {
-                        id: 'q_trans_push',
-                        type: QuestionType.TRANSLATION,
-                        difficulty: 'easy',
-                        title: 'Tradução',
-                        prompt: 'O que "Push" faz?',
-                        options: [
-                            { id: '1', text: 'Envia código', isCorrect: true },
-                            { id: '2', text: 'Baixa código', isCorrect: false },
-                            { id: '3', text: 'Apaga código', isCorrect: false }
-                        ],
-                        correctFeedback: 'Yes! Push = Empurrar/Enviar.',
-                        wrongFeedback: 'Push empurra para o servidor.'
-                    },
-                    {
-                        id: 'q_match_git',
-                        type: QuestionType.PAIR_MATCH,
-                        difficulty: 'medium',
-                        title: 'Git Terms',
-                        prompt: 'Associe:',
-                        options: [],
-                        pairs: [
-                            { id: '1', text: 'Commit', pairId: '1a' },
-                            { id: '1a', text: 'Salvar Mudança', pairId: '1' },
-                            { id: '2', text: 'Push', pairId: '2a' },
-                            { id: '2a', text: 'Enviar', pairId: '2' },
-                            { id: '3', text: 'Pull', pairId: '3a' },
-                            { id: '3a', text: 'Baixar/Puxar', pairId: '3' }
-                        ],
-                        correctFeedback: 'Git master!',
-                        wrongFeedback: 'Review Push vs Pull.'
-                    }
-                ]
-            },
-            {
-                id: 502,
-                title: "Terminal & CLI",
-                description: "Linha de comando.",
-                color: 'info',
-                icon: 'zap',
-                totalQuestions: 3,
-                stars: 0,
-                learnableConcepts: [
-                    { term: 'Directory', definition: 'Pasta.', type: 'Inglês' },
-                    { term: 'Path', definition: 'Caminho do arquivo.', type: 'Inglês' },
-                    { term: 'Flag', definition: 'Opção de comando (ex: -v).', type: 'Inglês' }
-                ],
-                questions: [
-                    {
-                        id: 't_cli',
-                        type: QuestionType.THEORY,
-                        difficulty: 'easy',
-                        title: 'O Terminal',
-                        prompt: 'Directory',
-                        englishWord: 'Directory',
-                        phonetic: '/dɪˈrek.tər.i/',
-                        theoryContent: 'No terminal, não dizemos "pasta", dizemos **Directory**. \n\nO endereço de um arquivo é o seu **Path** (Caminho).',
-                        codeSnippet: 'cd /home/user/projects\n# Changing Directory',
-                        options: [],
-                        correctFeedback: '',
-                        wrongFeedback: ''
-                    },
-                    {
-                        id: 'q_trans_dir',
-                        type: QuestionType.TRANSLATION,
-                        difficulty: 'easy',
-                        title: 'Vocabulário',
-                        prompt: 'O que é um "Directory"?',
-                        options: [
-                            { id: '1', text: 'Uma pasta', isCorrect: true },
-                            { id: '2', text: 'Um arquivo', isCorrect: false },
-                            { id: '3', text: 'Um comando', isCorrect: false }
-                        ],
-                        correctFeedback: 'Correct!',
-                        wrongFeedback: 'Directory = Pasta.'
-                    },
-                    {
-                        id: 'q_listen_path',
-                        type: QuestionType.LISTENING,
-                        difficulty: 'medium',
-                        title: 'Listening',
-                        prompt: 'O que foi pedido?',
-                        englishWord: 'Check the file path.',
-                        options: [
-                            { id: '1', text: 'Verificar o caminho', isCorrect: true },
-                            { id: '2', text: 'Criar o arquivo', isCorrect: false },
-                            { id: '3', text: 'Apagar a pasta', isCorrect: false }
-                        ],
-                        correctFeedback: 'Yes! Path = Caminho.',
-                        wrongFeedback: 'Path means location/way.'
-                    }
-                ]
-            },
-            {
-                id: 503,
-                title: "Workflow",
-                description: "Fluxo de trabalho.",
-                color: 'warn',
-                icon: 'trophy',
-                totalQuestions: 3,
-                stars: 0,
-                learnableConcepts: [
-                    { term: 'Bug', definition: 'Erro ou falha no código.', type: 'Inglês' },
-                    { term: 'Feature', definition: 'Nova funcionalidade.', type: 'Inglês' },
-                    { term: 'Deploy', definition: 'Publicar o site/app.', type: 'Inglês' }
-                ],
-                questions: [
-                    {
-                        id: 't_flow',
-                        type: QuestionType.THEORY,
-                        difficulty: 'easy',
-                        title: 'Dia a Dia',
-                        prompt: 'Deploy',
-                        englishWord: 'Deploy',
-                        phonetic: '/dɪˈplɔɪ/',
-                        theoryContent: 'Quando terminamos uma **Feature** (Funcionalidade) e corrigimos os **Bugs**, fazemos o **Deploy**. \n\nDeploy significa colocar o sistema no ar para os usuários.',
-                        codeSnippet: 'npm run deploy',
-                        options: [],
-                        correctFeedback: '',
-                        wrongFeedback: ''
-                    },
-                    {
-                        id: 'q_match_flow',
-                        type: QuestionType.PAIR_MATCH,
-                        difficulty: 'medium',
-                        title: 'Workflow',
-                        prompt: 'Conecte:',
-                        options: [],
-                        pairs: [
-                            { id: '1', text: 'Bug', pairId: '1a' },
-                            { id: '1a', text: 'Erro/Falha', pairId: '1' },
-                            { id: '2', text: 'Feature', pairId: '2a' },
-                            { id: '2a', text: 'Funcionalidade', pairId: '2' },
-                            { id: '3', text: 'Deploy', pairId: '3a' },
-                            { id: '3a', text: 'Publicar', pairId: '3' }
-                        ],
-                        correctFeedback: 'Ready for work!',
-                        wrongFeedback: 'Review the terms.'
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        id: 6,
-        title: "Unidade 6: Web & APIs",
-        description: "Como a internet funciona.",
-        levels: [
-            {
-                id: 601,
-                title: "HTTP Basics",
-                description: "Conversa entre computadores.",
-                color: 'brand',
-                icon: 'zap',
-                totalQuestions: 3,
-                stars: 0,
-                learnableConcepts: [
-                    { term: 'Request', definition: 'Pedido feito ao servidor.', type: 'Inglês' },
-                    { term: 'Response', definition: 'Resposta do servidor.', type: 'Inglês' },
-                    { term: 'Server', definition: 'Computador que serve dados.', type: 'Inglês' }
-                ],
-                questions: [
-                    {
-                        id: 't_http',
-                        type: QuestionType.THEORY,
-                        difficulty: 'easy',
-                        title: 'A Web',
-                        prompt: 'Request',
-                        englishWord: 'Request',
-                        theoryContent: 'A web funciona com perguntas e respostas. \n\nO seu navegador faz um **Request** (Pedido) e o **Server** (Servidor) manda uma **Response** (Resposta).',
-                        codeSnippet: 'Client -> Request -> Server\nClient <- Response <- Server',
-                        options: [],
-                        correctFeedback: '',
-                        wrongFeedback: ''
-                    },
-                    {
-                        id: 'q_trans_req',
-                        type: QuestionType.TRANSLATION,
-                        difficulty: 'medium',
-                        title: 'Tradução',
-                        prompt: 'O que é um "Request"?',
-                        options: [
-                            { id: '1', text: 'Um pedido/solicitação', isCorrect: true },
-                            { id: '2', text: 'Uma recusa', isCorrect: false },
-                            { id: '3', text: 'Um teste', isCorrect: false }
-                        ],
-                        correctFeedback: 'Correct!',
-                        wrongFeedback: 'Request é solicitar algo.'
-                    }
-                ]
-            },
-            {
-                id: 602,
-                title: "JSON Data",
-                description: "Formato de dados.",
-                color: 'info',
-                icon: 'code',
-                totalQuestions: 3,
-                stars: 0,
-                learnableConcepts: [
-                    { term: 'Key', definition: 'Chave (nome do dado).', type: 'Inglês' },
-                    { term: 'Value', definition: 'Valor do dado.', type: 'Inglês' },
-                    { term: 'Parse', definition: 'Converter texto para código.', type: 'Inglês' }
-                ],
-                questions: [
-                    {
-                        id: 't_json',
-                        type: QuestionType.THEORY,
-                        difficulty: 'medium',
-                        title: 'Dados',
-                        prompt: 'Parse',
-                        englishWord: 'Parse',
-                        theoryContent: 'Dados vêm como texto. Para o código entender, precisamos fazer o **Parse** (Analisar/Converter). \n\nJSON é o formato mais comum, com pares de **Key** (Chave) e **Value** (Valor).',
-                        codeSnippet: 'JSON.parse(\'{"id": 1}\');',
-                        options: [],
-                        correctFeedback: '',
-                        wrongFeedback: ''
-                    },
-                    {
-                        id: 'q_match_json',
-                        type: QuestionType.PAIR_MATCH,
-                        difficulty: 'medium',
-                        title: 'JSON Terms',
-                        prompt: 'Associe:',
-                        options: [],
-                        pairs: [
-                            { id: '1', text: 'Key', pairId: '1a' },
-                            { id: '1a', text: 'Chave', pairId: '1' },
-                            { id: '2', text: 'Value', pairId: '2a' },
-                            { id: '2a', text: 'Valor', pairId: '2' },
-                            { id: '3', text: 'Parse', pairId: '3a' },
-                            { id: '3a', text: 'Converter', pairId: '3' }
-                        ],
-                        correctFeedback: 'Good job!',
-                        wrongFeedback: 'Try again.'
-                    }
-                ]
-            }
-        ]
     }
 ];
 
@@ -936,7 +711,7 @@ export const CURRICULUM: Unit[] = [
 const ADJECTIVES = ['Advanced', 'Complex', 'Deep', 'Master', 'Legacy', 'Async', 'Virtual', 'Cyber', 'Mega', 'Ultra'];
 const TOPICS = ['Algorithms', 'Patterns', 'Refactoring', 'Debugging', 'Deploy', 'Cloud', 'API', 'Database', 'Security', 'UI'];
 
-export const generateRandomUnit = (startUnitId: number, startLevelId: number): Unit => {
+export const generateRandomUnit = (startUnitId: number, startLevelId: number, mode: ModuleType = ModuleType.COMBO): Unit => {
     const randomAdjective = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)];
     const randomTopic = TOPICS[Math.floor(Math.random() * TOPICS.length)];
     const unitTitle = `Unidade ${startUnitId}: ${randomAdjective} ${randomTopic}`;
@@ -946,14 +721,17 @@ export const generateRandomUnit = (startUnitId: number, startLevelId: number): U
     const colors: Level['color'][] = ['brand', 'info', 'secondary', 'warn'];
     const icons: Level['icon'][] = ['star', 'code', 'book', 'trophy', 'zap'];
 
+    const sourceCurriculum = mode === ModuleType.ENGLISH ? ENGLISH_CURRICULUM :
+        mode === ModuleType.LOGIC ? LOGIC_CURRICULUM :
+            COMBO_CURRICULUM;
+
     for (let i = 0; i < 3; i++) {
         const levelId = startLevelId + i;
         const color = colors[Math.floor(Math.random() * colors.length)];
         const icon = icons[Math.floor(Math.random() * icons.length)];
 
         // Recycle questions from existing levels to simulate content for now
-        // In a real app, this would call an AI endpoint or DB
-        const randomSourceUnit = CURRICULUM[Math.floor(Math.random() * CURRICULUM.length)];
+        const randomSourceUnit = sourceCurriculum[Math.floor(Math.random() * sourceCurriculum.length)];
         const randomSourceLevel = randomSourceUnit.levels[Math.floor(Math.random() * randomSourceUnit.levels.length)];
         const questions = [...randomSourceLevel.questions].sort(() => 0.5 - Math.random()).slice(0, 3);
 
@@ -979,10 +757,14 @@ export const generateRandomUnit = (startUnitId: number, startLevelId: number): U
 };
 
 // Helper to get a level even if it's dynamically generated
-export const getLevelById = (id: number): Level | undefined => {
+export const getLevelById = (id: number, mode: ModuleType = ModuleType.COMBO): Level | undefined => {
+    const curriculum = mode === ModuleType.ENGLISH ? ENGLISH_CURRICULUM :
+        mode === ModuleType.LOGIC ? LOGIC_CURRICULUM :
+            COMBO_CURRICULUM;
+
     // 1. Try static curriculum
     let level: Level | undefined;
-    for (const unit of CURRICULUM) {
+    for (const unit of curriculum) {
         const found = unit.levels.find(l => l.id === id);
         if (found) {
             level = found;
@@ -991,18 +773,14 @@ export const getLevelById = (id: number): Level | undefined => {
     }
 
     // 2. If id is high, it might be generated. 
-    // Since we don't store generated levels in constants, we re-generate 
-    // deterministically or assume App/Home passed the data context. 
-    // However, for this demo, we'll implement a simple deterministic generator based on ID 
-    // so direct linking works.
     if (!level && id > 900) {
         const seedUnitId = Math.floor(id / 100); // approx
-        const generatedUnit = generateRandomUnit(seedUnitId, Math.floor(id / 10) * 10); // approximate logic
+        const generatedUnit = generateRandomUnit(seedUnitId, Math.floor(id / 10) * 10, mode);
         level = generatedUnit.levels.find(l => l.id === id) || generatedUnit.levels[0];
     }
 
     if (level) {
-        // SHUFFLE OPTIONS: Randomize the order of options for relevant question types
+        // SHUFFLE OPTIONS
         const questions = level.questions.map(q => {
             if (q.options && q.options.length > 1 && (
                 q.type === QuestionType.MULTIPLE_CHOICE ||
@@ -1017,26 +795,19 @@ export const getLevelById = (id: number): Level | undefined => {
             return q;
         });
 
-        // GARANTIA DE TEORIA: Separa questões de teoria das práticas
+        // GARANTIA DE TEORIA
         const theoryQuestions = questions.filter(q => q.type === QuestionType.THEORY || q.theory);
         const practiceQuestions = questions.filter(q => q.type !== QuestionType.THEORY && !q.theory);
 
         let selectedQuestions: typeof level.questions = [];
 
-        // Se houver teoria, garante que a primeira questão seja de teoria
         if (theoryQuestions.length > 0) {
-            // Pega a primeira teoria definida (geralmente a intro)
             selectedQuestions.push(theoryQuestions[0]);
-
-            // Mistura o resto (outras teorias + práticas)
             const remaining = [...theoryQuestions.slice(1), ...practiceQuestions];
             const shuffledRemaining = remaining.sort(() => Math.random() - 0.5);
-
-            // Preenche até 5 questões (1 teoria + 4 aleatórias)
             const countToTake = Math.min(4, shuffledRemaining.length);
             selectedQuestions = [...selectedQuestions, ...shuffledRemaining.slice(0, countToTake)];
         } else {
-            // Se não tiver teoria, segue o fluxo normal aleatório
             selectedQuestions = [...questions].sort(() => Math.random() - 0.5).slice(0, 5);
         }
 
@@ -1049,3 +820,6 @@ export const getLevelById = (id: number): Level | undefined => {
 
     return undefined;
 };
+
+// Export the default curriculum for backward compatibility if needed, but prefer using the mode
+export const CURRICULUM = COMBO_CURRICULUM; 

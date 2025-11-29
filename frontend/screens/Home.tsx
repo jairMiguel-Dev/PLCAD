@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CURRICULUM, HEART_REFILL_TIME_MS, generateRandomUnit } from '../constants';
+import { CURRICULUM, ENGLISH_CURRICULUM, LOGIC_CURRICULUM, COMBO_CURRICULUM, HEART_REFILL_TIME_MS, generateRandomUnit } from '../constants';
 import { Star, Lock, Check, Code, Book, Trophy, Zap, Flag, Sparkles, Clock, Heart, CheckCircle, Gift, Loader, ChevronUp, ChevronDown, RefreshCw, Cpu, Bug, Rocket } from 'lucide-react';
-import { Level, Quest, Unit } from '../types';
+import { Level, Quest, Unit, ModuleType } from '../types';
 
 interface HomeProps {
     onStartLevel: (levelId: number) => void;
@@ -19,6 +19,7 @@ interface HomeProps {
     onClaimQuest: (id: string) => void;
     onResetQuest: (questId: string) => void;
     conceptMastery: Record<string, number>;
+    selectedModule: ModuleType | null;
 }
 
 // Generate random stars for the background
@@ -47,12 +48,21 @@ export const Home: React.FC<HomeProps> = ({
     quests,
     onClaimQuest,
     onResetQuest,
-    conceptMastery
+    conceptMastery,
+    selectedModule
 }) => {
     const scrollRef = useRef<HTMLDivElement>(null);
     const loaderRef = useRef<HTMLDivElement>(null);
 
-    const [displayedUnits, setDisplayedUnits] = useState<Unit[]>(CURRICULUM);
+    const getInitialCurriculum = () => {
+        switch (selectedModule) {
+            case ModuleType.ENGLISH: return ENGLISH_CURRICULUM;
+            case ModuleType.LOGIC: return LOGIC_CURRICULUM;
+            default: return COMBO_CURRICULUM;
+        }
+    };
+
+    const [displayedUnits, setDisplayedUnits] = useState<Unit[]>(getInitialCurriculum());
     const [isLoadingMore, setIsLoadingMore] = useState(false);
     const [animatingUnlockId, setAnimatingUnlockId] = useState<number | null>(null);
     const [showLevelUpToast, setShowLevelUpToast] = useState(false);
@@ -82,12 +92,12 @@ export const Home: React.FC<HomeProps> = ({
             const lastLevelId = lastUnit.levels[lastUnit.levels.length - 1].id;
             const startLevelId = nextUnitId * 100 + 1;
 
-            const newUnit = generateRandomUnit(nextUnitId, startLevelId);
+            const newUnit = generateRandomUnit(nextUnitId, startLevelId, selectedModule || ModuleType.COMBO);
 
             setDisplayedUnits(prev => [...prev, newUnit]);
             setIsLoadingMore(false);
         }, 1500);
-    }, [displayedUnits, isLoadingMore]);
+    }, [displayedUnits, isLoadingMore, selectedModule]);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -421,7 +431,7 @@ export const Home: React.FC<HomeProps> = ({
                                         return (
                                             <div key={level.id} className="relative flex justify-center w-full">
                                                 {/* Connecting Line (to next level) - Simplified vertical line for now, 
-                                                    could be SVG curve in future */}
+                                                        could be SVG curve in future */}
                                                 {levelIndex < unit.levels.length - 1 && (
                                                     <div
                                                         className="absolute top-16 w-1 h-16 bg-white/10 border-l-2 border-dashed border-white/20"
@@ -440,14 +450,14 @@ export const Home: React.FC<HomeProps> = ({
                                                     whileTap={{ scale: 0.9 }}
                                                     onClick={() => !isLocked && onStartLevel(level.id)}
                                                     className={`
-                                                        relative w-24 h-24 rounded-full flex items-center justify-center cursor-pointer no-select transition-all z-10
-                                                        ${isActive
+                                                            relative w-24 h-24 rounded-full flex items-center justify-center cursor-pointer no-select transition-all z-10
+                                                            ${isActive
                                                             ? `bg-gradient-to-br ${unitColor} shadow-[0_0_30px_rgba(255,255,255,0.4)] ring-4 ring-white/20`
                                                             : isCompleted
                                                                 ? 'bg-gradient-to-br from-yellow-400 to-orange-500 shadow-lg'
                                                                 : 'bg-gradient-to-br from-slate-700 to-slate-800 border-4 border-slate-600 opacity-80'
                                                         }
-                                                    `}
+                                                        `}
                                                     style={{
                                                         transform: `translateX(${offset}px)`,
                                                     }}

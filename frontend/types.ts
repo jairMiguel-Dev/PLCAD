@@ -34,7 +34,8 @@ export enum QuestionType {
   PAIR_MATCH = 'PAIR_MATCH',
   DRAG_AND_DROP = 'DRAG_AND_DROP',
   FILL_IN_BLANK = 'FILL_IN_BLANK',
-  LISTENING = 'LISTENING'
+  LISTENING = 'LISTENING',
+  SPEAKING = 'SPEAKING'
 }
 
 export interface Option {

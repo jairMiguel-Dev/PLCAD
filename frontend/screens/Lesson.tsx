@@ -7,7 +7,7 @@ import { TheoryScreen } from '../components/TheoryScreen';
 import { Level, QuestionType, PairItem, LessonResult } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BASE_XP_PER_QUESTION, COMBO_BONUS_MULTIPLIER, PERFECT_LESSON_BONUS } from '../constants';
-import { Volume2, Flame, Zap } from 'lucide-react';
+import { Volume2, Flame, Zap, Check } from 'lucide-react';
 
 interface LessonProps {
     level: Level;
@@ -74,6 +74,7 @@ export const Lesson: React.FC<LessonProps> = ({
     const isDragDrop = currentQuestion.type === QuestionType.DRAG_AND_DROP;
     const isFillBlank = currentQuestion.type === QuestionType.FILL_IN_BLANK;
     const isListening = currentQuestion.type === QuestionType.LISTENING;
+    const isSpeaking = currentQuestion.type === QuestionType.SPEAKING;
 
     // Check for instant game over on mount if 0 hearts (double safety)
     useEffect(() => {
@@ -98,7 +99,6 @@ export const Lesson: React.FC<LessonProps> = ({
         );
 
         if (shouldShowTheory) {
-            console.log('🎓 Teoria detectada:', currentQuestion.theory?.concept);
             setShowTheory(true);
             return; // Interrompe inicialização do exercício para focar na teoria
         }
@@ -139,6 +139,18 @@ export const Lesson: React.FC<LessonProps> = ({
 
     // --- HANDLERS ---
 
+    const incrementCombo = () => {
+        const newCombo = combo + 1;
+        setCombo(newCombo);
+        if (newCombo > maxCombo) setMaxCombo(newCombo);
+        setCorrectCount(prev => prev + 1);
+    };
+
+    const resetCombo = () => {
+        setCombo(0);
+        setMistakeCount(prev => prev + 1);
+    };
+
     const handleCheck = () => {
         if (isMatching) return;
 
@@ -153,6 +165,9 @@ export const Lesson: React.FC<LessonProps> = ({
         } else if (isListening) {
             const correctOption = currentQuestion.options.find(o => o.isCorrect);
             isCorrect = selectedOption === correctOption?.id;
+        } else if (isSpeaking) {
+            // Speaking is auto-validated or assumed correct if 'spoken' is selected
+            isCorrect = selectedOption === 'spoken';
         } else {
             const correctOption = currentQuestion.options.find(o => o.isCorrect);
             isCorrect = selectedOption === correctOption?.id;
@@ -163,6 +178,7 @@ export const Lesson: React.FC<LessonProps> = ({
         if (isCorrect) {
             setFeedbackState('correct');
             incrementCombo();
+            playAudio('Correct!');
         } else {
             setFeedbackState('wrong');
             // HARDCORE MODE: Lose Heart immediately
@@ -170,19 +186,8 @@ export const Lesson: React.FC<LessonProps> = ({
                 setHearts(hearts - 1);
             }
             resetCombo();
+            playAudio('Wrong.');
         }
-    };
-
-    const incrementCombo = () => {
-        const newCombo = combo + 1;
-        setCombo(newCombo);
-        if (newCombo > maxCombo) setMaxCombo(newCombo);
-        setCorrectCount(prev => prev + 1);
-    };
-
-    const resetCombo = () => {
-        setCombo(0);
-        setMistakeCount(prev => prev + 1);
     };
 
     const handleContinue = () => {
@@ -406,6 +411,41 @@ export const Lesson: React.FC<LessonProps> = ({
         </div>
     );
 
+    const renderSpeaking = () => (
+        <div className="w-full max-w-xl mx-auto px-6 pt-4 pb-32 flex flex-col items-center text-center">
+            <h2 className="text-xl md:text-2xl font-extrabold text-neutral-700 dark:text-neutral-200 mb-6 leading-tight">{currentQuestion.prompt}</h2>
+
+            <div className="mb-8 p-6 bg-slate-100 dark:bg-neutral-800 rounded-2xl border-2 border-slate-200 dark:border-neutral-700 w-full">
+                <p className="text-2xl font-bold text-brand dark:text-brand-light mb-2">{currentQuestion.englishWord}</p>
+                <p className="text-sm text-neutral-500 dark:text-neutral-400">Diga esta frase em voz alta</p>
+            </div>
+
+            <button
+                onClick={() => {
+                    if (isCheckSubmitted) return;
+                    setIsPlayingAudio(true);
+                    setTimeout(() => {
+                        setIsPlayingAudio(false);
+                        setSelectedOption('spoken'); // Dummy value to enable check
+                        // Auto-submit for speaking after "listening"
+                        // But for consistency with other types, we might just mark it as "selected"
+                    }, 2000);
+                }}
+                className={`w-40 h-40 rounded-full flex flex-col items-center justify-center gap-2 transition-all shadow-[0_10px_0_rgba(0,0,0,0.1)] border-4 ${selectedOption === 'spoken'
+                        ? 'bg-green-500 border-green-600 text-white'
+                        : isPlayingAudio
+                            ? 'bg-red-500 border-red-600 text-white scale-110 animate-pulse'
+                            : 'bg-brand border-brand-dark text-white hover:scale-105'
+                    }`}
+            >
+                {selectedOption === 'spoken' ? <Check size={48} /> : <Volume2 size={48} />}
+                <span className="font-black uppercase tracking-widest text-sm">
+                    {selectedOption === 'spoken' ? 'Gravado' : isPlayingAudio ? 'Ouvindo...' : 'Falar'}
+                </span>
+            </button>
+        </div>
+    );
+
     const renderStandard = () => {
         const isCode = currentQuestion.type === QuestionType.CODE_BUILDER;
         return (
@@ -450,12 +490,14 @@ export const Lesson: React.FC<LessonProps> = ({
         if (isDragDrop) return renderDragAndDrop();
         if (isFillBlank) return renderFillInBlank();
         if (isListening) return renderListening();
+        if (isSpeaking) return renderSpeaking();
         return renderStandard();
     }
 
     const isValidationDisabled = () => {
         if (isDragDrop) return selectedSegments.length === 0;
         if (isFillBlank) return inputValue.trim().length === 0;
+        if (isSpeaking) return selectedOption !== 'spoken';
         return !selectedOption;
     };
 
