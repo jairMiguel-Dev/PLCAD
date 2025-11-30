@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Lightbulb, Code, ArrowRight, Sparkles } from 'lucide-react';
+import { BookOpen, Lightbulb, Code, ArrowRight, Sparkles, Volume2 } from 'lucide-react';
 import { Button } from './Button';
 
 interface TheoryScreenProps {
@@ -20,6 +20,30 @@ export const TheoryScreen: React.FC<TheoryScreenProps> = ({
     tips = [],
     onContinue
 }) => {
+    const [isReadingTheory, setIsReadingTheory] = useState(false);
+
+    const readTheory = () => {
+        if (isReadingTheory) {
+            window.speechSynthesis.cancel();
+            setIsReadingTheory(false);
+            return;
+        }
+
+        setIsReadingTheory(true);
+        const utterance = new SpeechSynthesisUtterance(explanation);
+        utterance.lang = 'pt-BR';
+        utterance.rate = 1.0;
+        utterance.onend = () => setIsReadingTheory(false);
+        window.speechSynthesis.speak(utterance);
+    };
+
+    // Stop audio on unmount
+    useEffect(() => {
+        return () => {
+            window.speechSynthesis.cancel();
+        }
+    }, []);
+
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -166,8 +190,20 @@ export const TheoryScreen: React.FC<TheoryScreenProps> = ({
                         >
                             <div className="flex items-start gap-3">
                                 <Lightbulb className="text-purple-500 flex-shrink-0 mt-1" size={24} />
-                                <div>
-                                    <h3 className="font-bold text-lg text-gray-800 dark:text-white mb-2">Bora entender!</h3>
+                                <div className="flex-1">
+                                    <div className="flex justify-between items-start gap-4 mb-2">
+                                        <h3 className="font-bold text-lg text-gray-800 dark:text-white">Bora entender!</h3>
+                                        <button
+                                            onClick={readTheory}
+                                            className={`
+                                                min-w-[40px] h-10 rounded-lg flex items-center justify-center transition-all flex-shrink-0
+                                                ${isReadingTheory ? 'bg-purple-500 text-white animate-pulse' : 'bg-white dark:bg-gray-700 text-purple-500 hover:bg-purple-100 dark:hover:bg-purple-900/50'}
+                                            `}
+                                            title={isReadingTheory ? "Parar leitura" : "Ouvir explicação"}
+                                        >
+                                            <Volume2 size={20} />
+                                        </button>
+                                    </div>
                                     <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base">
                                         {explanation}
                                     </p>

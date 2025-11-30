@@ -131,8 +131,22 @@ export const UNIFIED_CURRICULUM: Unit[] = [
                         prompt: 'Variable',
                         englishWord: 'Variable',
                         phonetic: '/ˈveə.ri.ə.bəl/',
-                        theoryContent: 'Imagine uma **Variable** (Variável) como uma caixa onde você guarda informações. \n\nVocê dá um nome para a caixa (como `score`) e coloca um valor dentro dela (como `10`).',
+                        theoryContent: 'Imagine uma **Variable** (Variável) como uma caixa onde você guarda informações. \n\nEm Portugol (lógica pura), seria assim:\n`inteiro pontos = 10`\n\nEm JavaScript, usamos `let`:\n`let pontos = 10;`\n\nO computador entende que você criou uma caixa chamada "pontos" e guardou o número 10 nela.',
                         codeSnippet: 'let score = 10;',
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
+                    {
+                        id: 't_console_log',
+                        type: QuestionType.THEORY,
+                        difficulty: 'easy',
+                        title: 'Mostrando na Tela',
+                        prompt: 'Output',
+                        englishWord: 'Output',
+                        phonetic: '/ˈaʊt.pʊt/',
+                        theoryContent: 'Para mostrar algo na tela, usamos um comando de saída.\n\nEm Portugol:\n`escreva("Olá Mundo")`\n\nEm JavaScript:\n`console.log("Olá Mundo");`\n\nO `console.log` é o nosso "escreva".',
+                        codeSnippet: 'console.log("Hello World");',
                         options: [],
                         correctFeedback: '',
                         wrongFeedback: ''
@@ -156,7 +170,7 @@ export const UNIFIED_CURRICULUM: Unit[] = [
                         type: QuestionType.CODE_BUILDER,
                         difficulty: 'easy',
                         title: 'Prática',
-                        prompt: 'Crie uma variável chamada "nome" com o valor "Dev":',
+                        prompt: 'Crie uma variável chamada "nome" com o valor "Dev" (Em Portugol: cadeia nome = "Dev"):',
                         options: [
                             { id: '1', text: 'let nome = "Dev";', isCorrect: true },
                             { id: '2', text: 'variable nome "Dev"', isCorrect: false },
