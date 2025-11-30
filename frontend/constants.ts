@@ -102,482 +102,183 @@ export const ACHIEVEMENTS: Achievement[] = [
     }
 ];
 
-// --- ENGLISH TRACK ---
-export const ENGLISH_CURRICULUM: Unit[] = [
+// --- UNIFIED CURRICULUM (ProGles Core) ---
+export const UNIFIED_CURRICULUM: Unit[] = [
     {
         id: 1,
-        title: "Unit 1: The Daily Standup",
-        description: "Fale sobre seu progresso diário.",
+        title: "Unidade 1: Fundamentos do Código",
+        description: "Seus primeiros passos na programação.",
         levels: [
             {
                 id: 101,
-                title: "Greetings & Status",
-                description: "Iniciando a reunião.",
-                color: 'info',
-                icon: 'zap',
-                totalQuestions: 4,
-                stars: 0,
-                learnableConcepts: [
-                    { term: 'Standup', definition: 'Reunião diária rápida.', type: 'Inglês', example: 'Let\'s start the standup.' },
-                    { term: 'Blocker', definition: 'Algo que impede seu progresso.', type: 'Inglês', example: 'I have a blocker on the API.' }
-                ],
-                questions: [
-                    {
-                        id: 'e_t1',
-                        type: QuestionType.THEORY,
-                        difficulty: 'easy',
-                        title: 'The Standup',
-                        prompt: 'Standup Meeting',
-                        englishWord: 'Standup',
-                        phonetic: '/ˈstænd.ʌp/',
-                        theoryContent: 'A **Standup** is a short daily meeting where you say what you did yesterday, what you will do today, and if you have any **Blockers**.',
-                        options: [],
-                        correctFeedback: '',
-                        wrongFeedback: ''
-                    },
-                    {
-                        id: 'e_l1',
-                        type: QuestionType.LISTENING,
-                        difficulty: 'easy',
-                        title: 'Listening',
-                        prompt: 'What did they say?',
-                        englishWord: 'I am working on the login page.',
-                        options: [
-                            { id: '1', text: 'Estou trabalhando na página de login.', isCorrect: true },
-                            { id: '2', text: 'Terminei a página de login.', isCorrect: false },
-                            { id: '3', text: 'Vou começar a página de login.', isCorrect: false }
-                        ],
-                        correctFeedback: 'Correct!',
-                        wrongFeedback: 'Listen for "working on".'
-                    },
-                    {
-                        id: 'e_s1',
-                        type: QuestionType.SPEAKING,
-                        difficulty: 'medium',
-                        title: 'Speaking',
-                        prompt: 'Say: "I have no blockers"',
-                        englishWord: 'I have no blockers',
-                        options: [],
-                        correctFeedback: 'Perfect pronunciation!',
-                        wrongFeedback: 'Try to emphasize "blockers".'
-                    },
-                    {
-                        id: 'e_m1',
-                        type: QuestionType.PAIR_MATCH,
-                        difficulty: 'easy',
-                        title: 'Vocabulary',
-                        prompt: 'Match terms:',
-                        options: [],
-                        pairs: [
-                            { id: '1', text: 'Yesterday', pairId: '1a' },
-                            { id: '1a', text: 'Ontem', pairId: '1' },
-                            { id: '2', text: 'Today', pairId: '2a' },
-                            { id: '2a', text: 'Hoje', pairId: '2' },
-                            { id: '3', text: 'Blocker', pairId: '3a' },
-                            { id: '3a', text: 'Impedimento', pairId: '3' }
-                        ],
-                        correctFeedback: 'Good job!',
-                        wrongFeedback: 'Review the time words.'
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        id: 2,
-        title: "Unit 2: Code Review",
-        description: "Dando e recebendo feedback.",
-        levels: [
-            {
-                id: 201,
-                title: "LGTM & Comments",
-                description: "Aprovando código.",
+                title: "Variáveis & Dados",
+                description: "Como o computador guarda informações.",
                 color: 'brand',
                 icon: 'code',
-                totalQuestions: 3,
+                totalQuestions: 5,
                 stars: 0,
                 learnableConcepts: [
-                    { term: 'LGTM', definition: 'Looks Good To Me (Parece bom para mim).', type: 'Inglês' },
-                    { term: 'Nitpick', definition: 'Um detalhe pequeno/chato.', type: 'Inglês' }
+                    { term: 'Variable', definition: 'Um espaço na memória para guardar dados.', type: 'Inglês', example: 'let score = 10;' },
+                    { term: 'String', definition: 'Texto entre aspas.', type: 'Inglês', example: '"Olá"' },
+                    { term: 'Number', definition: 'Números inteiros ou decimais.', type: 'Inglês', example: '42' }
                 ],
                 questions: [
                     {
-                        id: 'e_t2',
+                        id: 't_var_intro',
                         type: QuestionType.THEORY,
                         difficulty: 'easy',
-                        title: 'Review Acronyms',
-                        prompt: 'LGTM',
-                        englishWord: 'LGTM',
-                        theoryContent: '**LGTM** stands for "Looks Good To Me". Use it when you approve a Pull Request without changes.',
-                        options: [],
-                        correctFeedback: '',
-                        wrongFeedback: ''
-                    },
-                    {
-                        id: 'e_s2',
-                        type: QuestionType.SPEAKING,
-                        difficulty: 'hard',
-                        title: 'Speaking',
-                        prompt: 'Say: "Can you fix this typo?"',
-                        englishWord: 'Can you fix this typo?',
-                        options: [],
-                        correctFeedback: 'Excellent!',
-                        wrongFeedback: 'Clear enunciation helps.'
-                    },
-                    {
-                        id: 'e_l2',
-                        type: QuestionType.LISTENING,
-                        difficulty: 'medium',
-                        title: 'Listening',
-                        prompt: 'What is the request?',
-                        englishWord: 'Please update the documentation.',
-                        options: [
-                            { id: '1', text: 'Atualize a documentação.', isCorrect: true },
-                            { id: '2', text: 'Apague a documentação.', isCorrect: false },
-                            { id: '3', text: 'Leia a documentação.', isCorrect: false }
-                        ],
-                        correctFeedback: 'Correct!',
-                        wrongFeedback: 'Update = Atualizar.'
-                    }
-                ]
-            }
-        ]
-    }
-];
-
-// --- LOGIC TRACK ---
-export const LOGIC_CURRICULUM: Unit[] = [
-    {
-        id: 1,
-        title: "Unidade 1: Lógica Pura",
-        description: "Algoritmos e Estruturas.",
-        levels: [
-            {
-                id: 101,
-                title: "Fluxo de Controle",
-                description: "Sequência e Decisão.",
-                color: 'warn',
-                icon: 'code',
-                totalQuestions: 4,
-                stars: 0,
-                learnableConcepts: [
-                    { term: 'Sequence', definition: 'Ordem de execução.', type: 'Lógica' },
-                    { term: 'Branch', definition: 'Ramificação (if/else).', type: 'Lógica' }
-                ],
-                questions: [
-                    {
-                        id: 'l_q1',
-                        type: QuestionType.DRAG_AND_DROP,
-                        difficulty: 'easy',
-                        title: 'Sequência',
-                        prompt: 'Ordene para: Acordar -> Comer -> Codar',
-                        options: [],
-                        segments: ['wakeUp();', 'eat();', 'code();'],
-                        distractors: ['sleep();'],
-                        correctFeedback: 'Lógica correta!',
-                        wrongFeedback: 'A ordem importa.'
-                    },
-                    {
-                        id: 'l_q2',
-                        type: QuestionType.CODE_BUILDER,
-                        difficulty: 'medium',
-                        title: 'Decisão',
-                        prompt: 'Se x > 5, retorne true:',
-                        options: [
-                            { id: '1', text: 'if (x > 5) return true;', isCorrect: true },
-                            { id: '2', text: 'if (x < 5) return true;', isCorrect: false },
-                            { id: '3', text: 'return x > 5;', isCorrect: true } // Also correct technically but maybe strictly looking for if structure? Let's keep simple.
-                        ],
-                        correctFeedback: 'Boa!',
-                        wrongFeedback: 'Verifique a condição.'
-                    },
-                    {
-                        id: 'l_q3',
-                        type: QuestionType.FILL_IN_BLANK,
-                        difficulty: 'hard',
-                        title: 'Loop',
-                        prompt: 'Repita 10 vezes:',
-                        codeSnippet: 'for (let i = 0; i < ___; i++)',
-                        correctAnswer: '10',
-                        options: [],
-                        correctFeedback: 'Exato!',
-                        wrongFeedback: 'O limite é 10.'
-                    },
-                    {
-                        id: 'l_q4',
-                        type: QuestionType.MULTIPLE_CHOICE,
-                        difficulty: 'medium',
-                        title: 'Lógica',
-                        prompt: 'Qual o valor de !true?',
-                        options: [
-                            { id: '1', text: 'false', isCorrect: true },
-                            { id: '2', text: 'true', isCorrect: false },
-                            { id: '3', text: 'undefined', isCorrect: false }
-                        ],
-                        correctFeedback: 'Negação inverte o valor.',
-                        wrongFeedback: '! significa NÃO.'
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        id: 2,
-        title: "Unidade 2: Estruturas de Dados",
-        description: "Organizando informação.",
-        levels: [
-            {
-                id: 201,
-                title: "Arrays & Objects",
-                description: "Coleções complexas.",
-                color: 'secondary',
-                icon: 'book',
-                totalQuestions: 3,
-                stars: 0,
-                learnableConcepts: [
-                    { term: 'Index', definition: 'Posição no array.', type: 'Lógica' },
-                    { term: 'Key', definition: 'Identificador no objeto.', type: 'Lógica' }
-                ],
-                questions: [
-                    {
-                        id: 'l_q5',
-                        type: QuestionType.CODE_BUILDER,
-                        difficulty: 'medium',
-                        title: 'Acesso',
-                        prompt: 'Acesse o segundo item de "arr":',
-                        options: [
-                            { id: '1', text: 'arr[1]', isCorrect: true },
-                            { id: '2', text: 'arr[2]', isCorrect: false },
-                            { id: '3', text: 'arr.2', isCorrect: false }
-                        ],
-                        correctFeedback: 'Índice 1 é o segundo item.',
-                        wrongFeedback: 'Começa em 0.'
-                    },
-                    {
-                        id: 'l_q6',
-                        type: QuestionType.FILL_IN_BLANK,
-                        difficulty: 'hard',
-                        title: 'Objetos',
-                        prompt: 'Acesse a propriedade "id":',
-                        codeSnippet: 'user.___',
-                        correctAnswer: 'id',
-                        options: [],
-                        correctFeedback: 'Dot notation.',
-                        wrongFeedback: 'Use .id'
-                    },
-                    {
-                        id: 'l_q7',
-                        type: QuestionType.DRAG_AND_DROP,
-                        difficulty: 'hard',
-                        title: 'Construção',
-                        prompt: 'Crie um objeto vazio:',
-                        options: [],
-                        segments: ['const', 'obj', '=', '{}', ';'],
-                        distractors: ['[]', 'empty'],
-                        correctFeedback: 'Correct syntax.',
-                        wrongFeedback: 'Objects use {}'
-                    }
-                ]
-            }
-        ]
-    }
-];
-
-// --- COMBO TRACK (Original) ---
-export const COMBO_CURRICULUM: Unit[] = [
-    {
-        id: 1,
-        title: "Unidade 1: Fundamentos & Vocabulário",
-        description: "Iniciando sua jornada bilíngue.",
-        levels: [
-            {
-                id: 101,
-                title: "Variáveis & Assignment",
-                description: "Guardando dados.",
-                color: 'brand',
-                icon: 'code',
-                totalQuestions: 4,
-                stars: 0,
-                learnableConcepts: [
-                    { term: 'Variable', definition: 'Um espaço na memória para guardar dados.', type: 'Inglês', example: 'The score variable is 10.' },
-                    { term: 'Assign', definition: 'Atribuir um valor a uma variável (=).', type: 'Inglês', example: 'Assign 10 to x.' },
-                    { term: 'Value', definition: 'O dado guardado na variável.', type: 'Inglês', example: 'The value is 5.' }
-                ],
-                questions: [
-                    {
-                        id: 't1',
-                        type: QuestionType.THEORY,
-                        difficulty: 'easy',
-                        title: 'O que é uma Variable?',
+                        title: 'O que é uma Variável?',
                         prompt: 'Variable',
                         englishWord: 'Variable',
                         phonetic: '/ˈveə.ri.ə.bəl/',
-                        theoryContent: 'Uma **Variable** (Variável) é como uma caixa etiquetada onde guardamos um **Value** (Valor). \n\nPara colocar algo na caixa, usamos o sinal de igual `=`. Em inglês, chamamos isso de **Assignment** (Atribuição).',
-                        codeSnippet: 'let score = 10; // Assign 10 to score',
+                        theoryContent: 'Imagine uma **Variable** (Variável) como uma caixa onde você guarda informações. \n\nVocê dá um nome para a caixa (como `score`) e coloca um valor dentro dela (como `10`).',
+                        codeSnippet: 'let score = 10;',
                         options: [],
                         correctFeedback: '',
-                        wrongFeedback: '',
+                        wrongFeedback: ''
                     },
                     {
-                        id: 'q1',
-                        type: QuestionType.TRANSLATION,
+                        id: 'q_var_def',
+                        type: QuestionType.MULTIPLE_CHOICE,
                         difficulty: 'easy',
-                        title: 'Vocabulário',
-                        prompt: 'O que significa "Assign"?',
+                        title: 'Conceito',
+                        prompt: 'Para que serve uma Variable?',
                         options: [
-                            { id: '1', text: 'Atribuir', isCorrect: true },
-                            { id: '2', text: 'Assinar', isCorrect: false },
-                            { id: '3', text: 'Apagar', isCorrect: false },
+                            { id: '1', text: 'Guardar dados na memória', isCorrect: true },
+                            { id: '2', text: 'Deletar arquivos', isCorrect: false },
+                            { id: '3', text: 'Desligar o computador', isCorrect: false }
                         ],
-                        correctFeedback: 'Correct! Assign = Atribuir valor.',
-                        wrongFeedback: 'Assign é usado para definir valores (=).',
+                        correctFeedback: 'Isso! Variáveis armazenam dados.',
+                        wrongFeedback: 'Variáveis são como caixas para guardar dados.'
                     },
                     {
-                        id: 'q2',
+                        id: 'q_code_assign',
                         type: QuestionType.CODE_BUILDER,
                         difficulty: 'easy',
                         title: 'Prática',
-                        prompt: 'Assign the value 10 to "x":',
+                        prompt: 'Crie uma variável chamada "nome" com o valor "Dev":',
                         options: [
-                            { id: '1', text: 'let x = 10;', isCorrect: true },
-                            { id: '2', text: 'let x == 10;', isCorrect: false },
-                            { id: '3', text: 'x : 10;', isCorrect: false },
+                            { id: '1', text: 'let nome = "Dev";', isCorrect: true },
+                            { id: '2', text: 'variable nome "Dev"', isCorrect: false },
+                            { id: '3', text: 'nome == "Dev";', isCorrect: false }
                         ],
-                        correctFeedback: 'Perfect! "=" is the assignment operator.',
-                        wrongFeedback: 'Use "=" to assign.',
+                        correctFeedback: 'Perfeito! Usamos "let" e "=" para criar variáveis.',
+                        wrongFeedback: 'A sintaxe correta é: let nome = "valor";'
                     },
                     {
-                        id: 'q3',
+                        id: 'q_list_var',
                         type: QuestionType.LISTENING,
                         difficulty: 'medium',
                         title: 'Listening',
                         prompt: 'O que foi dito?',
-                        englishWord: 'Assign a value to the variable.',
+                        englishWord: 'Declare a variable.',
+                        translation: 'Declare uma variável.',
+                        phonetic: 'Di-clér a vé-ri-a-bol',
                         options: [
-                            { id: '1', text: 'Atribua um valor à variável.', isCorrect: true },
-                            { id: '2', text: 'Assine o valor da variável.', isCorrect: false },
-                            { id: '3', text: 'Verifique o valor da variável.', isCorrect: false }
+                            { id: '1', text: 'Declare uma variável.', isCorrect: true },
+                            { id: '2', text: 'Delete a variável.', isCorrect: false },
+                            { id: '3', text: 'Declare uma vitória.', isCorrect: false }
                         ],
-                        correctFeedback: 'Yes! Assign = Atribuir.',
-                        wrongFeedback: 'Listen closely: "Assign".'
+                        correctFeedback: 'Muito bem! Declare = Declarar.',
+                        wrongFeedback: 'Ouça com atenção: "Declare".'
+                    },
+                    {
+                        id: 'q_speak_var',
+                        type: QuestionType.SPEAKING,
+                        difficulty: 'hard',
+                        title: 'Pronúncia',
+                        prompt: 'Diga: "Variable"',
+                        englishWord: 'Variable',
+                        translation: 'Variável',
+                        phonetic: '/ˈveə.ri.ə.bəl/',
+                        options: [],
+                        correctFeedback: 'Excelente pronúncia!',
+                        wrongFeedback: 'Tente focar no som do "V".'
                     }
                 ]
             },
             {
                 id: 102,
-                title: "Strings & Characters",
-                description: "Textos em código.",
+                title: "Tipos de Dados",
+                description: "Textos, Números e Booleanos.",
                 color: 'info',
                 icon: 'book',
-                totalQuestions: 3,
+                totalQuestions: 5,
                 stars: 0,
                 learnableConcepts: [
-                    { term: 'String', definition: 'Texto em programação.', type: 'Inglês', example: '"Hello"' },
-                    { term: 'Character', definition: 'Uma única letra ou símbolo.', type: 'Inglês', example: '"A"' },
-                    { term: 'Quote', definition: 'Aspas (" ou \').', type: 'Inglês', example: 'Single quotes.' }
+                    { term: 'Boolean', definition: 'Verdadeiro ou Falso.', type: 'Inglês', example: 'true / false' },
+                    { term: 'Integer', definition: 'Número inteiro.', type: 'Inglês', example: '10' },
+                    { term: 'Float', definition: 'Número decimal.', type: 'Inglês', example: '10.5' }
                 ],
                 questions: [
                     {
-                        id: 't_str',
+                        id: 't_types',
                         type: QuestionType.THEORY,
                         difficulty: 'easy',
-                        title: 'Texto é String',
-                        prompt: 'String',
-                        englishWord: 'String',
-                        phonetic: '/strɪŋ/',
-                        theoryContent: 'Em inglês técnico, texto é **String**. Uma String é feita de **Characters** (Caracteres). \n\nSempre usamos **Quotes** (Aspas) para definir uma String.',
-                        codeSnippet: 'let name = "Leo"; // String with double quotes',
+                        title: 'Tipos Básicos',
+                        prompt: 'Data Types',
+                        englishWord: 'Data Types',
+                        phonetic: '/ˈdeɪ.tə taɪps/',
+                        theoryContent: 'Existem diferentes tipos de dados:\n\n- **String**: Texto ("Olá")\n- **Number**: Números (42, 3.14)\n- **Boolean**: Lógica (true, false)',
+                        codeSnippet: 'let isHappy = true; // Boolean\nlet age = 25; // Number',
                         options: [],
                         correctFeedback: '',
                         wrongFeedback: ''
                     },
                     {
-                        id: 'q_match_str',
+                        id: 'q_match_types',
                         type: QuestionType.PAIR_MATCH,
                         difficulty: 'medium',
-                        title: 'Vocabulário',
-                        prompt: 'Conecte os termos:',
+                        title: 'Associação',
+                        prompt: 'Ligue o valor ao seu tipo:',
                         options: [],
                         pairs: [
-                            { id: 'p1', text: 'String', pairId: 'r1' },
-                            { id: 'r1', text: 'Texto', pairId: 'p1' },
-                            { id: 'p2', text: 'Quote', pairId: 'r2' },
-                            { id: 'r2', text: 'Aspas', pairId: 'p2' },
-                            { id: 'p3', text: 'Character', pairId: 'r3' },
-                            { id: 'r3', text: 'Letra/Símbolo', pairId: 'p3' }
+                            { id: 'p1', text: '"Code"', pairId: 'r1' },
+                            { id: 'r1', text: 'String', pairId: 'p1' },
+                            { id: 'p2', text: '99', pairId: 'r2' },
+                            { id: 'r2', text: 'Number', pairId: 'p2' },
+                            { id: 'p3', text: 'true', pairId: 'r3' },
+                            { id: 'r3', text: 'Boolean', pairId: 'p3' }
                         ],
-                        correctFeedback: 'Great job!',
-                        wrongFeedback: 'Review the terms.'
+                        correctFeedback: 'Ótimo trabalho!',
+                        wrongFeedback: 'Lembre-se: Aspas = String, Sem aspas = Number/Boolean.'
                     },
                     {
-                        id: 'q_drag_str',
+                        id: 'q_drag_bool',
                         type: QuestionType.DRAG_AND_DROP,
                         difficulty: 'medium',
-                        title: 'Code It',
-                        prompt: 'Create a String "Hello":',
+                        title: 'Montagem',
+                        prompt: 'Crie um booleano verdadeiro:',
                         options: [],
-                        segments: ['let', 's', '=', '"Hello";'],
-                        distractors: ['Hello', 'quote'],
-                        correctFeedback: 'Correct! Quotes are essential.',
-                        wrongFeedback: 'Don\'t forget the quotes.'
-                    }
-                ]
-            },
-            {
-                id: 103,
-                title: "Output & Console",
-                description: "Vendo resultados.",
-                color: 'secondary',
-                icon: 'zap',
-                totalQuestions: 3,
-                stars: 0,
-                learnableConcepts: [
-                    { term: 'Output', definition: 'O resultado exibido pelo programa.', type: 'Inglês' },
-                    { term: 'Print', definition: 'Escrever/Mostrar algo na tela.', type: 'Inglês' },
-                    { term: 'Error', definition: 'Um problema ou falha no código.', type: 'Inglês' }
-                ],
-                questions: [
-                    {
-                        id: 't_log',
-                        type: QuestionType.THEORY,
-                        difficulty: 'easy',
-                        title: 'Saída de Dados',
-                        prompt: 'Output',
-                        englishWord: 'Output',
-                        phonetic: '/ˈaʊt.pʊt/',
-                        theoryContent: 'Para ver o que seu código está fazendo, geramos um **Output** (Saída). \n\nO comando `console.log()` serve para **Print** (Imprimir/Mostrar) mensagens no terminal de desenvolvimento.',
-                        codeSnippet: 'console.log("System Ready"); // Prints "System Ready"',
-                        options: [],
-                        correctFeedback: '',
-                        wrongFeedback: ''
+                        segments: ['let', 'isActive', '=', 'true;'],
+                        distractors: ['"true"', 'Boolean'],
+                        correctFeedback: 'Correto! Booleanos não usam aspas.',
+                        wrongFeedback: 'Booleanos são palavras-chave, sem aspas.'
                     },
                     {
-                        id: 'q_trans_print',
-                        type: QuestionType.TRANSLATION,
-                        difficulty: 'easy',
-                        title: 'Tradução',
-                        prompt: 'O que significa "Print" em programação?',
-                        options: [
-                            { id: '1', text: 'Mostrar na tela', isCorrect: true },
-                            { id: '2', text: 'Imprimir em papel', isCorrect: false },
-                            { id: '3', text: 'Digitar', isCorrect: false }
-                        ],
-                        correctFeedback: 'Yes! Print = Mostrar output.',
-                        wrongFeedback: 'No contexto dev, é mostrar na tela.'
+                        id: 'q_fill_str',
+                        type: QuestionType.FILL_IN_BLANK,
+                        difficulty: 'medium',
+                        title: 'Complete',
+                        prompt: 'Complete a String:',
+                        codeSnippet: 'let greeting = ___Hello___;',
+                        correctAnswer: '"',
+                        options: [],
+                        correctFeedback: 'Isso! Strings precisam de aspas.',
+                        wrongFeedback: 'Use aspas (") para criar Strings.'
                     },
                     {
-                        id: 'q_code_log',
-                        type: QuestionType.CODE_BUILDER,
-                        difficulty: 'easy',
-                        title: 'Prática',
-                        prompt: 'Print "Error" to the console:',
-                        options: [
-                            { id: '1', text: 'console.log("Error");', isCorrect: true },
-                            { id: '2', text: 'print("Error");', isCorrect: false },
-                            { id: '3', text: 'log.console("Error");', isCorrect: false }
-                        ],
-                        correctFeedback: 'Correct syntax!',
-                        wrongFeedback: 'Use console.log().'
+                        id: 'q_speak_bool',
+                        type: QuestionType.SPEAKING,
+                        difficulty: 'hard',
+                        title: 'Pronúncia',
+                        prompt: 'Diga: "Boolean value"',
+                        englishWord: 'Boolean value',
+                        translation: 'Valor booleano',
+                        phonetic: '/ˈbuː.li.ən ˈvæl.juː/',
+                        options: [],
+                        correctFeedback: 'Mandou bem!',
+                        wrongFeedback: 'Tente novamente.'
                     }
                 ]
             }
@@ -585,120 +286,275 @@ export const COMBO_CURRICULUM: Unit[] = [
     },
     {
         id: 2,
-        title: "Unidade 2: Lógica & Conditions",
-        description: "Tomando decisões.",
+        title: "Unit 2: Logic & Control Flow",
+        description: "Controlando o fluxo do código.",
         levels: [
             {
                 id: 201,
-                title: "Booleans & Conditions",
-                description: "Verdadeiro ou Falso.",
+                title: "If & Else Statements",
+                description: "Tomando decisões no código.",
                 color: 'warn',
                 icon: 'trophy',
-                totalQuestions: 3,
+                totalQuestions: 5,
+                stars: 0,
                 learnableConcepts: [
-                    { term: 'Boolean', definition: 'Tipo verdadeiro (true) ou falso (false).', type: 'Inglês' },
-                    { term: 'Condition', definition: 'Uma verificação lógica.', type: 'Inglês' },
-                    { term: 'Statement', definition: 'Uma instrução completa de código.', type: 'Inglês' }
+                    { term: 'If Statement', definition: 'Executa se a condição for verdadeira.', type: 'Lógica', example: 'if (x > 5) { ... }' },
+                    { term: 'Else', definition: 'Executa se o "if" for falso.', type: 'Lógica', example: 'else { ... }' },
+                    { term: 'Condition', definition: 'A expressão avaliada (true/false).', type: 'Inglês' }
                 ],
                 questions: [
                     {
-                        id: 't_bool',
+                        id: 't_if_else',
                         type: QuestionType.THEORY,
                         difficulty: 'easy',
-                        title: 'Lógica Binária',
-                        prompt: 'Boolean',
-                        englishWord: 'True/False',
-                        theoryContent: 'Um **Boolean** só tem dois estados: `true` (Verdadeiro) ou `false` (Falso). \n\nUsamos booleans em **Conditions** (Condições) para decidir se um código deve rodar ou não.',
-                        codeSnippet: 'let isValid = true;\nif (isValid) { ... }',
+                        title: 'Decisões',
+                        prompt: 'If / Else',
+                        englishWord: 'Condition',
+                        phonetic: '/kənˈdɪʃ.ən/',
+                        theoryContent: 'Use **if** (se) para executar um código apenas quando uma **Condition** for verdadeira.\n\nUse **else** (senão) para executar algo quando a condição for falsa.',
+                        codeSnippet: 'if (score > 10) {\n  win();\n} else {\n  lose();\n}',
                         options: [],
                         correctFeedback: '',
                         wrongFeedback: ''
                     },
                     {
-                        id: 'q_match_cond',
-                        type: QuestionType.PAIR_MATCH,
+                        id: 'q_code_logic',
+                        type: QuestionType.CODE_BUILDER,
                         difficulty: 'medium',
-                        title: 'Termos',
-                        prompt: 'Associe:',
-                        options: [],
-                        pairs: [
-                            { id: '1', text: 'True', pairId: '1a' },
-                            { id: '1a', text: 'Verdadeiro', pairId: '1' },
-                            { id: '2', text: 'False', pairId: '2a' },
-                            { id: '2a', text: 'Falso', pairId: '2' },
-                            { id: '3', text: 'Condition', pairId: '3a' },
-                            { id: '3a', text: 'Condição', pairId: '3' }
+                        title: 'Logic Challenge',
+                        prompt: 'Check if "age" is greater than 18:',
+                        options: [
+                            { id: '1', text: 'if (age > 18)', isCorrect: true },
+                            { id: '2', text: 'if (age = 18)', isCorrect: false },
+                            { id: '3', text: 'check (age > 18)', isCorrect: false }
                         ],
-                        correctFeedback: 'Good!',
-                        wrongFeedback: 'Try again.'
+                        correctFeedback: 'Correct syntax!',
+                        wrongFeedback: 'Use ">" for greater than.'
                     },
                     {
-                        id: 'q_fill_if',
-                        type: QuestionType.FILL_IN_BLANK,
+                        id: 'q_list_else',
+                        type: QuestionType.LISTENING,
                         difficulty: 'medium',
-                        title: 'Syntax',
-                        prompt: 'Check if x is true:',
-                        codeSnippet: 'if (x ___ true) { ... }',
+                        title: 'Listening',
+                        prompt: 'What happens?',
+                        englishWord: 'Else, run this code.',
+                        translation: 'Senão, execute este código.',
+                        phonetic: 'Éls, rân dis côud',
+                        options: [
+                            { id: '1', text: 'Senão, execute este código.', isCorrect: true },
+                            { id: '2', text: 'Se, execute este código.', isCorrect: false },
+                            { id: '3', text: 'Sempre execute este código.', isCorrect: false }
+                        ],
+                        correctFeedback: 'Right! Else handles the false case.',
+                        wrongFeedback: 'Else means "Senão".'
+                    },
+                    {
+                        id: 'q_fill_cond',
+                        type: QuestionType.FILL_IN_BLANK,
+                        difficulty: 'hard',
+                        title: 'Complete Code',
+                        prompt: 'Complete the condition:',
+                        codeSnippet: 'if (isReady ___ true) { start(); }',
                         correctAnswer: '===',
                         options: [],
-                        correctFeedback: 'Triple equals check equality.',
-                        wrongFeedback: 'Use === for comparison.'
+                        correctFeedback: '=== checks for equality.',
+                        wrongFeedback: 'Use === to compare.'
+                    },
+                    {
+                        id: 'q_speak_cond',
+                        type: QuestionType.SPEAKING,
+                        difficulty: 'hard',
+                        title: 'Speaking',
+                        prompt: 'Say: "Check the condition"',
+                        englishWord: 'Check the condition',
+                        translation: 'Verifique a condição',
+                        phonetic: 'Tchék da con-di-shon',
+                        options: [],
+                        correctFeedback: 'Perfect!',
+                        wrongFeedback: 'Clear pronunciation helps.'
                     }
-                ],
-                stars: 0
+                ]
             },
             {
                 id: 202,
-                title: "If / Else Statements",
-                description: "Caminhos alternativos.",
+                title: "Loops & Iteration",
+                description: "Repetindo tarefas automaticamente.",
                 color: 'brand',
-                icon: 'code',
-                totalQuestions: 4,
+                icon: 'refresh-cw',
+                totalQuestions: 5,
                 stars: 0,
                 learnableConcepts: [
-                    { term: 'If Statement', definition: 'Bloco "Se".', type: 'Inglês' },
-                    { term: 'Else', definition: 'Bloco "Senão" (Caso contrário).', type: 'Inglês' },
-                    { term: 'Block', definition: 'Grupo de código entre chaves { }.', type: 'Inglês' }
+                    { term: 'Loop', definition: 'Repete um bloco de código.', type: 'Inglês' },
+                    { term: 'Iteration', definition: 'Cada volta do loop.', type: 'Inglês' },
+                    { term: 'Array', definition: 'Uma lista de dados.', type: 'Inglês' }
                 ],
                 questions: [
                     {
-                        id: 't_if',
+                        id: 't_loops_mix',
                         type: QuestionType.THEORY,
-                        difficulty: 'easy',
-                        title: 'Se... Senão...',
-                        prompt: 'Else',
-                        englishWord: 'Else',
-                        theoryContent: 'O **If Statement** verifica uma condição. Se falhar, o código pula para o bloco **Else** (Senão/Caso contrário). \n\nO código dentro das chaves `{}` é chamado de **Block**.',
-                        codeSnippet: 'if (isOnline) {\n  // Block 1\n} else {\n  // Block 2\n}',
+                        difficulty: 'medium',
+                        title: 'Loops',
+                        prompt: 'Iteration',
+                        englishWord: 'Iteration',
+                        phonetic: '/ˌɪt.əˈreɪ.ʃən/',
+                        theoryContent: 'Um **Loop** permite repetir ações. Cada repetição é chamada de **Iteration**.\n\nCommon loops: `for`, `while`.',
+                        codeSnippet: 'for (let i = 0; i < 5; i++) {\n  console.log(i);\n}',
                         options: [],
                         correctFeedback: '',
                         wrongFeedback: ''
                     },
                     {
-                        id: 'q_trans_else',
-                        type: QuestionType.TRANSLATION,
-                        difficulty: 'easy',
-                        title: 'Tradução',
-                        prompt: 'O que "Else" significa neste contexto?',
-                        options: [
-                            { id: '1', text: 'Caso contrário', isCorrect: true },
-                            { id: '2', text: 'E também', isCorrect: false },
-                            { id: '3', text: 'Depois', isCorrect: false }
+                        id: 'q_match_loop',
+                        type: QuestionType.PAIR_MATCH,
+                        difficulty: 'medium',
+                        title: 'Vocabulary',
+                        prompt: 'Match the concepts:',
+                        options: [],
+                        pairs: [
+                            { id: 'p1', text: 'Loop', pairId: 'r1' },
+                            { id: 'r1', text: 'Repetição', pairId: 'p1' },
+                            { id: 'p2', text: 'Array', pairId: 'r2' },
+                            { id: 'r2', text: 'Lista', pairId: 'p2' },
+                            { id: 'p3', text: 'Index', pairId: 'r3' },
+                            { id: 'r3', text: 'Posição', pairId: 'p3' }
                         ],
-                        correctFeedback: 'Correct! Else = Caso contrário.',
-                        wrongFeedback: 'Else cobre a alternativa.'
+                        correctFeedback: 'Good job!',
+                        wrongFeedback: 'Try again.'
                     },
                     {
-                        id: 'q_drag_block',
+                        id: 'q_drag_for',
                         type: QuestionType.DRAG_AND_DROP,
-                        difficulty: 'medium',
-                        title: 'Estrutura',
-                        prompt: 'Create an else block:',
-                        segments: ['else', '{', 'runCode();', '}'],
-                        distractors: ['if', '('],
+                        difficulty: 'hard',
+                        title: 'Code Structure',
+                        prompt: 'Build a loop from 0 to 9:',
                         options: [],
-                        correctFeedback: 'Valid syntax.',
-                        wrongFeedback: 'Else doesn\'t need parentheses.'
+                        segments: ['for', '(let i=0;', 'i<10;', 'i++)'],
+                        distractors: ['while', 'if'],
+                        correctFeedback: 'Correct loop syntax!',
+                        wrongFeedback: 'Follow the pattern: for (init; cond; inc)'
+                    },
+                    {
+                        id: 'q_list_iter',
+                        type: QuestionType.LISTENING,
+                        difficulty: 'hard',
+                        title: 'Listening',
+                        prompt: 'Translate mentally:',
+                        englishWord: 'Iterate over the array.',
+                        translation: 'Iterar sobre a lista.',
+                        phonetic: 'I-te-reit ou-ver da a-rei',
+                        options: [
+                            { id: '1', text: 'Iterar sobre a lista.', isCorrect: true },
+                            { id: '2', text: 'Apagar a lista.', isCorrect: false },
+                            { id: '3', text: 'Criar uma lista.', isCorrect: false }
+                        ],
+                        correctFeedback: 'Correct!',
+                        wrongFeedback: 'Iterate means to go through items.'
+                    },
+                    {
+                        id: 'q_speak_loop',
+                        type: QuestionType.SPEAKING,
+                        difficulty: 'hard',
+                        title: 'Speaking',
+                        prompt: 'Say: "Infinite Loop"',
+                        englishWord: 'Infinite Loop',
+                        translation: 'Loop Infinito',
+                        phonetic: '/ˈɪn.fɪ.nət luːp/',
+                        options: [],
+                        correctFeedback: 'Great!',
+                        wrongFeedback: 'Watch the "Infinite" pronunciation.'
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        id: 3,
+        title: "Unit 3: Advanced Concepts",
+        description: "Mastering modern development.",
+        levels: [
+            {
+                id: 301,
+                title: "Async & Promises",
+                description: "Handling operations in time.",
+                color: 'secondary',
+                icon: 'zap',
+                totalQuestions: 5,
+                stars: 0,
+                learnableConcepts: [
+                    { term: 'Async', definition: 'Non-blocking operations.', type: 'Inglês' },
+                    { term: 'Promise', definition: 'A value that may be available later.', type: 'Inglês' },
+                    { term: 'Await', definition: 'Pauses execution until promise resolves.', type: 'Inglês' }
+                ],
+                questions: [
+                    {
+                        id: 't_async',
+                        type: QuestionType.THEORY,
+                        difficulty: 'hard',
+                        title: 'Asynchronous Code',
+                        prompt: 'Async / Await',
+                        englishWord: 'Asynchronous',
+                        phonetic: '/eɪˈsɪŋ.krə.nəs/',
+                        theoryContent: '**Asynchronous** code allows the program to continue running while waiting for a long task (like fetching data) to finish.\n\nWe use `async` and `await` to handle **Promises** cleanly.',
+                        codeSnippet: 'async function getData() {\n  const data = await fetch(url);\n}',
+                        options: [],
+                        correctFeedback: '',
+                        wrongFeedback: ''
+                    },
+                    {
+                        id: 'q_code_async',
+                        type: QuestionType.CODE_BUILDER,
+                        difficulty: 'hard',
+                        title: 'Advanced Syntax',
+                        prompt: 'Define an async function:',
+                        options: [
+                            { id: '1', text: 'async function load() {}', isCorrect: true },
+                            { id: '2', text: 'function async load() {}', isCorrect: false },
+                            { id: '3', text: 'await function load() {}', isCorrect: false }
+                        ],
+                        correctFeedback: 'Correct! "async" goes before "function".',
+                        wrongFeedback: 'Syntax: async function name() {}'
+                    },
+                    {
+                        id: 'q_list_prom',
+                        type: QuestionType.LISTENING,
+                        difficulty: 'hard',
+                        title: 'Listening',
+                        prompt: 'Understand the concept:',
+                        englishWord: 'The promise resolved successfully.',
+                        translation: 'A promessa foi resolvida com sucesso.',
+                        phonetic: 'Da pró-miss ri-zólvd sâk-sés-fu-li',
+                        options: [
+                            { id: '1', text: 'A promessa foi resolvida com sucesso.', isCorrect: true },
+                            { id: '2', text: 'O problema foi resolvido.', isCorrect: false },
+                            { id: '3', text: 'A promessa falhou.', isCorrect: false }
+                        ],
+                        correctFeedback: 'Spot on.',
+                        wrongFeedback: 'Resolved means completed successfully.'
+                    },
+                    {
+                        id: 'q_fill_await',
+                        type: QuestionType.FILL_IN_BLANK,
+                        difficulty: 'hard',
+                        title: 'Complete',
+                        prompt: 'Wait for the result:',
+                        codeSnippet: 'const user = ___ getUser();',
+                        correctAnswer: 'await',
+                        options: [],
+                        correctFeedback: 'Use await inside async functions.',
+                        wrongFeedback: 'Keyword is "await".'
+                    },
+                    {
+                        id: 'q_speak_async',
+                        type: QuestionType.SPEAKING,
+                        difficulty: 'hard',
+                        title: 'Fluency',
+                        prompt: 'Say: "Asynchronous Operation"',
+                        englishWord: 'Asynchronous Operation',
+                        translation: 'Operação Assíncrona',
+                        phonetic: '/eɪˈsɪŋ.krə.nəs ˌɒp.ərˈeɪ.ʃən/',
+                        options: [],
+                        correctFeedback: 'Professional pronunciation!',
+                        wrongFeedback: 'It\'s a tongue twister! Try again.'
                     }
                 ]
             }
@@ -706,61 +562,34 @@ export const COMBO_CURRICULUM: Unit[] = [
     }
 ];
 
-// --- DYNAMIC LEVEL GENERATION FOR INFINITE SCROLL ---
-
-const ADJECTIVES = ['Advanced', 'Complex', 'Deep', 'Master', 'Legacy', 'Async', 'Virtual', 'Cyber', 'Mega', 'Ultra'];
-const TOPICS = ['Algorithms', 'Patterns', 'Refactoring', 'Debugging', 'Deploy', 'Cloud', 'API', 'Database', 'Security', 'UI'];
-
-export const generateRandomUnit = (startUnitId: number, startLevelId: number, mode: ModuleType = ModuleType.COMBO): Unit => {
-    const randomAdjective = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)];
-    const randomTopic = TOPICS[Math.floor(Math.random() * TOPICS.length)];
-    const unitTitle = `Unidade ${startUnitId}: ${randomAdjective} ${randomTopic}`;
-    const unitDesc = `Conceitos avançados de ${randomTopic.toLowerCase()}.`;
-
-    const levels: Level[] = [];
-    const colors: Level['color'][] = ['brand', 'info', 'secondary', 'warn'];
-    const icons: Level['icon'][] = ['star', 'code', 'book', 'trophy', 'zap'];
-
-    const sourceCurriculum = mode === ModuleType.ENGLISH ? ENGLISH_CURRICULUM :
-        mode === ModuleType.LOGIC ? LOGIC_CURRICULUM :
-            COMBO_CURRICULUM;
-
-    for (let i = 0; i < 3; i++) {
-        const levelId = startLevelId + i;
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        const icon = icons[Math.floor(Math.random() * icons.length)];
-
-        // Recycle questions from existing levels to simulate content for now
-        const randomSourceUnit = sourceCurriculum[Math.floor(Math.random() * sourceCurriculum.length)];
-        const randomSourceLevel = randomSourceUnit.levels[Math.floor(Math.random() * randomSourceUnit.levels.length)];
-        const questions = [...randomSourceLevel.questions].sort(() => 0.5 - Math.random()).slice(0, 3);
-
-        levels.push({
-            id: levelId,
-            title: `${randomTopic} - Parte ${i + 1}`,
-            description: `Prática intensiva de ${randomTopic}`,
-            color: color,
-            icon: icon,
-            totalQuestions: 3,
-            stars: 0,
-            learnableConcepts: randomSourceLevel.learnableConcepts || [],
-            questions: questions.map(q => ({ ...q, id: `${q.id}_gen_${levelId}` })) // Unique Q IDs
-        });
-    }
-
+// Helper to generate random units (simplified for Unified)
+const generateRandomUnit = (id: number, levelStartId: number, mode: ModuleType): Unit => {
+    // Fallback generator logic
     return {
-        id: startUnitId,
-        title: unitTitle,
-        description: unitDesc,
-        levels: levels
+        id: id,
+        title: `Unit ${id}: Practice`,
+        description: "Reforço contínuo.",
+        levels: [
+            {
+                id: levelStartId,
+                title: "Daily Practice",
+                description: "Mantenha o ritmo.",
+                color: 'info',
+                icon: 'zap',
+                totalQuestions: 5,
+                stars: 0,
+                learnableConcepts: [],
+                questions: [] // In a real app, we'd generate these
+            }
+        ]
     };
 };
 
+
 // Helper to get a level even if it's dynamically generated
 export const getLevelById = (id: number, mode: ModuleType = ModuleType.COMBO): Level | undefined => {
-    const curriculum = mode === ModuleType.ENGLISH ? ENGLISH_CURRICULUM :
-        mode === ModuleType.LOGIC ? LOGIC_CURRICULUM :
-            COMBO_CURRICULUM;
+    // ALWAYS USE UNIFIED CURRICULUM, IGNORE MODE
+    const curriculum = UNIFIED_CURRICULUM;
 
     // 1. Try static curriculum
     let level: Level | undefined;
@@ -821,5 +650,5 @@ export const getLevelById = (id: number, mode: ModuleType = ModuleType.COMBO): L
     return undefined;
 };
 
-// Export the default curriculum for backward compatibility if needed, but prefer using the mode
-export const CURRICULUM = COMBO_CURRICULUM; 
+// Export the default curriculum
+export const CURRICULUM = UNIFIED_CURRICULUM;

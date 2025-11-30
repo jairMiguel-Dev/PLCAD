@@ -6,11 +6,7 @@ import { Splash } from './screens/Splash';
 import { Profile } from './screens/Profile';
 import { Shop } from './screens/Shop';
 import { Review } from './screens/Review';
-import { ModuleSelection } from './screens/ModuleSelection';
-import { PaymentSuccess } from './screens/PaymentSuccess';
-import { Login } from './screens/Login';
-import { Register } from './screens/Register';
-import { FrameworkChoice } from './screens/FrameworkChoice';
+
 import { Achievements } from './screens/Achievements';
 import { CodeDebug } from './screens/CodeDebug';
 import { BottomNav } from './components/BottomNav';
@@ -18,8 +14,8 @@ import { OnboardingOverlay } from './components/OnboardingOverlay';
 import { TermsOverlay } from './components/TermsOverlay';
 import { HeartRefillModal } from './components/HeartRefillModal';
 import { ResizableContainer } from './components/ResizableContainer';
-import { ScreenState, Level, UserStats, LessonResult, Achievement, ShopItem, ModuleType, Quest, ReviewConcept, QuestionType, Question } from './types';
-import { MAX_HEARTS, CURRICULUM, ENGLISH_CURRICULUM, LOGIC_CURRICULUM, COMBO_CURRICULUM, calculateLevel, ACHIEVEMENTS, HEART_REFILL_TIME_MS, DAILY_QUEST_TEMPLATES, getLevelById } from './constants';
+import { ScreenState, Level, UserStats, LessonResult, Achievement, ShopItem, Quest, ReviewConcept, QuestionType, Question } from './types';
+import { MAX_HEARTS, CURRICULUM, UNIFIED_CURRICULUM, calculateLevel, ACHIEVEMENTS, HEART_REFILL_TIME_MS, DAILY_QUEST_TEMPLATES, getLevelById } from './constants';
 
 const INITIAL_STATS: UserStats = {
     hearts: MAX_HEARTS,
@@ -34,7 +30,6 @@ const INITIAL_STATS: UserStats = {
     isPremium: false,
     lastHeartLostTime: null,
     hasSeenOnboarding: false,
-    selectedModule: null,
     activeQuests: [],
     lastQuestGenDate: null,
     settings: {
@@ -211,8 +206,6 @@ const App: React.FC = () => {
         setAuthToken(token);
         setUserId(user.id);
 
-        let hasSelectedModule = !!userStats.selectedModule;
-
         // Carregar progresso do servidor para qualquer usuário
         try {
             const response = await fetch('https://backend-fgao.onrender.com/api/auth/progress', {
@@ -230,11 +223,6 @@ const App: React.FC = () => {
                     isPremium: user.isPremium,
                     username: user.username
                 }));
-
-                // Check if module is selected in the fetched data
-                if (data.progress.selectedModule) {
-                    hasSelectedModule = true;
-                }
             } else {
                 // Se não tem progresso no servidor, manter o local
                 setUserStats(prev => ({
@@ -252,12 +240,7 @@ const App: React.FC = () => {
             }));
         }
 
-        // Verificar módulo selecionado usando o dado mais recente
-        if (!hasSelectedModule) {
-            setScreen(ScreenState.MODULE_SELECTION);
-        } else {
-            setScreen(ScreenState.HOME);
-        }
+        setScreen(ScreenState.HOME);
     };
 
     const handleRegister = (token: string, user: any) => {
@@ -266,7 +249,7 @@ const App: React.FC = () => {
         // Novo usuário - não aceitou termos ainda
         setUserStats(prev => ({ ...prev, username: user.username, isPremium: user.isPremium, hasAcceptedTerms: false }));
         // Os termos vão aparecer automaticamente porque hasAcceptedTerms = false
-        setScreen(ScreenState.MODULE_SELECTION);
+        setScreen(ScreenState.HOME);
     };
 
     const handleLogout = () => {
@@ -279,17 +262,7 @@ const App: React.FC = () => {
 
 
     // Check Unit 1 completion and show Framework Choice for premium users
-    useEffect(() => {
-        if (
-            userStats.isPremium &&
-            isUnit1Complete() &&
-            screen === ScreenState.HOME &&
-            !userStats.selectedModule
-        ) {
-            // Show framework choice if premium, Unit 1 complete, and no module selected yet
-            setScreen(ScreenState.FRAMEWORK_CHOICE);
-        }
-    }, [userStats.completedLevels, userStats.isPremium, screen]);
+
 
 
 
@@ -375,11 +348,7 @@ const App: React.FC = () => {
             return;
         }
 
-        if (!userStats.selectedModule) {
-            setScreen(ScreenState.MODULE_SELECTION);
-        } else {
-            setScreen(ScreenState.HOME);
-        }
+        setScreen(ScreenState.HOME);
     };
 
     // --- HEART REGENERATION LOOP ---
@@ -414,7 +383,7 @@ const App: React.FC = () => {
     }, [userStats.hearts, userStats.lastHeartLostTime]);
 
     const getLevelData = (id: number): Level | undefined => {
-        return getLevelById(id, userStats.selectedModule || ModuleType.COMBO);
+        return getLevelById(id);
     };
 
     const handleStartLevel = (id: number) => {
@@ -623,10 +592,7 @@ const App: React.FC = () => {
         }
     };
 
-    const handleSelectModule = (module: ModuleType) => {
-        setUserStats(prev => ({ ...prev, selectedModule: module }));
-        setScreen(ScreenState.HOME);
-    };
+
 
     const toggleSetting = (key: 'soundEnabled' | 'hapticsEnabled') => {
         setUserStats(prev => ({
@@ -648,20 +614,11 @@ const App: React.FC = () => {
         return unit1Levels.every(id => userStats.completedLevels.includes(id));
     };
 
-    const handleFrameworkSelect = (framework: ModuleType.REACT | ModuleType.NODEJS) => {
-        setUserStats(prev => ({ ...prev, selectedModule: framework }));
-        setScreen(ScreenState.HOME);
-    };
 
-    const handleContinueVanilla = () => {
-        setScreen(ScreenState.HOME);
-    };
 
     const handlePracticeConcept = (conceptTerm: string) => {
         // Encontrar níveis que ensinam este conceito
-        const currentCurriculum = userStats.selectedModule === ModuleType.ENGLISH ? ENGLISH_CURRICULUM :
-            userStats.selectedModule === ModuleType.LOGIC ? LOGIC_CURRICULUM :
-                COMBO_CURRICULUM;
+        const currentCurriculum = UNIFIED_CURRICULUM;
 
         const relevantLevels = currentCurriculum.flatMap(u => u.levels).filter(l =>
             l.learnableConcepts?.some(c => c.term === conceptTerm)
@@ -748,14 +705,6 @@ const App: React.FC = () => {
             case ScreenState.SPLASH: return <Splash onFinish={handleSplashFinish} />;
             case ScreenState.LOGIN: return <Login onLogin={handleLogin} onSwitchToRegister={() => setScreen(ScreenState.REGISTER)} />;
             case ScreenState.REGISTER: return <Register onRegister={handleRegister} onSwitchToLogin={() => setScreen(ScreenState.LOGIN)} />;
-            case ScreenState.MODULE_SELECTION: return <ModuleSelection onSelectModule={handleSelectModule} onBack={() => { }} />;
-            case ScreenState.FRAMEWORK_CHOICE:
-                return (
-                    <FrameworkChoice
-                        onSelect={handleFrameworkSelect}
-                        onContinueVanilla={handleContinueVanilla}
-                    />
-                );
             case ScreenState.HOME:
                 return (
                     <Home
@@ -773,7 +722,6 @@ const App: React.FC = () => {
                         onClaimQuest={handleClaimQuest}
                         onResetQuest={handleResetQuest}
                         conceptMastery={userStats.conceptMastery}
-                        selectedModule={userStats.selectedModule}
                     />
                 );
             case ScreenState.LESSON:

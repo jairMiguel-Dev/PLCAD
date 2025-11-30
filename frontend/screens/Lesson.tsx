@@ -100,49 +100,55 @@ export const Lesson: React.FC<LessonProps> = ({
 
         if (shouldShowTheory) {
             setShowTheory(true);
-            return; // Interrompe inicialização do exercício para focar na teoria
         }
 
-        // Init Matching
-        if (isMatching && currentQuestion.pairs) {
-            const shuffled = [...currentQuestion.pairs].sort(() => Math.random() - 0.5);
-            setShuffledPairs(shuffled);
+        // Initialize Matching Game
+        if (currentQuestion.type === QuestionType.PAIR_MATCH && currentQuestion.pairs) {
             setMatchedPairs([]);
-            setSelectedPairId(null);
             setWrongPairIds([]);
+            setSelectedPairId(null);
+            const allItems: PairItem[] = [];
+            currentQuestion.pairs.forEach(p => {
+                allItems.push({ id: p.id, text: p.text, pairId: p.pairId });
+                allItems.push({ id: p.pairId, text: p.text === p.pairId ? p.text : (currentQuestion.pairs?.find(x => x.id === p.pairId)?.text || 'Error'), pairId: p.id });
+            });
+            // Filter out duplicates if pair definitions were bidirectional (usually they are not, but safety first)
+            // Actually, usually pairs are defined as A -> B. We need A and B as items.
+            // Let's assume pairs are [{id: 'p1', text: 'Cat', pairId: 'r1'}, {id: 'r1', text: 'Gato', pairId: 'p1'}]
+            // If the input is just pairs, we might need to flatten.
+            // Assuming currentQuestion.pairs contains ALL items to be matched.
+            setShuffledPairs([...currentQuestion.pairs].sort(() => Math.random() - 0.5));
         }
 
-        // Init Drag & Drop
-        if (isDragDrop && currentQuestion.segments) {
+        // Initialize Drag & Drop
+        if (currentQuestion.type === QuestionType.DRAG_AND_DROP) {
+            setSelectedSegments([]);
             const allSegments = [
-                ...currentQuestion.segments,
+                ...(currentQuestion.segments || []),
                 ...(currentQuestion.distractors || [])
             ].map((text, i) => ({ id: `seg-${i}`, text }));
             setAvailableSegments(allSegments.sort(() => Math.random() - 0.5));
-            setSelectedSegments([]);
         }
 
-        if (isListening && currentQuestion.englishWord) {
-            setTimeout(() => playAudio(currentQuestion.englishWord!), 500);
-        }
-
-    }, [currentQuestionIndex, isMatching, isDragDrop, isListening, currentQuestion]);
+    }, [currentQuestionIndex, level]);
 
     const playAudio = (text: string) => {
-        setIsPlayingAudio(true);
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-US';
-        utterance.rate = 0.85;
-        utterance.onend = () => setIsPlayingAudio(false);
-        window.speechSynthesis.speak(utterance);
+        if ('speechSynthesis' in window) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.9;
+            setIsPlayingAudio(true);
+            utterance.onend = () => setIsPlayingAudio(false);
+            window.speechSynthesis.speak(utterance);
+        }
     };
 
-    // --- HANDLERS ---
-
     const incrementCombo = () => {
-        const newCombo = combo + 1;
-        setCombo(newCombo);
-        if (newCombo > maxCombo) setMaxCombo(newCombo);
+        setCombo(prev => {
+            const newCombo = prev + 1;
+            if (newCombo > maxCombo) setMaxCombo(newCombo);
+            return newCombo;
+        });
         setCorrectCount(prev => prev + 1);
     };
 
@@ -388,8 +394,26 @@ export const Lesson: React.FC<LessonProps> = ({
     const renderListening = () => (
         <div className="w-full max-w-xl mx-auto px-6 pt-4 pb-32 flex flex-col">
             <h2 className="text-xl md:text-2xl font-extrabold text-neutral-700 dark:text-neutral-200 mb-6 leading-tight">{currentQuestion.prompt}</h2>
+
+            {currentQuestion.englishWord && (
+                <div className="mb-6 p-5 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl border-2 border-blue-200 dark:border-blue-800 shadow-sm">
+                    <p className="text-2xl font-bold text-blue-900 dark:text-blue-100 mb-3">{currentQuestion.englishWord}</p>
+                    {currentQuestion.translation && (
+                        <p className="text-base text-blue-700 dark:text-blue-300 mb-2">
+                            <span className="font-semibold">Tradução:</span> {currentQuestion.translation}
+                        </p>
+                    )}
+                    {currentQuestion.phonetic && (
+                        <p className="text-sm text-blue-600 dark:text-blue-400 font-mono">
+                            <span className="font-semibold">Como se fala:</span> {currentQuestion.phonetic}
+                        </p>
+                    )}
+                </div>
+            )}
+
             <div className="flex justify-center mb-10">
-                <button onClick={() => currentQuestion.englishWord && playAudio(currentQuestion.englishWord)} className={`w-32 h-32 rounded-3xl flex flex-col items-center justify-center gap-2 transition-all shadow-[0_8px_0_rgba(0,0,0,0.1)] border-2 ${isPlayingAudio ? 'bg-brand text-white border-brand-dark scale-105' : 'bg-brand text-white border-brand-dark hover:brightness-110'}`}>
+                <button onClick={() => currentQuestion.englishWord && playAudio(currentQuestion.englishWord)} className={`w-32 h-32 rounded-3xl flex flex-col items-center justify-center gap-2 transition-all shadow-[0_8px_0_rgba(0,0,0,0.1)] border-2 ${isPlayingAudio ? 'bg-brand text-white border-brand-dark scale-105' : 'bg-brand text-white border-brand-dark hover:brightness-110'}`}
+                >
                     <Volume2 size={48} className={isPlayingAudio ? 'animate-bounce' : ''} />
                     <span className="text-xs font-black uppercase tracking-widest">Ouvir</span>
                 </button>
@@ -402,7 +426,8 @@ export const Lesson: React.FC<LessonProps> = ({
                     if (isCheckSubmitted && option.isCorrect) styles = "bg-brand/10 border-brand text-brand-dark border-2 border-b-4";
                     if (isCheckSubmitted && isSelected && !option.isCorrect) styles = "bg-danger/10 border-danger text-danger border-2 border-b-4";
                     return (
-                        <button key={option.id} onClick={() => !isCheckSubmitted && setSelectedOption(option.id)} className={`w-full p-4 rounded-xl font-mono text-left text-lg transition-all active:scale-[0.98] ${styles}`}>
+                        <button key={option.id} onClick={() => !isCheckSubmitted && setSelectedOption(option.id)} className={`w-full p-4 rounded-xl font-mono text-left text-lg transition-all active:scale-[0.98] ${styles}`}
+                        >
                             {option.text}
                         </button>
                     )
@@ -415,9 +440,22 @@ export const Lesson: React.FC<LessonProps> = ({
         <div className="w-full max-w-xl mx-auto px-6 pt-4 pb-32 flex flex-col items-center text-center">
             <h2 className="text-xl md:text-2xl font-extrabold text-neutral-700 dark:text-neutral-200 mb-6 leading-tight">{currentQuestion.prompt}</h2>
 
-            <div className="mb-8 p-6 bg-slate-100 dark:bg-neutral-800 rounded-2xl border-2 border-slate-200 dark:border-neutral-700 w-full">
-                <p className="text-2xl font-bold text-brand dark:text-brand-light mb-2">{currentQuestion.englishWord}</p>
-                <p className="text-sm text-neutral-500 dark:text-neutral-400">Diga esta frase em voz alta</p>
+            <div className="mb-8 p-6 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-2xl border-2 border-purple-200 dark:border-purple-800 w-full shadow-lg">
+                <p className="text-3xl font-bold text-purple-900 dark:text-purple-100 mb-4">{currentQuestion.englishWord}</p>
+
+                {currentQuestion.translation && (
+                    <p className="text-lg text-purple-700 dark:text-purple-300 mb-3">
+                        <span className="font-semibold">Tradução:</span> {currentQuestion.translation}
+                    </p>
+                )}
+
+                {currentQuestion.phonetic && (
+                    <p className="text-base text-purple-600 dark:text-purple-400 font-mono mb-4">
+                        <span className="font-semibold">Como se fala:</span> {currentQuestion.phonetic}
+                    </p>
+                )}
+
+                <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-4 border-t border-purple-200 dark:border-purple-700 pt-4">Diga esta frase em voz alta</p>
             </div>
 
             <button
@@ -426,16 +464,14 @@ export const Lesson: React.FC<LessonProps> = ({
                     setIsPlayingAudio(true);
                     setTimeout(() => {
                         setIsPlayingAudio(false);
-                        setSelectedOption('spoken'); // Dummy value to enable check
-                        // Auto-submit for speaking after "listening"
-                        // But for consistency with other types, we might just mark it as "selected"
+                        setSelectedOption('spoken');
                     }, 2000);
                 }}
                 className={`w-40 h-40 rounded-full flex flex-col items-center justify-center gap-2 transition-all shadow-[0_10px_0_rgba(0,0,0,0.1)] border-4 ${selectedOption === 'spoken'
-                        ? 'bg-green-500 border-green-600 text-white'
-                        : isPlayingAudio
-                            ? 'bg-red-500 border-red-600 text-white scale-110 animate-pulse'
-                            : 'bg-brand border-brand-dark text-white hover:scale-105'
+                    ? 'bg-green-500 border-green-600 text-white'
+                    : isPlayingAudio
+                        ? 'bg-red-500 border-red-600 text-white scale-110 animate-pulse'
+                        : 'bg-brand border-brand-dark text-white hover:scale-105'
                     }`}
             >
                 {selectedOption === 'spoken' ? <Check size={48} /> : <Volume2 size={48} />}
@@ -515,7 +551,7 @@ export const Lesson: React.FC<LessonProps> = ({
 
     const showCheckButton = !isTheory && !isMatching;
 
-    // If showing theory, render only theory screen - CORREÇÃO DA ROLAGEM
+    // If showing theory, render only theory screen
     if (showTheory && currentQuestion.theory) {
         return (
             <div className="h-full overflow-auto">

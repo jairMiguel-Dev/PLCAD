@@ -66,8 +66,10 @@ export interface Question {
   prompt: string;
 
   theory?: TheoryContent; // Teoria interativa antes da questão
+  theoryContent?: string; // Conteúdo de teoria simples
   phonetic?: string;
   englishWord?: string;
+  translation?: string; // Tradução em português para exercícios de inglês
 
   codeSnippet?: string;
   options: Option[];
@@ -93,7 +95,7 @@ export interface Level {
   title: string;
   description: string;
   color: 'brand' | 'info' | 'secondary' | 'warn';
-  icon: 'star' | 'book' | 'code' | 'trophy' | 'zap';
+  icon: 'star' | 'book' | 'code' | 'trophy' | 'zap' | 'refresh-cw';
   totalQuestions: number;
   questions: Question[];
   stars: number;
@@ -147,7 +149,7 @@ export interface UserStats {
   isPremium: boolean;
   lastHeartLostTime: number | null; // Timestamp for regeneration
   hasSeenOnboarding: boolean;
-  selectedModule: ModuleType | null;
+
   activeQuests: Quest[];
   lastQuestGenDate: string | null; // YYYY-MM-DD
   username: string; // User display name
