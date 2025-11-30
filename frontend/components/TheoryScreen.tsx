@@ -31,8 +31,8 @@ export const TheoryScreen: React.FC<TheoryScreenProps> = ({
 
         setIsReadingTheory(true);
         const utterance = new SpeechSynthesisUtterance(explanation);
-        utterance.lang = 'pt-BR';
-        utterance.rate = 1.0;
+        utterance.lang = 'en-US'; // Same voice as word pronunciation
+        utterance.rate = 0.8; // Slower for learning
         utterance.onend = () => setIsReadingTheory(false);
         window.speechSynthesis.speak(utterance);
     };

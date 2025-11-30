@@ -46,8 +46,8 @@ export const TheoryCard: React.FC<TheoryCardProps> = ({
     // Remove markdown symbols for cleaner reading
     const cleanContent = content.replace(/\*\*/g, '').replace(/`/g, '');
     const utterance = new SpeechSynthesisUtterance(cleanContent);
-    utterance.lang = 'pt-BR';
-    utterance.rate = 1.0;
+    utterance.lang = 'en-US'; // Same voice as word pronunciation
+    utterance.rate = 0.8; // Slower for learning, same as speak()
     utterance.onend = () => setIsReadingTheory(false);
     window.speechSynthesis.speak(utterance);
   };
