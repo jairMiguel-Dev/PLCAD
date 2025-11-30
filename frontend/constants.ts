@@ -563,7 +563,7 @@ export const UNIFIED_CURRICULUM: Unit[] = [
 ];
 
 // Helper to generate random units (simplified for Unified)
-const generateRandomUnit = (id: number, levelStartId: number, mode: ModuleType): Unit => {
+export const generateRandomUnit = (id: number, levelStartId: number, mode: ModuleType): Unit => {
     // Fallback generator logic
     return {
         id: id,
@@ -652,3 +652,10 @@ export const getLevelById = (id: number, mode: ModuleType = ModuleType.COMBO): L
 
 // Export the default curriculum
 export const CURRICULUM = UNIFIED_CURRICULUM;
+
+// Temporary exports for backwards compatibility
+export const ENGLISH_CURRICULUM = UNIFIED_CURRICULUM;
+export const LOGIC_CURRICULUM = UNIFIED_CURRICULUM;
+export const COMBO_CURRICULUM = UNIFIED_CURRICULUM;
+
+
