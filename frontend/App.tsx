@@ -6,6 +6,9 @@ import { Splash } from './screens/Splash';
 import { Profile } from './screens/Profile';
 import { Shop } from './screens/Shop';
 import { Review } from './screens/Review';
+import { Login } from './screens/Login';
+import { Register } from './screens/Register';
+import { PaymentSuccess } from './screens/PaymentSuccess';
 
 import { Achievements } from './screens/Achievements';
 import { CodeDebug } from './screens/CodeDebug';
